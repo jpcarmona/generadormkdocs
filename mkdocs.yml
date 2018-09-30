@@ -1,11 +1,16 @@
-site_name: El Rincón Vacío
+# Información del proyecto
+site_name: 'El Rincón Vacío'
+site_description: 'El sitio de la informática'
+site_author: 'Juan Pedro Carmona Romero'
+site_url: 'https://jpcarmona.github.io/web/'
 
-site_url: https://jpcarmona.github.io/web/
-
-repo_url: https://github.com/jpcarmona/
+# Repositorio
+repo_name: 'jpcarmona'
+repo_url: 'https://github.com/jpcarmona/'
 
 edit_uri: '?query=root/path/docs/'
 
+# Copyright
 copyright: '<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
             <img alt="Licencia Creative Commons" style="border-width:0" 
             src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
@@ -15,11 +20,45 @@ copyright: '<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
 
 google_analytics: ['UA-36723568-3', 'mkdocs.org']
 
+#Navegación
 nav:
-- Home: index.md
+- Home: 'index.md'
 - Blog:
     - 'MkDocs': 'mkdocs.md'
-- About: about.md
+- Sobre mí: 'about.md'
 
-theme: material
+# Configuración
+theme: 
+  name: 'material'
+  palette:
+    primary: 'red'
+    accent: 'red'
+  font:
+    text: 'Ubuntu'
+    code: 'Ubuntu Mono'
+  logo: 'img/favicon.ico'
+  favicon: 'img/favicon.ico'
+  language: 'es'
+  #feature:
+    #tabs: true
 
+# Configuración
+extra:
+  search:
+    language: 'en, es'
+  social:
+    - type: 'github'
+      link: 'https://github.com/jpcarmona/'
+    - type: 'twitter'
+      link: 'https://twitter.com/JPCR92'
+    - type: 'linkedin'
+      link: 'https://linkedin.com'
+#  disqus: 'your-shortname' ## para comentarios
+
+# Extensiones
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
