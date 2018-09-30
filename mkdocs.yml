@@ -22,7 +22,7 @@ google_analytics: ['UA-36723568-3', 'mkdocs.org']
 
 #Navegación
 nav:
-- Home: 'index.md'
+- Inicio: 'index.md'
 - Blog:
     - 'MkDocs': 'mkdocs.md'
 - Sobre mí: 'about.md'
@@ -39,8 +39,8 @@ theme:
   logo: 'img/favicon.ico'
   favicon: 'img/favicon.ico'
   language: 'es'
-  #feature:
-    #tabs: true
+  feature:
+    tabs: true
 
 # Configuración
 extra:
