@@ -1,6 +1,6 @@
 # MkDocs
 
-En este post veremos como crear páginas estáticas con MkDocs y luego desplegarlas con GitHubPages en un entorno Debian Stretch.
+En este post veremos como crear páginas estáticas con MkDocs en un entorno Debian Stretch y luego desplegarlas con GitHubPages .
 
 ## Instalación
 
