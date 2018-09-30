@@ -16,9 +16,10 @@ copyright: '<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
 google_analytics: ['UA-36723568-3', 'mkdocs.org']
 
 nav:
-    - Home: index.md
-    - MkDocs: mkdocs.md
-    - About: about.md
+- Home: index.md
+- Blog:
+    - 'MkDocs': 'mkdocs.md'
+- About: about.md
 
-theme: flatly
+theme: material
 
