@@ -5,33 +5,55 @@ En este post veremos como crear páginas estáticas con MkDocs en un entorno Deb
 ## Instalación
 
 Antes de instalar algo en Entornos Debian:  
-
-	sudo apt update
+``` bash
+sudo apt update
+```
 
 Instalamos Python y Pip ya que MkDocs está desarrollado en Python:
-
-	sudo apt-get install python3.5
-	sudo apt-get install python3-pip
+``` bash
+sudo apt-get install python3.5
+sudo apt-get install python3-pip
+```
 
 Instalamos el creador de entornos virtuales de Python para instalar los modulos necesarios en nuestro entorno:
+``` bash
+sudo apt-get install python3-venv
+```
 
-	sudo apt-get install python3-venv
-
-* Creamos el entorno:  
-	
+Creamos el entorno:  
+``` bash
 python3 -m venv mkdocs_env
+```
 
-* Activamos el entorno:  
-
+Activamos el entorno:  
+``` bash
 source entorno1/bin/activate
+```
+
+Instalamos el generador de páginas estáticas MkDocs:
+``` bash
+pip install mkdocs
+```
+
+Instalamos también una plantilla para nuestro sitio:
+``` bash
+pip install mkdocs-material
+```
+
+## Creación del sitio
+
+Para empezar generamos un sitio estándar:
+``` bash
+mkdocs new sitio1
+cd sitio1
+```
+
+La configuración se realiza en el fihero 
 
 
-## Project layout
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+
+
 
 Para más documentación visita:  
 [mkdocs.org](https://www.mkdocs.org)  
