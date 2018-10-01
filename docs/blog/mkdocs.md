@@ -27,7 +27,7 @@ python3 -m venv mkdocs_env
 
 Activamos el entorno:  
 ``` bash
-source entorno1/bin/activate
+source mkdocs_env/bin/activate
 ```
 
 Instalamos el generador de páginas estáticas MkDocs:

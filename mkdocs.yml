@@ -20,13 +20,6 @@ copyright: '<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
 
 google_analytics: ['UA-36723568-3', 'mkdocs.org']
 
-#Navegación
-nav:
-- Inicio: 'index.md'
-- Blog:
-    - 'MkDocs': 'mkdocs.md'
-- Sobre mí: 'about.md'
-
 # Configuración
 theme: 
   name: 'material'
@@ -63,3 +56,11 @@ markdown_extensions:
       linenums: true
   - toc:
       permalink: true
+
+#Navegación
+nav:
+- Inicio: 'index.md'
+- Blog:
+    - 'MkDocs': 'blog/mkdocs.md'
+    - 'Kernel Linux': 'blog/kernel.md'
+- Sobre mí: 'about.md'
