@@ -4,8 +4,6 @@ git add * 2>/dev/null
 echo "Comentario1:"
 read comentario1
 git commit -am "$comentario1"
-echo "pass github:"
-read pass
 git push
 mkdocs build -d web
 cd web
