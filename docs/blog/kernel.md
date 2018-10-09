@@ -94,7 +94,7 @@ time make deb-pkg
 ```
 Por defecto el compilador solo usa un core a la vez, si queremos usar mas de uno utilizamos el siguiente parámetro:
 ``` bash
-time make -j 2 deb-pkg
+time make -j 4 deb-pkg
 ```
 
 Nos creará varios ficheros en el directorio padre:
