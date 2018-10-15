@@ -63,4 +63,5 @@ nav:
 - Blog:
     - 'MkDocs': 'blog/mkdocs.md'
     - 'Kernel Linux': 'blog/kernel.md'
+    - 'PL/SQL vs PL/PGSQL': 'blog/plpgsql.md'
 - Sobre mí: 'about.md'
