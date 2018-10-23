@@ -188,7 +188,7 @@ Nos aparecerá una ventana para decirnos que Oracle no está soportado para este
 y que el instalador no realizará las comprobaciones de requisitos en el sistema,
 la ignoramos y continuamos diciendo `Sí`.
 
-<img src="/img/oracleinstall/captura1.png" alt="captura1" width="500" height="400" />
+<img src="../img/oracleinstall/captura1.png" alt="captura1" width="500" height="400" />
 
 ***
 * Configurar Actualizaciones de Seguridad
@@ -196,7 +196,7 @@ la ignoramos y continuamos diciendo `Sí`.
 Demarcamos la casilla para recibir actualizaciones y continuamos con `Siguiente >`.
 
 
-<img src="/img/oracleinstall/captura2.png" alt="captura2" width="500" height="400" />
+<img src="../img/oracleinstall/captura2.png" alt="captura2" width="500" height="400" />
 
 ***
 * Seleccionar Opción de Instalación
@@ -204,7 +204,7 @@ Demarcamos la casilla para recibir actualizaciones y continuamos con `Siguiente 
 Elegimos la opción para "Crear y configurar base de datos" ya que vamos a crear una nueva base de datos y continuamos con `Siguiente >`.
 
 
-<img src="/img/oracleinstall/captura3.png" alt="captura3" width="500" height="400" />
+<img src="../img/oracleinstall/captura3.png" alt="captura3" width="500" height="400" />
 
 ***
 * Clase de Sistema
@@ -212,7 +212,7 @@ Elegimos la opción para "Crear y configurar base de datos" ya que vamos a crear
 Elegimos la opción "Clase de Escritorio" ya que de momento no vamos a utilizar las opciones avanzadas que nos ofrece Oracle como "Oracle RAC, la gestión automática de almacenamiento, configuración de copia de seguridad..." y continuamos con `Siguiente >`.
 
 
-<img src="/img/oracleinstall/captura4.png" alt="captura4" width="500" height="400" />
+<img src="../img/oracleinstall/captura4.png" alt="captura4" width="500" height="400" />
 
 ***
 * Configuración de Instalación Típica
@@ -231,7 +231,7 @@ Aquí tendremos que configurar varias cosas:
 Continuamos con `Siguiente >`.
 
 
-<img src="/img/oracleinstall/captura5.png" alt="captura5" width="500" height="400" />
+<img src="../img/oracleinstall/captura5.png" alt="captura5" width="500" height="400" />
 
 ***
 * Crear Inventario
@@ -242,7 +242,7 @@ Continuamos con `Siguiente >`.
 Continuamos con `Siguiente >`.
 
 
-<img src="/img/oracleinstall/captura6.png" alt="captura6" width="500" height="400" />
+<img src="../img/oracleinstall/captura6.png" alt="captura6" width="500" height="400" />
 
 ***
 * Resumen  
@@ -252,16 +252,16 @@ Aquí veremos el resumen de la configuración de la instalación por si queremos
 Procedemos a `Instalar`.
 
 
-<img src="/img/oracleinstall/captura7.png" alt="captura7" width="500" height="400" />
+<img src="../img/oracleinstall/captura7.png" alt="captura7" width="500" height="400" />
 
-<img src="/img/oracleinstall/captura8.png" alt="captura8" width="500" height="400" />
+<img src="../img/oracleinstall/captura8.png" alt="captura8" width="500" height="400" />
 
 ***
 * Errores en la instalación
 
 En mi caso me encuentro varios errores enlazando los binarios y me sale esta ventana:
 
-<img src="/img/oracleinstall/captura9.png" alt="captura9" width="500" height="400" />
+<img src="../img/oracleinstall/captura9.png" alt="captura9" width="500" height="400" />
 
 Lo que hago es mirar al final del fichero log, que nos indica en el mensaje, y averiguar que ocurre.
 
@@ -304,7 +304,7 @@ mkdir -p /opt/oracle/product/12.2.0/dbhome_1/precomp/lib/proc
 Demarcamos la casilla para recibir actualizaciones y continuamos con `Siguiente >`.
 
 
-<img src="/img/oracleinstall/captura2.png" alt="captura2" width="500" height="400" />
+<img src="../img/oracleinstall/captura2.png" alt="captura2" width="500" height="400" />
 
 ***
 
