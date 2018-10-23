@@ -1,17 +1,9 @@
-# Welcome to MkDocs
+# Bienvenido al Rincón Vacío
 
-For full documentation visit [mkdocs.org](https://mkdocs.org).
+***
 
-## Commands
+[Instalación Oracle Database 12c versión 2 (12.2.0) Enterprise Edition en Debian Stretch 9.5](blog/oracleinstall.md#cabecera1)
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs help` - Print this help message.
+Y aquí llega lo que no suele ser visto con Oracle, la instalación de su base de datos en un sistema que no está soportado por este software privativo en un Debian. Así es, aquí descubrimeros que entresijos tiene realizar esta instalación un poco dificultosa en varios pasos.
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+***

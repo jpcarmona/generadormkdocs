@@ -5,10 +5,13 @@ site_author: 'Juan Pedro Carmona Romero'
 site_url: 'https://jpcarmona.github.io/web/'
 
 # Repositorio
-repo_name: 'jpcarmona'
-repo_url: 'https://github.com/jpcarmona/'
+repo_name: 'jpcarmona/generadormkdocs'
+repo_url: 'https://github.com/jpcarmona/generadormkdocs'
 
-edit_uri: '?query=root/path/docs/'
+#edit_uri: '?query=root/path/docs/blog/'
+
+# ver urls
+#use_directory_urls: false
 
 # Copyright
 copyright: '<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
@@ -64,4 +67,5 @@ nav:
     - 'MkDocs': 'blog/mkdocs.md'
     - 'Kernel Linux': 'blog/kernel.md'
     - 'PL/SQL vs PL/PGSQL': 'blog/plpgsql.md'
+    - 'Install Oracle 12': 'blog/oracleinstall.md'
 - Sobre mí: 'about.md'
