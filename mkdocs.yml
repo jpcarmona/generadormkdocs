@@ -60,6 +60,10 @@ markdown_extensions:
   - toc:
       permalink: true
 
+# CSS Extra
+extra_css:
+    - css/extra.css
+
 #Navegación
 nav:
 - Inicio: 'index.md'
@@ -68,4 +72,5 @@ nav:
     - 'Kernel Linux': 'blog/kernel.md'
     - 'PL/SQL vs PL/PGSQL': 'blog/plpgsql.md'
     - 'Install Oracle 12': 'blog/oracleinstall.md'
+    - 'Fail2Ban': 'blog/fail2ban.md'
 - Sobre mí: 'about.md'
