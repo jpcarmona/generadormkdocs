@@ -14,19 +14,19 @@ Y aquí llega lo que no suele ser visto con Oracle, la instalación de su base d
 
 ***
 
-[PL/SQL vs PL/PGSQL](plpgsql.md#header1)
+[PL/SQL vs PL/PGSQL](blog/plpgsql.md#header1)
 
 En este post veremos las principales diferencias entre la programación en PL/SQL de Oracle y PL/PGSQL de Postgres.
 
 ***
 
-[Kernel Linux](kernel.md#header1)
+[Kernel Linux](blog/kernel.md#header1)
 
 En este post veremos como configurar el kernel linux y adaptarlo a las necesidades mínimas de nuestra máquina.
 
 ***
 
-[MkDocs](mkdocs.md#header1)
+[MkDocs](blog/mkdocs.md#header1)
 
 En este post veremos como crear páginas estáticas con MkDocs en un entorno Debian Stretch y luego desplegarlas con GitHubPages .
 
