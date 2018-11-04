@@ -696,18 +696,6 @@ echo "log-warnings=2" >> /etc/mysql/mariadb.conf.d/50-server.cnf
 systemctl restart mysqld
 ```
 
-# -Le concedemos al nuevo usuario todos los permisos para que pueda crear tablas, etc... :
-
-  GRANT ALL PRIVILEGES ON * . * TO 'juanpe'@'localhost';
-  EXIT;
-
-#--Accedemos como el usuario nuevo:
-  mysql -u juanpe -p
-
-# -Creamos base de datos:
-
-  CREATE DATABASE juanpe;
-
 #### Iniciación de JAIL `mysqld-auth`
 
 Añadimos en el fichero `/etc/fail2ban/jail.d/defaults-debian.conf` lo siguiente:
@@ -772,19 +760,19 @@ mariadb -u fail2ban -h 192.168.1.27 -p
 ```
 
 ``` bash
-(mkdocs_env) pedro@jpdeb1:~/Dropbox/github/generadormkdocs$ mariadb -u fail2ban -h 192.168.1.27 -p
+edro@jpdeb1:~/$ mariadb -u fail2ban -h 192.168.1.27 -p
 Enter password: 
 ERROR 1045 (28000): Access denied for user 'fail2ban'@'192.168.1.4' (using password: NO)
-(mkdocs_env) pedro@jpdeb1:~/Dropbox/github/generadormkdocs$ mariadb -u fail2ban -h 192.168.1.27 -p
+pedro@jpdeb1:~$ mariadb -u fail2ban -h 192.168.1.27 -p
 Enter password: 
 ERROR 1045 (28000): Access denied for user 'fail2ban'@'192.168.1.4' (using password: NO)
-(mkdocs_env) pedro@jpdeb1:~/Dropbox/github/generadormkdocs$ mariadb -u fail2ban -h 192.168.1.27 -p
+pedro@jpdeb1:~$ mariadb -u fail2ban -h 192.168.1.27 -p
 Enter password: 
 ERROR 1045 (28000): Access denied for user 'fail2ban'@'192.168.1.4' (using password: NO)
-(mkdocs_env) pedro@jpdeb1:~/Dropbox/github/generadormkdocs$ mariadb -u fail2ban -h 192.168.1.27 -p
+pedro@jpdeb1:~$ mariadb -u fail2ban -h 192.168.1.27 -p
 Enter password: 
 ERROR 1045 (28000): Access denied for user 'fail2ban'@'192.168.1.4' (using password: NO)
-(mkdocs_env) pedro@jpdeb1:~/Dropbox/github/generadormkdocs$ mariadb -u fail2ban -h 192.168.1.27 -p
+pedro@jpdeb1:~$ mariadb -u fail2ban -h 192.168.1.27 -p
 Enter password: 
 ERROR 2003 (HY000): Can't connect to MySQL server on '192.168.1.27' (111 "Connection refused")
 ```
@@ -831,6 +819,11 @@ Status for the jail: mysqld-auth
    |- Total banned: 1
    `- Banned IP list: 
 ```
+
+Con esto terminamos este sencillo tutorial de esta herramienta tan simple pero a la vez tan funcional.
+
+***
+## Enlaces de Interés para este Post
 
 [Fail2Ban](http://www.fail2ban.org/wiki/index.php/Main_Page)
 
