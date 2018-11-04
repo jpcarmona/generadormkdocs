@@ -33,7 +33,7 @@ Son las acciones a realizar según los acontecimientos encontrados en los logs.
 Son un conjunto de `filter` y `action` utilizados independientemente por cada servicio denominado. Puede ser por ejemplo "ssh" o "apache2" o incluso variaciones de estas ya incluidas.
 
 !!! note ""
-	Podemos crear `filter` , `action` y `jail` personalizados que veamos oportunos para nuestro sistema customizado.
+    Podemos crear `filter` , `action` y `jail` personalizados que veamos oportunos para nuestro sistema customizado.
 
 
 ***
@@ -491,13 +491,352 @@ action_ = %(banaction)s[name=%(__name__)s, bantime="%(bantime)s", port="%(port)s
 Que será la `action` definida en el fichero `/etc/fail2ban/action.d/iptables-multiport.conf`.
 
 ***
-## Configuración para mysql y Apache2
+## Configuración para Apache2 y mysql(mariadb)
+
+### Apache2
+
+El uso que le daremos a esta herramienta con Apcahe2 será activar el JAIL `apache-auth` el cual detectará los intentos fallidos de autenticación en sitios web.
+
+#### Configuración de prueba de Apache2
+
+* Creamos el directorio de la web:
+``` bash
+mkdir -p /var/www/fail2ban
+```
+
+* Creamos el fichero `index.html` de la web:
+``` bash
+echo '''
+
+<!DOCTYPE HTML>
+<html lang="es">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Prueba Fail2Ban</title>
+  </head>
+  <body>
+  <h1>Prueba autenticación fallida con Fail2ban</h1>
+  </body>
+</html>
+
+''' >> /var/www/fail2ban/index.html
+```
+
+* Damos permisos a `www-data`:
+``` bash
+chown -R www-data:www-data /var/www
+```
+
+* Creamos el sitio en Apache2:
+``` bash
+echo '''
+
+<VirtualHost *:80>
+        ServerName www.fail2ban.org
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/fail2ban
+
+        <Directory /var/www/fail2ban/>
+          AuthType basic
+          AuthName "PRIVADO"
+          AuthUserFile /etc/apache2/password
+          Require valid-user
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+
+''' > /etc/apache2/sites-available/fail2ban.conf
+```
+
+* Activamos el sitio:
+``` bash
+a2ensite fail2ban.conf
+```
+
+* Y recargamos la configuración de Apache2:
+``` bash
+systemctl reload apache2
+```
+
+!!! note ""
+    Para acceder a esta página desde nuestra máquina anfitrión debemos configurar el `/etc/hosts` de esta.
 
 
+#### Iniciación de JAIL `apache-auth`
+
+Lo primero será añadir en el fichero `/etc/fail2ban/jail.d/defaults-debian.conf` lo siguiente:
+
+``` bash
+[apache-auth]
+enabled = true
+```
+
+Podemos hacerlo con:
+``` bash
+echo '''
+
+[apache-auth]
+enabled = true
+
+''' >> /etc/fail2ban/jail.d/defaults-debian.conf
+```
+
+Ahora recargamos la configuración con:
+``` bash
+fail2ban-client reload
+```
+
+Ya podremos trabajar con este JAIL activado.
+
+#### Prueba de JAIL `apache-auth`
+
+Comprobamos que está activado con:
+``` bash
+fail2ban-client status
+```
+
+Nos responde:
+
+``` bash
+Status
+|- Number of jail:  2
+`- Jail list: apache-auth, sshd
+```
+
+Vemos el estado del JAIL `apache-auth`:
+``` bash
+fail2ban-client status apache-auth
+```
+
+Nos responde:
+``` bash
+Status for the jail: apache-auth
+|- Filter
+|  |- Currently failed: 0
+|  |- Total failed: 0
+|  `- File list:  /var/log/apache2/error.log
+`- Actions
+   |- Currently banned: 0
+   |- Total banned: 0
+   `- Banned IP list: 
+```
+
+También podemos ver más fácilmente la configuración de los JAIL mediante los comandos de Fail2Ban:
+``` bash
+root@jpfail:~# fail2ban-client get apache-auth 
+action            bantime           ignorecommand     logencoding       usedns
+actionmethods     datepattern       ignoreip          logpath           
+actionproperties  failregex         ignoreregex       maxlines          
+actions           findtime          journalmatch      maxretry          
+root@jpfail:~# fail2ban-client get apache-auth actions
+The jail apache-auth has the following actions:
+iptables-multiport
+root@jpfail:~# 
+```
+
+Ahora realizamos varios intentos fallidos de autenticación en el sitio web y vemos el estado del JAIL:
+``` bash
+fail2ban-client status apache-auth
+```
+
+Nos responde:
+``` bash
+Status for the jail: apache-auth
+|- Filter
+|  |- Currently failed: 0
+|  |- Total failed: 5
+|  `- File list:  /var/log/apache2/error.log
+`- Actions
+   |- Currently banned: 1
+   |- Total banned: 1
+   `- Banned IP list: 192.168.1.4 
+```
+
+Para eliminar este JAIL podemos hacerlo de 2 maneras:
+
+* Editando el fichero `/etc/fail2ban/jail.d/defaults-debian.conf`, eliminando las líneas de este JAIL en concreto y haciendo un "reload".
+
+* O con el comando:
+``` bash
+fail2ban-client stop apache-auth
+```
+
+### mysql(mariadb)
+El uso que le daremos a esta herramienta con mysql será activar el JAIL `mysql-auth` el cual detectará los intentos fallidos de autenticación en las bases de datos del sistema.
+
+#### Configuración de prueba de mysql
+
+* Entramos en Mariadb como ROOT:
+``` bash
+mariadb -u root
+```
+
+* Creamos un usuario:
+``` sql
+CREATE USER 'fail2ban'@'192.168.1.4' IDENTIFIED BY 'fail2ban';
+EXIT;
+```
+
+* Configuramos mariadb para que podamos acceder desde una red cualquiera:
+``` bash
+nano /etc/mysql/mariadb.conf.d/50-server.cnf
+
+bind-address            = 0.0.0.0
+```
+
+* Configuramos mariadb para que guarde los logs mas severos en su fichero log de error:
+``` bash
+echo "log-warnings=2" >> /etc/mysql/mariadb.conf.d/50-server.cnf
+
+systemctl restart mysqld
+```
+
+# -Le concedemos al nuevo usuario todos los permisos para que pueda crear tablas, etc... :
+
+  GRANT ALL PRIVILEGES ON * . * TO 'juanpe'@'localhost';
+  EXIT;
+
+#--Accedemos como el usuario nuevo:
+  mysql -u juanpe -p
+
+# -Creamos base de datos:
+
+  CREATE DATABASE juanpe;
+
+#### Iniciación de JAIL `mysqld-auth`
+
+Añadimos en el fichero `/etc/fail2ban/jail.d/defaults-debian.conf` lo siguiente:
+
+``` bash
+echo '''
+
+[mysqld-auth]
+enabled = true
+
+''' >> /etc/fail2ban/jail.d/defaults-debian.conf
+```
+
+Recargamos la configuración:
+``` bash
+fail2ban-client reload
+```
+
+Este JAIL necesita un poco de configuración extra. Tendremos que cambiar el `logpath`.  
+
+Eliminamos el actual con:
+``` bash
+fail2ban-client set mysqld-auth dellogpath /var/log/daemon.log
+```
+
+Y añadimos el nuevo:
+``` bash
+fail2ban-client set mysqld-auth addlogpath /var/log/mysql/error.log
+```
+
+#### Prueba de JAIL `mysqld-auth`
+
+Comprobamos que está activado con:
+``` bash
+fail2ban-client status
+```
+
+Nos responde:
+
+``` bash
+Status
+|- Number of jail:  2
+`- Jail list: mysqld-auth, sshd
+```
+
+Vemos el estado del JAIL `mysqld-auth`:
+``` bash
+Status for the jail: mysqld-auth
+|- Filter
+|  |- Currently failed: 0
+|  |- Total failed: 0
+|  `- File list:  /var/log/mysql/error.log
+`- Actions
+   |- Currently banned: 0
+   |- Total banned: 0
+   `- Banned IP list: 
+```
+
+Ahora realizamos varios intentos fallidos de autenticación en la base de datos:
+``` bash
+mariadb -u fail2ban -h 192.168.1.27 -p
+```
+
+``` bash
+(mkdocs_env) pedro@jpdeb1:~/Dropbox/github/generadormkdocs$ mariadb -u fail2ban -h 192.168.1.27 -p
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'fail2ban'@'192.168.1.4' (using password: NO)
+(mkdocs_env) pedro@jpdeb1:~/Dropbox/github/generadormkdocs$ mariadb -u fail2ban -h 192.168.1.27 -p
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'fail2ban'@'192.168.1.4' (using password: NO)
+(mkdocs_env) pedro@jpdeb1:~/Dropbox/github/generadormkdocs$ mariadb -u fail2ban -h 192.168.1.27 -p
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'fail2ban'@'192.168.1.4' (using password: NO)
+(mkdocs_env) pedro@jpdeb1:~/Dropbox/github/generadormkdocs$ mariadb -u fail2ban -h 192.168.1.27 -p
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'fail2ban'@'192.168.1.4' (using password: NO)
+(mkdocs_env) pedro@jpdeb1:~/Dropbox/github/generadormkdocs$ mariadb -u fail2ban -h 192.168.1.27 -p
+Enter password: 
+ERROR 2003 (HY000): Can't connect to MySQL server on '192.168.1.27' (111 "Connection refused")
+```
+
+Al final me deniega el acceso aunque ponga bien la contraseña.
+
+Vemos el estado del JAIL:
+``` bash
+fail2ban-client status mysqld-auth
+```
+
+Nos responde:
+``` bash
+Status for the jail: mysqld-auth
+|- Filter
+|  |- Currently failed: 0
+|  |- Total failed: 5
+|  `- File list:  /var/log/mysql/error.log
+`- Actions
+   |- Currently banned: 1
+   |- Total banned: 1
+   `- Banned IP list: 192.168.1.4
+```
+
+Si queremos "desbanear" la ip podemos usar lo siguiente:
+``` bash
+fail2ban-client set mysqld-auth unbanip 192.168.1.4
+```
+
+Vemos el estado del JAIL:
+``` bash
+fail2ban-client status mysqld-auth
+```
+
+Nos responde:
+``` bash
+Status for the jail: mysqld-auth
+|- Filter
+|  |- Currently failed: 0
+|  |- Total failed: 5
+|  `- File list:  /var/log/mysql/error.log
+`- Actions
+   |- Currently banned: 0
+   |- Total banned: 1
+   `- Banned IP list: 
+```
 
 [Fail2Ban](http://www.fail2ban.org/wiki/index.php/Main_Page)
 
 [10 IDS](https://www.comparitech.com/net-admin/network-intrusion-detection-tools/)
+
+[MARIADB Configuration](https://mariadb.com/kb/en/library/server-system-variables/#log_warnings)
 
 
 
