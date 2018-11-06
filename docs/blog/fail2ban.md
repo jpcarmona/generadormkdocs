@@ -508,13 +508,21 @@ Tambien instalamos el cliente de correo que usa fail2ban por defecto:
 apt install bsd-mailx
 ```
 
-Le vamos a añadir la `action` para enviar correos:
+Le vamos a añadir la `action` para enviar correos editando el fichero `/etc/fail2ban/jail.d/defaults-debian.conf`:
 
 ``` bash
-fail2ban-client set mysqld-auth addactions mail
+[sshd]
+enabled = true
+mta = mail
+action = %(action_mw)s
 ```
 
-Con esto si se crea algún "baneo" se enviará un correo al usuario local root por defecto.
+Recargamos la configruación:
+``` bash
+fail2ban-client reload
+```
+
+Con esto si se crea algún "baneo" se enviará un correo al usuario local root por defecto además se envía un correo cada vez se inicia o para el JAIL.
 
 ***
 ## Configuración para Apache2 y mysql(mariadb)
