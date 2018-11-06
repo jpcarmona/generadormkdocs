@@ -1,7 +1,8 @@
 # Instalación y uso de herramienta de seguridad Fail2Ban en Debian Stretch 9.5  
 
 Vamos a ver esta vez una buena herramienta que funcionará como Sistema de Detección de Intrusos (IDS o HIDS).  
-Fail2ban nos permite ver los accesos o intentos de accesos en el sistema o en servicios del sistema y además podremos aplicar medidas. Funciona leyendo ficheros de logs y aplicando reglas de iptables.
+
+Fail2ban nos permite ver los accesos o intentos de accesos en el sistema o en servicios del sistema y además podremos aplicar medidas. Funciona leyendo ficheros de logs y aplicando reglas de iptables generalmente.
 
 
 ***
@@ -81,7 +82,7 @@ vagrant ssh
 
 ### Actualización del sistema:
 ``` bash
-suso su -
+sudo su -
 apt update && apt -y upgrade
 ```
 
@@ -206,11 +207,11 @@ findtime  = 600
 maxretry = 5
 ```
 
-Más abajo se definen las configuraciones de algunas `actions` y todos los `jails` que se pueden usar.
+Más abajo se definen las configuraciones de algunas `actions` y todos los `jails` que se pueden usar por defecto.
 
 #### /etc/fail2ban/jail.d/\*.conf
 
-Existe un solo fichero que es `/etc/fail2ban/jail.d/defaults-debian.conf`. En el se configurará la activación de los `jails`.
+Existe un solo fichero que es `/etc/fail2ban/jail.d/defaults-debian.conf`. En el se configurará la activación de los `jails` por defecto.
 
 ``` bash
 [sshd]
@@ -490,6 +491,31 @@ action_ = %(banaction)s[name=%(__name__)s, bantime="%(bantime)s", port="%(port)s
 
 Que será la `action` definida en el fichero `/etc/fail2ban/action.d/iptables-multiport.conf`.
 
+#### Enviar Correos
+
+Lo primero será instalar un servidor de correo, en nuestro caso usaremos postfix:
+``` bash
+apt install postfix
+```
+
+En las ventanas interactivas elegimos:
+
+* Local Only
+* fail2ban.org
+
+Tambien instalamos el cliente de correo que usa fail2ban por defecto:
+``` bash
+apt install bsd-mailx
+```
+
+Le vamos a añadir la `action` para enviar correos:
+
+``` bash
+fail2ban-client set mysqld-auth addactions mail
+```
+
+Con esto si se crea algún "baneo" se enviará un correo al usuario local root por defecto.
+
 ***
 ## Configuración para Apache2 y mysql(mariadb)
 
@@ -760,7 +786,7 @@ mariadb -u fail2ban -h 192.168.1.27 -p
 ```
 
 ``` bash
-edro@jpdeb1:~/$ mariadb -u fail2ban -h 192.168.1.27 -p
+pedro@jpdeb1:~/$ mariadb -u fail2ban -h 192.168.1.27 -p
 Enter password: 
 ERROR 1045 (28000): Access denied for user 'fail2ban'@'192.168.1.4' (using password: NO)
 pedro@jpdeb1:~$ mariadb -u fail2ban -h 192.168.1.27 -p
