@@ -494,3 +494,25 @@ sqlplus64 system/PASS@//192.168.1.25:1521/orcl
 
 Y con esto y un bizcocho se acabó Oracle!!   
 De momento...
+
+## Enlaces de Interés
+
+[Oracle Oficial][1]  
+[Wiki Debian][2]  
+[debian-administration][3]  
+[oracle-base][4]  
+[dbaora][5]  
+[gemsofprogramming][6]  
+[Oracle Oficial 10g][7]  
+[Blog juanjo][8]  
+[Blog Aitor][9]
+
+ [1]: https://docs.oracle.com/database/121/LADBI/toc.htm
+ [2]: https://wiki.debian.org/DataBase/Oracle
+ [3]: https://debian-administration.org/article/656/Installing_Oracle11_and_Oracle12_on_Debian_Wheezy_Squeeze
+ [4]: https://oracle-base.com/articles/12c/oracle-db-12cr1-installation-on-oracle-linux-7
+ [5]: http://dbaora.com/install-oracle-12cr1-on-oel7/
+ [6]: https://gemsofprogramming.wordpress.com/2013/09/19/installing-oracle-12c-on-ubuntu-12-04-64-bit-a-hard-journey-but-its-worth-it/
+ [7]: https://docs.oracle.com/html/B14402_01/qig_master.htm#BAGGEBGG
+ [8]: https://juanjoselo.wordpress.com/2017/10/25/instalacion-y-configuracion-de-oracle-12c-en-debian-8-jessie/
+ [9]: https://openbinary20.com/2016/11/10/instalacion-y-configuracion-de-oracle-12c-en-debian-jessie/
