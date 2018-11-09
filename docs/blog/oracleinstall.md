@@ -59,9 +59,9 @@ passwd oracle
 
 * Creación de directorios requeridos por Oracle:
 ``` bash
-mkdir -p /opt/oracle/product/12.1.0
+mkdir -p /opt/oracle/product/12.1.0.2
 mkdir -p /opt/oraInventory
-chown -R oracle:dba /opt/
+chown -R oracle:dba /opt/ora*
 ```
 
 * Para instalar oracle se necesitan crear los siguientes enlaces:
@@ -96,6 +96,9 @@ vm.nr_hugepages = 64
 ```
 !!! attention "Atención"
 	Importante que `vm.hugetlb_shm_group` sea el GID del grupo `dba`.
+	``` bash
+		cat /etc/group | grep dba
+	```
 
 Cargamos la configuración al sistema:
 ``` bash
@@ -132,7 +135,7 @@ export ORACLE_UNQNAME=orcl
 ## Identificador de servicio de escucha. ##
 export ORACLE_SID=orcl
 ## Ruta a archivos binarios. ##
-export PATH=$PATH:$ORACLE_HOME/bin
+export PATH=$PATH:/opt/oracle/product/12.1.0.2/dbhome_1/bin
 ## Ruta a la biblioteca. ##
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/bin/lib:/lib/x86_64-linux-gnu/:/usr/lib64
 """ >> /etc/bash.bashrc
@@ -195,130 +198,130 @@ database/runInstaller -IgnoreSysPreReqs
 
 Demarcamos la casilla para recibir actualizaciones y continuamos con `Siguiente >`.
 
-<img src="../../img/oracleinstall/captura1.png" alt="captura2" width="500" height="400" />
+![](../../img/oracleinstall/captura1.png)
 
 ***
 Nos aparecerá una ventana para decirnos que Oracle no está soportado para este sistema
 y que el instalador no realizará las comprobaciones de requisitos en el sistema,
 la ignoramos y continuamos diciendo `Sí`.
 
-<img src="../../img/oracleinstall/captura2.png" alt="captura1" width="500" height="400" />
+![](../../img/oracleinstall/captura2.png)
 
 ***
 * Seleccionar Opción de Instalación
 
 Elegimos la opción para "Crear y configurar base de datos" ya que vamos a crear una nueva base de datos y continuamos con `Siguiente >`.
 
-<img src="../../img/oracleinstall/captura3.png" alt="captura3" width="500" height="400" />
+![](../../img/oracleinstall/captura3.png)
 
 ***
 * Clase de Sistema
 
 Elegimos la opción "Clase de Servidor" y continuamos con `Siguiente >`.
 
-<img src="../../img/oracleinstall/captura4.png" alt="captura4" width="500" height="400" />
+![](../../img/oracleinstall/captura4.png)
 
 ***
 * Opciones de Instalción de Grid
 
 Elegimos "Instalación de Base de Datos de Instancia Única"  y continuamos con `Siguiente >`.
 
-<img src="../../img/oracleinstall/captura5.png" alt="captura5" width="500" height="400" />
+![](../../img/oracleinstall/captura5.png)
 
 ***
 * Tipo de Instalación
 
 Elegimos Avanzada para configurar mas a fondo.
 
-<img src="../../img/oracleinstall/captura6.png" alt="captura6" width="500" height="400" />
+![](../../img/oracleinstall/captura6.png)
 
 ***
 * Idiomas
 
 Dejamos por defecto.
 
-<img src="../../img/oracleinstall/captura7.png" alt="captura7" width="500" height="400" />
+![](../../img/oracleinstall/captura7.png)
 
 ***
 * Edición de Base de Datos
 
 Solo nos deja Enterprise Edition.
 
-<img src="../../img/oracleinstall/captura8.png" alt="captura8" width="500" height="400" />
+![](../../img/oracleinstall/captura8.png)
 
 ***
 * Ubicación de Instalación
 
 Si tenemos bien definidas las variavles de entorno se configura automáticamente.
 
-<img src="../../img/oracleinstall/captura9.png" alt="captura9" width="500" height="400" />
+![](../../img/oracleinstall/captura9.png)
 
 ***
 * Crear Inventario
 
 Si tenemos bien definidas las variavles de entorno se configura automáticamente.
 
-<img src="../../img/oracleinstall/captura10.png" alt="captura10" width="500" height="400" />
+![](../../img/oracleinstall/captura10.png)
 
 ***
 * Tipo de COnfiguración
 
 Para Uso General.
 
-<img src="../../img/oracleinstall/captura11.png" alt="captura11" width="500" height="400" />
+![](../../img/oracleinstall/captura11.png)
 
 ***
 * Especificar Identificadores de Base de Datos
 
 Dejamos valores por defecto.
 
-<img src="../../img/oracleinstall/captura12.png" alt="captura12" width="500" height="400" />
+![](../../img/oracleinstall/captura12.png)
 
 ***
 * Opciones de Configuración
 
 En "Juego de Caracteres" elegimos "Unicode".
 
-<img src="../../img/oracleinstall/captura14.png" alt="captura14" width="500" height="400" />
+![](../../img/oracleinstall/captura14.png)
 
 Y en "Esquemas de Ejemplo" marcamos la casilla para crear la base de datos con esquemas de ejemplo.
 
-<img src="../../img/oracleinstall/captura13.png" alt="captura13" width="500" height="400" />
+![](../../img/oracleinstall/captura13.png)
 
 ***
 * Almacenamiento en la base de datos
 
 Dejamos por defecto.
 
-<img src="../../img/oracleinstall/captura15.png" alt="captura15" width="500" height="400" />
+![](../../img/oracleinstall/captura15.png)
 
 ***
 * Opciones de Gestión
 
 Saltamos este paso y continuamos con `Siguiente >`.
 
-<img src="../../img/oracleinstall/captura16.png" alt="captura16" width="500" height="400" />
+![](../../img/oracleinstall/captura16.png)
 
 ***
 * Opciones de Recuperación
 
 Saltamos este paso y continuamos con `Siguiente >`.
 
-<img src="../../img/oracleinstall/captura17.png" alt="captura17" width="500" height="400" />
+![](../../img/oracleinstall/captura17.png)
 
 ***
 * Contraseñas de Esquemas
 
 Para mayor comodidad usamos la misma contraseña para todas las cuentas. Además Oracle recomienda una contraseña de al menos 8 caracteres, al menos una en mayúscula, otra en minúscula y al menos un carácter alfanumérico.
 
-<img src="../../img/oracleinstall/captura18.png" alt="captura18" width="500" height="400" />
+![](../../img/oracleinstall/captura18.png)
 
 ***
 * Grupos del Sistema Operativo con privilegios
 
 Dejamos por defecto.
 
-<img src="../../img/oracleinstall/captura19.png" alt="captura19" width="500" height="400" />
+![](../../img/oracleinstall/captura19.png)
 
 ***
 * Resumen de Instalación
@@ -326,14 +329,14 @@ Dejamos por defecto.
 Aquí vemos la configuración final de la instalación para poder comprobar si tenemos algún error.
 Seleccionamos "Instalar".
 
-<img src="../../img/oracleinstall/captura20.png" alt="captura20" width="500" height="400" />
+![](../../img/oracleinstall/captura20.png)
 
 ***
 * Instalar Producto
 
 Este paso tardará algunos minutos.
 
-<img src="../../img/oracleinstall/captura21.png" alt="captura21" width="500" height="400" />
+![](../../img/oracleinstall/captura21.png)
 
 ***
 * Ejecutar Scripts de Configuración
@@ -345,14 +348,14 @@ Finalizando la instalación Oracle nos pide que ejecutemos unos scripts como ROO
 /opt/oracle/product/12.2.0/dbhome_1/root.sh
 ```
 
-<img src="../../img/oracleinstall/captura22.png" alt="captura22" width="500" height="400" />
+![](../../img/oracleinstall/captura22.png)
 
 ***
 * Asistente de Configuración de base de Datos
 
 Al finalizar la ejecución de los scripts pulsamos `Aceptar` y comenzará el proceso de creación de la base de datos que tardará aún mas tiempo que la instalación del software. Así que a esperar...
 
-<img src="../../img/oracleinstall/captura23.png" alt="captura23" width="500" height="400" />
+![](../../img/oracleinstall/captura23.png)
 
 ***
 * Fin Configuración
@@ -371,14 +374,14 @@ Para acceder a dicha aplicación web necesitaremos tener instalado Adobe Flash P
 
 Aceptamos.
 
-<img src="../../img/oracleinstall/captura24.png" alt="captura24" width="500" height="400" />
+![](../../img/oracleinstall/captura24.png)
 
-<img src="../../img/oracleinstall/captura28.png" alt="captura28" width="500" height="400" />
+![](../../img/oracleinstall/captura28.png)
 
 ***
 * Fin de la instalación
 
-<img src="../../img/oracleinstall/captura25.png" alt="captura25" width="500" height="400" />
+![](../../img/oracleinstall/captura25.png)
 
 
 ## Accediendo a la base de datos
@@ -403,13 +406,13 @@ Ejecutamos consulta para ver la versión de Oracle:
 select * from v$version;
 ```
 
-<img src="../../img/oracleinstall/captura26.png" alt="captura26" width="500" height="600" />
+![](../../img/oracleinstall/captura26.png)
 
 
 !!! note "Para poder crear usuarios ejecutamos lo siguiente:"
-	``` sql
-	alter session set "_ORACLE_SCRIPT"=true;  
-	```
+	`alter session set "_ORACLE_SCRIPT"=true;`  
+	-\ \ \ \ \ \ -Ó    
+	`echo 'alter session set "_ORACLE_SCRIPT"=true;' >> $ORACLE_HOME/sqlplus/admin/glogin.sql` 
 
 ## Configuración acceso remoto Oracle
 
@@ -490,7 +493,7 @@ Ya podemos usar SQLPlus remotamente:
 sqlplus64 system/PASS@//192.168.1.25:1521/orcl
 ```
 
-<img src="../../img/oracleinstall/captura27.png" alt="captura27" width="500" height="550" />
+![](../../img/oracleinstall/captura27.png)
 
 Y con esto y un bizcocho se acabó Oracle!!   
 De momento...

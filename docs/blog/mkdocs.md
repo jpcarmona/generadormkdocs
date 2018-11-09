@@ -59,3 +59,15 @@ Para más documentación visita:
 [mkdocs.org](https://www.mkdocs.org)  
 [pages.github.com](https://help.github.com/categories/github-pages-basics)  
 
+
+
+De esta forma podrías insertar una imagen
+![nombre de la imagen][img1]
+
+O dos, sin ensuciar tu espacio de escritura.
+![nombre de la imagen2][img2] 
+
+[img1]: /ruta/a/la/imagen.jpg "Título alternativo"
+[img2]: /ruta/a/la/imagen2.jpg "Título alternativo"
+
+![](../../img/oracleinstall/captura27.png)
