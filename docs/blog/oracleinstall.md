@@ -1,8 +1,9 @@
-# Instalación Oracle Database 12c versión 2(12.2.0) Enterprise Edition en Debian Jessie 8.11  
-Y aquí llega lo que no suele ser visto con Oracle, la instalación de su base de datos en un sistema que no está soportado por este software privativo en un Debian. Así es, aquí descubrimeros que entresijos tiene realizar esta instalación un poco dificultosa en varios pasos.
+# Instalación Oracle Database 12c versión 2(12.1.0) Enterprise Edition en Debian Jessie 8.11  
+
+Y aquí llega lo que no suele ser visto con Oracle, la instalación de su software privativo de base de datos en un sistema que no está soportado, en un sistema Debian. Así es, aquí descubrimeros que entresijos tiene realizar una instalación básica en varios pasos.
 
 
-## Configuración inicial de la máquina.
+## Configuración inicial de la máquina
 
 !!! note ""
 	* El espacio temporal: debe ser mayor que 500 MB. (Espacio en /tmp)
@@ -10,17 +11,12 @@ Y aquí llega lo que no suele ser visto con Oracle, la instalación de su base d
 	* El monitor: debe estar configurado para mostrar al menos 256 colores. (Tener instalado "xorg")
 
 * Instalación de debian en VirtualBox con:
-	* 40GB de disco duro
+	* 30GB de disco duro
 	* 2GB de RAM
 	* 2 procesadores virtuales
-	* ISO imagen debian-8.1.0-amd64-netinst.iso
+	* ISO imagen debian-8.11.0-amd64-netinst.iso
 [Debian](https://cdimage.debian.org/cdimage/archive/8.11.0/amd64/iso-cd/debian-8.11.0-amd64-netinst.iso)
-	* Internet
-
-* Particionado:
-	* 9GB -- Sistema raíz -- /
-	* 29GB -- Instalción de oracle -- /opt
-	* 2GB -- SWAP
+	* Conexión a Internet
 
 * Instalación de paquetes con debian-installer:
 	* Utilidades estándar del sistema 
@@ -31,26 +27,26 @@ Y aquí llega lo que no suele ser visto con Oracle, la instalación de su base d
 su -
 echo """
 ############################ Debian Main Repos ############################
-deb http://deb.debian.org/debian/ stable main contrib non-free
-deb-src http://deb.debian.org/debian/ stable main contrib non-free
+deb http://deb.debian.org/debian/ oldstable main contrib non-free
+deb-src http://deb.debian.org/debian/ oldstable main contrib non-free
 
-deb http://deb.debian.org/debian/ stable-updates main contrib non-free
-deb-src http://deb.debian.org/debian/ stable-updates main contrib non-free
+deb http://deb.debian.org/debian/ oldstable-updates main contrib non-free
+deb-src http://deb.debian.org/debian/ oldstable-updates main contrib non-free
 
-deb http://deb.debian.org/debian-security stable/updates main
-deb-src http://deb.debian.org/debian-security stable/updates main
+deb http://deb.debian.org/debian-security oldstable/updates main
+deb-src http://deb.debian.org/debian-security oldstable/updates main
 
-deb http://ftp.debian.org/debian stretch-backports main
-deb-src http://ftp.debian.org/debian stretch-backports main
+deb http://ftp.debian.org/debian jessie-backports main
+deb-src http://ftp.debian.org/debian jessie-backports main
 ##########################################################################
 """ > /etc/apt/sources.list
 ```
 Actualizamos la lista de paquetes y el sistema:
 ``` bash
-apt update && apt upgrade
+apt update && apt -y upgrade
 ```
 
-## Configuración inicial personalizada para Oracle.
+## Configuración inicial personalizada para Oracle
 
 * Se suele sugerir la siguiente estructura de grupos y usuarios:
 ``` bash
@@ -63,7 +59,7 @@ passwd oracle
 
 * Creación de directorios requeridos por Oracle:
 ``` bash
-mkdir -p /opt/oracle/product/12.1.0
+mkdir -p /opt/oracle/product/12.2.0
 mkdir -p /opt/oraInventory
 chown -R oracle:dba /opt/
 ```
@@ -93,11 +89,14 @@ kernel.shmmni = 4096
 ## Valor del rango de números de puerto. ##
 net.ipv4.ip_local_port_range = 1024 65000
 ## Valor del número gid del grupo dba. ##
-vm.hugetlb_shm_group = 112
+vm.hugetlb_shm_group = 114
 ## Valor del número de páginas de memoria. ##
 vm.nr_hugepages = 64
 """ > /etc/sysctl.d/local-oracle.conf
 ```
+!!! attention "Atención"
+	Importante que `vm.hugetlb_shm_group` sea el GID del grupo `dba`.
+
 Cargamos la configuración al sistema:
 ``` bash
 sysctl -p /etc/sysctl.d/local-oracle.conf  
@@ -127,11 +126,11 @@ export ORACLE_OWNER=oracle
 ## Directorio que almacenará los distintos servicios de Oracle. ##
 export ORACLE_BASE=/opt/oracle
 ## Directorio que almacenará la base de datos Oracle. ##
-export ORACLE_HOME=$ORACLE_BASE/product/12.2.0/dbhome_1
+export ORACLE_HOME=/opt/oracle/product/12.1.0.2/dbhome_1
 ## Nombre único de la base de datos. ##
-export ORACLE_UNQNAME=ORA12C
+export ORACLE_UNQNAME=orcl
 ## Identificador de servicio de escucha. ##
-export ORACLE_SID=ORA12C
+export ORACLE_SID=orcl
 ## Ruta a archivos binarios. ##
 export PATH=$PATH:$ORACLE_HOME/bin
 ## Ruta a la biblioteca. ##
@@ -139,12 +138,20 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/bin/lib:/lib/
 """ >> /etc/bash.bashrc
 ```
 
+* Cargamos las variables de entorno:
+``` bash
+source /etc/bash.bashrc
+```
+
+!!! attention "Atención"
+	Importante establecer correctamente las variables de entorno.
+
 * Instalación de paquetes necesarios:
 ``` bash
 apt install build-essential binutils libcap-dev gcc g++ libc6-dev ksh libaio-dev make libxi-dev libxtst-dev libxau-dev libxcb1-dev sysstat rpm xauth xorg unzip
 ```
 
-## Descargas de Oracle Database Software.
+## Descargas de Oracle Database Software
 
 !!! note ""
 	Esta acción la realizaremos en el equipo anfitrión con entorno gráfico.
@@ -154,15 +161,15 @@ Link para descarga:
 
 Primero iniciamos sesión y aceptamos el "License Agreement". Luego elegimos el siguiente:
 
- Oracle Database 12c Release 2 (12.2.0.1.0)  
- Standard Edition 2 and Enterprise Edition  
+ Oracle Database 12c Release 1  
+ (12.1.0.2.0) Enterprise Edition  
  linux x86-64  	File 1  (3.2 GB)  
 
 * Descomprimimos el zip:
 Abrimos consola y nos situamos en el directorio de la descarga:
 ``` bash
 cd Descargas
-unzip linuxx64_12201_database.zip
+unzip linuxx64_12102_database.zip
 ```
 
 * Pasamos lo descomprimido a la máquina virtual:  
@@ -171,11 +178,12 @@ Aparecerá una carpeta `database`, esa carpeta la copiaremos mediante `scp` a la
 scp -r database/ oracle@192.168.1.25:
 ```
 
-## Instalación de Oracle:
+## Instalación de Oracle
 
 * Ejecutaremos mediante `ssh` y `X11forward` el instalador de Oracle con entorno gráfico:
 ``` bash
-ssh -XC oracle@192.168.1.25 /opt/database/runInstaller -IgnoreSysPreReqs
+ssh -XC oracle@192.168.1.25
+database/runInstaller -IgnoreSysPreReqs
 ```
 !!! note ""
 	La opción `-IgnoreSysPreReqs` es para que ignorar los prerequisitos del sistema.  
@@ -183,153 +191,306 @@ ssh -XC oracle@192.168.1.25 /opt/database/runInstaller -IgnoreSysPreReqs
 	La opción -C es para comprimir los datos de la conexión.  
 
 ***
-Nos aparecerá una ventana para decirnos que Oracle no está soportado para este sistema
-y que el instalador no realizará las comprobaciones de requisitos en el sistema,
-la ignoramos y continuamos diciendo `Sí`.
-
-<img src="../../img/oracleinstall/captura1.png" alt="captura1" width="500" height="400" />
-
-***
 * Configurar Actualizaciones de Seguridad
 
 Demarcamos la casilla para recibir actualizaciones y continuamos con `Siguiente >`.
 
+<img src="../../img/oracleinstall/captura1.png" alt="captura2" width="500" height="400" />
 
-<img src="../../img/oracleinstall/captura2.png" alt="captura2" width="500" height="400" />
+***
+Nos aparecerá una ventana para decirnos que Oracle no está soportado para este sistema
+y que el instalador no realizará las comprobaciones de requisitos en el sistema,
+la ignoramos y continuamos diciendo `Sí`.
+
+<img src="../../img/oracleinstall/captura2.png" alt="captura1" width="500" height="400" />
 
 ***
 * Seleccionar Opción de Instalación
 
 Elegimos la opción para "Crear y configurar base de datos" ya que vamos a crear una nueva base de datos y continuamos con `Siguiente >`.
 
-
 <img src="../../img/oracleinstall/captura3.png" alt="captura3" width="500" height="400" />
 
 ***
 * Clase de Sistema
 
-Elegimos la opción "Clase de Escritorio" ya que de momento no vamos a utilizar las opciones avanzadas que nos ofrece Oracle como "Oracle RAC, la gestión automática de almacenamiento, configuración de copia de seguridad..." y continuamos con `Siguiente >`.
-
+Elegimos la opción "Clase de Servidor" y continuamos con `Siguiente >`.
 
 <img src="../../img/oracleinstall/captura4.png" alt="captura4" width="500" height="400" />
 
 ***
-* Configuración de Instalación Típica
+* Opciones de Instalción de Grid
 
-Aquí tendremos que configurar varias cosas:  
- - Directorio Base de Oracle: `/opt/oracle`.  
- - Ubicación del Software: `/opt/oracle/product/12.2.0/dbhome_1`.  
- - Ubicación de Archivos de Bases de Datos: `/opt/oracle/oradata`.  
- - Edición de Base de Datos: `Standard Edition 2` para grupos de trabajo o pequeñas empresas.  
- - Juego de Caracteres: `Unicode AL32UTF8`.  
- - Grupo de OSDBA: `dba`.  
- - Nombre de la Base de Datos Global: `orcl`.  
- - Contraseña Administrativa (SYS): **********.  
- - Crear como Base de Datos de Contenedor: Desmarcamos ya que no vamos a conectarnos a otra.  
-
-Continuamos con `Siguiente >`.
-
+Elegimos "Instalación de Base de Datos de Instancia Única"  y continuamos con `Siguiente >`.
 
 <img src="../../img/oracleinstall/captura5.png" alt="captura5" width="500" height="400" />
 
 ***
-* Crear Inventario
+* Tipo de Instalación
 
- -Directorio de Inventario de Oracle: `/opt/oraInventory`  
- -Grupo de Inventario de Oracle: `oinstall`  
-
-Continuamos con `Siguiente >`.
-
+Elegimos Avanzada para configurar mas a fondo.
 
 <img src="../../img/oracleinstall/captura6.png" alt="captura6" width="500" height="400" />
 
 ***
-* Resumen  
+* Idiomas
 
-Aquí veremos el resumen de la configuración de la instalación por si queremos revisarlo.
-
-Procedemos a `Instalar`.
-
+Dejamos por defecto.
 
 <img src="../../img/oracleinstall/captura7.png" alt="captura7" width="500" height="400" />
+
+***
+* Edición de Base de Datos
+
+Solo nos deja Enterprise Edition.
 
 <img src="../../img/oracleinstall/captura8.png" alt="captura8" width="500" height="400" />
 
 ***
-* Errores en la instalación
+* Ubicación de Instalación
 
-En mi caso me encuentro varios errores enlazando los binarios y me sale esta ventana:
+Si tenemos bien definidas las variavles de entorno se configura automáticamente.
 
 <img src="../../img/oracleinstall/captura9.png" alt="captura9" width="500" height="400" />
 
-Lo que hago es mirar al final del fichero log, que nos indica en el mensaje, y averiguar que ocurre.
+***
+* Crear Inventario
 
-Abro temrinal y ejecuto:
+Si tenemos bien definidas las variavles de entorno se configura automáticamente.
 
-``` bash
-ssh oracle@192.168.1.25
-```
-
-Leemos el final del log:
-``` bash
-tail -40 /opt/oraInventory/logs/installActions2018-10-20_10-11-00PM.log
-```
-
-En una linea nos indica lo siguiente:
-`/bin/chmod: no se puede acceder a '/opt/oracle/product/12.2.0/dbhome_1/precomp/lib/proc': No existe el fichero o el directorio`
-
-Así que crearemos ese directorio a mano:
-``` bash
-mkdir -p /opt/oracle/product/12.2.0/dbhome_1/precomp/lib/proc
-```
-
-Ahora pulsamos en `Reintentar` en la ventana emergente que nos apareció.
-
-!!! note ""
-	Repetiremos esto las veces que haga falta.
-
-En mi caso estas serán las acciones que tendré que ejecutar:
-``` bash
-mkdir -p /opt/oracle/product/12.2.0/dbhome_1/precomp/lib/procob
-mkdir -p /opt/oracle/product/12.2.0/dbhome_1/precomp/lib/proc
-mkdir -p /opt/oracle/product/12.2.0/dbhome_1/precomp/lib/proc
-```
-
-
+<img src="../../img/oracleinstall/captura10.png" alt="captura10" width="500" height="400" />
 
 ***
+* Tipo de COnfiguración
 
+Para Uso General.
+
+<img src="../../img/oracleinstall/captura11.png" alt="captura11" width="500" height="400" />
+
+***
+* Especificar Identificadores de Base de Datos
+
+Dejamos valores por defecto.
+
+<img src="../../img/oracleinstall/captura12.png" alt="captura12" width="500" height="400" />
+
+***
+* Opciones de Configuración
+
+En "Juego de Caracteres" elegimos "Unicode".
+
+<img src="../../img/oracleinstall/captura14.png" alt="captura14" width="500" height="400" />
+
+Y en "Esquemas de Ejemplo" marcamos la casilla para crear la base de datos con esquemas de ejemplo.
+
+<img src="../../img/oracleinstall/captura13.png" alt="captura13" width="500" height="400" />
+
+***
+* Almacenamiento en la base de datos
+
+Dejamos por defecto.
+
+<img src="../../img/oracleinstall/captura15.png" alt="captura15" width="500" height="400" />
+
+***
+* Opciones de Gestión
+
+Saltamos este paso y continuamos con `Siguiente >`.
+
+<img src="../../img/oracleinstall/captura16.png" alt="captura16" width="500" height="400" />
+
+***
+* Opciones de Recuperación
+
+Saltamos este paso y continuamos con `Siguiente >`.
+
+<img src="../../img/oracleinstall/captura17.png" alt="captura17" width="500" height="400" />
+
+***
+* Contraseñas de Esquemas
+
+Para mayor comodidad usamos la misma contraseña para todas las cuentas. Además Oracle recomienda una contraseña de al menos 8 caracteres, al menos una en mayúscula, otra en minúscula y al menos un carácter alfanumérico.
+
+<img src="../../img/oracleinstall/captura18.png" alt="captura18" width="500" height="400" />
+
+***
+* Grupos del Sistema Operativo con privilegios
+
+Dejamos por defecto.
+
+<img src="../../img/oracleinstall/captura19.png" alt="captura19" width="500" height="400" />
+
+***
+* Resumen de Instalación
+
+Aquí vemos la configuración final de la instalación para poder comprobar si tenemos algún error.
+Seleccionamos "Instalar".
+
+<img src="../../img/oracleinstall/captura20.png" alt="captura20" width="500" height="400" />
+
+***
+* Instalar Producto
+
+Este paso tardará algunos minutos.
+
+<img src="../../img/oracleinstall/captura21.png" alt="captura21" width="500" height="400" />
+
+***
+* Ejecutar Scripts de Configuración
+
+Finalizando la instalación Oracle nos pide que ejecutemos unos scripts como ROOT:
+
+``` bash
+/opt/oraInventory/orainstRoot.sh
+/opt/oracle/product/12.2.0/dbhome_1/root.sh
+```
+
+<img src="../../img/oracleinstall/captura22.png" alt="captura22" width="500" height="400" />
+
+***
+* Asistente de Configuración de base de Datos
+
+Al finalizar la ejecución de los scripts pulsamos `Aceptar` y comenzará el proceso de creación de la base de datos que tardará aún mas tiempo que la instalación del software. Así que a esperar...
+
+<img src="../../img/oracleinstall/captura23.png" alt="captura23" width="500" height="400" />
+
+***
+* Fin Configuración
+
+Pasados bastantes minutos Oracle nos muestra alguna información de la base de datos como la URL de "Enterprise Manager Database Express" en:
+
+``` bash
 https://localhost:5500/em
+```
 
-[Enlace 1][1], [Enlace 2][2], [Enlace 3][3]
+Para acceder a dicha aplicación web necesitaremos tener instalado Adobe Flash Player y aceptar la excepción de seguridad de esa página. 
 
- [1]: http://joedicastro.com/consejos
- [2]: http://joedicastro.com/consejos "Consejos"
- [3]: http://joedicastro.com/
+!!! note ""
+	Los accesos desde otras redes están abiertas por defecto.	
+	`https://192.168.1.25:5500/em`
 
+Aceptamos.
 
+<img src="../../img/oracleinstall/captura24.png" alt="captura24" width="500" height="400" />
 
+<img src="../../img/oracleinstall/captura28.png" alt="captura28" width="500" height="400" />
 
+***
+* Fin de la instalación
 
-
-
-
-
-
-
-
-
-
+<img src="../../img/oracleinstall/captura25.png" alt="captura25" width="500" height="400" />
 
 
+## Accediendo a la base de datos
+
+El acceso a la base de datos lo realizaremos mediante línea de comandos con "sqlplus".
+
+Podemos instalar un paquete que nos ayudará con un uso mas amigable de "sqlplus":
+
+``` bash
+apt install rlwrap
+```
+
+Accedemos a la base de datos:
+
+``` bash
+rlwrap sqlplus sys/PASS as sysdba
+```
+
+Ejecutamos consulta para ver la versión de Oracle:
+
+``` sql
+select * from v$version;
+```
+
+<img src="../../img/oracleinstall/captura26.png" alt="captura26" width="500" height="600" />
 
 
+!!! note "Para poder crear usuarios ejecutamos lo siguiente:"
+	``` sql
+	alter session set "_ORACLE_SCRIPT"=true;  
+	```
 
+## Configuración acceso remoto Oracle
 
+Si necesitamos acceder mediante la red seguiremos los siguientes pasos:
 
+* Editamos la configuración del "Listener" de oracle en `$ORACLE_HOME/network/admin/listener.ora`:
+``` bash
+nano $ORACLE_HOME/network/admin/listener.ora
+```
 
+* Dejamos el fichero tal que así para que puedan acceder desde cualquier red:
+``` bash hl_lines='17'
+SID_LIST_LISTENER =
+ (SID_LIST =
+  (SID_DESC =
+   (GLOBAL_DBNAME = orcl)
+   (ORACLE_HOME = /opt/oracle/product/12.1.0.2/dbhome_1)
+   (SID_NAME = orcl)
+  )
+ )
 
+LISTENER=
+ (DESCRIPTION_LIST =
+  (DESCRIPTION =
+   (ADDRESS_LIST =
+    (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC1521))
+   )
+   (ADDRESS_LIST =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1521))
+   )
+  )
+ )
 
+```
 
+* Reiniciamos el "Listener" con:
+``` bash
+lsnrctl stop
+lsnrctl start
+```
 
+## Instalación de Cliente SQLPlus remoto
 
+Lo primero será instalar `alien` el cual nos permite reempaquetar un fichero `.rpm` en `.deb`:
+
+``` bash
+apt install alien
+```
+
+Luego nos descargamos los ficheros RPM necesarios de la página de [Oracle](https://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html)
+
+Aceptamos los términos y elegimos los siguientes paquetes:
+
+ -- Version 12.1.0.2.0 --  
+ oracle-instantclient12.1-basic-12.1.0.2.0-1.x86_64.rpm  
+ oracle-instantclient12.1-sqlplus-12.1.0.2.0-1.x86_64.rpm  
+ oracle-instantclient12.1-devel-12.1.0.2.0-1.x86_64.rpm  
+
+Reempaquetamos:
+``` bash
+alien --to-deb --scripts oracle-instantclient12.1-*.rpm
+```
+
+Instalamos los paquetes generados:
+``` bash
+dpkg -i oracle-instantclient12.1-*.rpm
+```
+
+Añadimos la variabe de entorno necesaria:
+``` bash
+echo '''
+export LD_LIBRARY_PATH=/usr/lib/oracle/12.1/client64/lib/:$LD_LIBRARY_PATH
+''' >> /etc/bash.bashrc
+```
+
+Ya podemos usar SQLPlus remotamente:
+``` bash
+sqlplus64 system/PASS@//192.168.1.25:1521/orcl
+```
+
+<img src="../../img/oracleinstall/captura27.png" alt="captura27" width="500" height="550" />
+
+Y con esto y un bizcocho se acabó Oracle!!   
+De momento...
