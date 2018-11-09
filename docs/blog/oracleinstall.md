@@ -59,7 +59,7 @@ passwd oracle
 
 * Creación de directorios requeridos por Oracle:
 ``` bash
-mkdir -p /opt/oracle/product/12.2.0
+mkdir -p /opt/oracle/product/12.1.0
 mkdir -p /opt/oraInventory
 chown -R oracle:dba /opt/
 ```
