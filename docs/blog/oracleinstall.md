@@ -414,6 +414,40 @@ select * from v$version;
 	-\ \ \ \ \ \ -Ó    
 	`echo 'alter session set "_ORACLE_SCRIPT"=true;' >> $ORACLE_HOME/sqlplus/admin/glogin.sql` 
 
+
+## Iniciación de la base de datos
+
+Por defecto si reinicio la máquina no arranca oracle asi que de momento la arrancaremos manualmente:
+
+* Estado del Listener
+
+``` bash
+lsnrctl status
+```
+
+![](../../img/oracleinstall/captura30.png)
+
+* Arrancamos el Listener:
+
+``` bash
+lsnrctl start
+```
+
+![](../../img/oracleinstall/captura31.png)
+
+* Arrancamos la base de datos:
+
+``` bash
+sqlplus / as sysdba
+```
+
+``` sql
+startup
+```
+
+![](../../img/oracleinstall/captura32.png)
+
+
 ## Configuración acceso remoto Oracle
 
 Si necesitamos acceder mediante la red seguiremos los siguientes pasos:

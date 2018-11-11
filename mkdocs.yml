@@ -73,4 +73,5 @@ nav:
     - 'PL/SQL vs PL/PGSQL': 'blog/plpgsql.md'
     - 'Install Oracle 12': 'blog/oracleinstall.md'
     - 'Fail2Ban': 'blog/fail2ban.md'
+    - 'Acceso remoto Postgresql': 'blog/postgresclient.md'
 - Sobre mí: 'about.md'
