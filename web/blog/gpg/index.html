@@ -1,0 +1,773 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="El sitio de la informática">
+      
+      
+        <link rel="canonical" href="https://jpcarmona.github.io/web/blog/gpg/">
+      
+      
+        <meta name="author" content="Juan Pedro Carmona Romero">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copiar al portapapeles">
+      
+        <meta name="lang:clipboard.copied" content="Copiado al portapapeles">
+      
+        <meta name="lang:search.language" content="en, es">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No se encontraron documentos">
+      
+        <meta name="lang:search.result.one" content="1 documento encontrado">
+      
+        <meta name="lang:search.result.other" content="# documentos encontrados">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
+    
+    
+      
+        <title>Cifrado y firmas con GPG - El Rincón Vacío</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.451f80e5.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.22915126.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="../../#cifrado-y-firmas-con-gpg" tabindex="1" class="md-skip">
+        Saltar a contenido
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://jpcarmona.github.io/web/" title="El Rincón Vacío" class="md-header-nav__button md-logo">
+          
+            <img src="../../img/favicon.ico" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                El Rincón Vacío
+              </span>
+              <span class="md-header-nav__topic">
+                Cifrado y firmas con GPG
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Teclee para comenzar búsqueda
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/jpcarmona/generadormkdocs/" title="Ir al repositorio" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      jpcarmona/generadormkdocs
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+<nav class="md-tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." title="Inicio" class="md-tabs__link md-tabs__link--active">
+        Inicio
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../mkdocs/" title="Blog" class="md-tabs__link">
+          Blog
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://jpcarmona.github.io/web/" title="El Rincón Vacío" class="md-nav__button md-logo">
+      
+        <img src="../../img/favicon.ico" width="48" height="48">
+      
+    </a>
+    El Rincón Vacío
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/jpcarmona/generadormkdocs/" title="Ir al repositorio" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      jpcarmona/generadormkdocs
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Inicio" class="md-nav__link">
+      Inicio
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Blog
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Blog
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../mkdocs/" title="MkDocs" class="md-nav__link">
+      MkDocs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../kernel/" title="Kernel Linux" class="md-nav__link">
+      Kernel Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../plpgsql/" title="PL/SQL vs PL/PGSQL" class="md-nav__link">
+      PL/SQL vs PL/PGSQL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../oracleinstall/" title="Install Oracle 12" class="md-nav__link">
+      Install Oracle 12
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fail2ban/" title="Fail2Ban" class="md-nav__link">
+      Fail2Ban
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../postgresclient/" title="Acceso remoto Postgresql" class="md-nav__link">
+      Acceso remoto Postgresql
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../about/" title="Sobre mí" class="md-nav__link">
+      Sobre mí
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Tabla de contenidos</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generacion-exportacion-e-importacion-de-claves" title="Generación, exportación e importación de claves" class="md-nav__link">
+    Generación, exportación e importación de claves
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacion-par-de-claves-desatendido" title="Creación par de claves desatendido" class="md-nav__link">
+    Creación par de claves desatendido
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generacion-de-datos-aleatorios-para-una-fuente-de-entropia" title="Generación de datos aleatorios para una fuente de entropía" class="md-nav__link">
+    Generación de datos aleatorios para una fuente de entropía
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exportacion-de-clave-a-fichero" title="Exportación de clave a fichero" class="md-nav__link">
+    Exportación de clave a fichero
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#importacion-de-clave-desde-fichero" title="Importación de clave desde fichero" class="md-nav__link">
+    Importación de clave desde fichero
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#servidores-de-claves" title="Servidores de claves" class="md-nav__link">
+    Servidores de claves
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exportacion-de-clave-a-un-servidor" title="Exportación de clave a un servidor" class="md-nav__link">
+    Exportación de clave a un servidor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revocar-nuestra-clave-en-el-servidor" title="Revocar nuestra clave en el servidor" class="md-nav__link">
+    Revocar nuestra clave en el servidor
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/jpcarmona/generadormkdocs/edit/master/docs/blog/gpg.md" title="Editar esta página" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="cifrado-y-firmas-con-gpg">Cifrado y firmas con GPG<a class="headerlink" href="#cifrado-y-firmas-con-gpg" title="Permanent link">&para;</a></h1>
+<p>INTRODUCCION llalala</p>
+<h2 id="generacion-exportacion-e-importacion-de-claves">Generación, exportación e importación de claves<a class="headerlink" href="#generacion-exportacion-e-importacion-de-claves" title="Permanent link">&para;</a></h2>
+<h3 id="creacion-par-de-claves-desatendido">Creación par de claves desatendido<a class="headerlink" href="#creacion-par-de-claves-desatendido" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Primero establecemos un directorio temporal para la creación de claves:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">export</span> <span class="nv">GNUPGHOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>mktemp -d<span class="k">)</span><span class="s2">&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Creamos un fichero con la frase de paso para no exponerlo mas tarde en la generación en claro:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>cat <span class="s">&lt;&lt; EOF &gt; frasedepaso</span>
+<span class="s">frasedepaso</span>
+<span class="s">EOF</span>
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note">
+<p>Obviamente esta no será mi frase de paso.</p>
+</div>
+<ul>
+<li>Creamos fichero de configuración de GPG:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>cat <span class="s">&lt;&lt; EOF &gt; key_conf</span>
+<span class="s">    Key-Type: RSA</span>
+<span class="s">    Key-Length: 4096</span>
+<span class="s">    Subkey-Type: RSA</span>
+<span class="s">    Subkey-Length: 4096</span>
+<span class="s">    Name-Real: Juan Pedro Carmona Romero</span>
+<span class="s">    Name-Comment: iesgn 2019 SAD</span>
+<span class="s">    Name-Email: jpcarmona92@gmail.com</span>
+<span class="s">    Expire-Date: 365</span>
+<span class="s">EOF</span>
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note">
+<p>Los párametros de configuración son bastantes intuitivos, así que no los voy a explicar, pero podemos ver el manual de creación de claves desatendido en <a href="https://www.gnupg.org/documentation/manuals/gnupg/Unattended-GPG-key-generation.html#Unattended-GPG-key-generation">GNUGPG-manual</a>.</p>
+</div>
+<ul>
+<li>Creación par de claves:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>gpg --verbose --batch --pinentry-mode loopback --passphrase-file frasedepaso --generate-key key_conf
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note">
+<p>Utilizamos la opción <code>--batch</code> para generar la clave de forma desatendida mediante el fichero <code>key_conf</code> y la opción <code>--pinentry-mode loopback --passphrase-file frasedepaso</code> es para especificar la frase de paso mediante un fichero.</p>
+</div>
+<p><img alt="" src="../../img/gpg/captura1.png" /></p>
+<p>Podemos ver que he utilizado <code>time</code> para enseñaros lo que tarda en generarse y os puede parecer raro que haya tardado solo 7 segundos ya que esto suele tardar varios minutos. La clave está en la generación de entropía que necesita GPG para la generación de claves. Esto lo explico a continuación.</p>
+<h3 id="generacion-de-datos-aleatorios-para-una-fuente-de-entropia">Generación de datos aleatorios para una fuente de entropía<a class="headerlink" href="#generacion-de-datos-aleatorios-para-una-fuente-de-entropia" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Instalación de paquete:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>apt install rng-tools
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Ejecución del demonio:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>rngd -r /dev/urandom
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note">
+<p>Una vez ejecutado el demonio no hará falta ejecutarlo más si vamos a generar varias claves.</p>
+</div>
+<h3 id="exportacion-de-clave-a-fichero">Exportación de clave a fichero<a class="headerlink" href="#exportacion-de-clave-a-fichero" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Listamos las claves:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>gpg --list-secret-keys
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/gpg/captura2.png" /></p>
+<ul>
+<li>Exportación de clave a un fichero:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>gpg --pinentry-mode loopback --passphrase-file frasedepaso <span class="se">\</span>
+--armor --export-secret-keys <span class="s1">&#39;iesgn 2019&#39;</span> &gt; juanpe_priv.key
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note">
+<ul>
+<li><code>--armor</code> : por defecto gpg exporta en binaro, de esta manera se exportará en texto plano.</li>
+<li><code>--export-secret-keys 'iesgn 2019'</code> : podemos utilizar como identificador para exportar la clave la huella, el nombre, el comentario o el email.</li>
+</ul>
+</div>
+<h3 id="importacion-de-clave-desde-fichero">Importación de clave desde fichero<a class="headerlink" href="#importacion-de-clave-desde-fichero" title="Permanent link">&para;</a></h3>
+<p>Ahora si queremos mantener el par de claves en la base de datos(anillo de claves) de GPG personal de un usuario realizaremos lo siguiente:</p>
+<ul>
+<li>Importamos la clave desde un fichero:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>gpg --pinentry-mode loopback --passphrase frasedepaso --import juanpe_priv.key
+</pre></div>
+</td></tr></table>
+
+<div class="admonition attention">
+<p class="admonition-title">Atención</p>
+<ul>
+<li>Utilizar otro terminal para que utilize como "GNUPGHOME" el de nuestro usuario y no el temporal que creamos anteriormente.</li>
+<li>Si por casualidad hemos borrado por error el directorio <code>.gnupg</code> necesitamos reiniciar el agente de GPG, podemos hacerlo reiniciando la máquina o ejecutando <code>gpgconf --kill gpg-agent</code>.</li>
+</ul>
+</div>
+<h2 id="servidores-de-claves">Servidores de claves<a class="headerlink" href="#servidores-de-claves" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p>En este apartado tendremos que tener un poco de paciencia, ya que estos servidores no responden con buena fluidez.</p>
+</div>
+<h3 id="exportacion-de-clave-a-un-servidor">Exportación de clave a un servidor<a class="headerlink" href="#exportacion-de-clave-a-un-servidor" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Añadiremos nuestra clave pública al servidor <code>pgp.rediris.es</code>:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>gpg --verbose --keyserver pgp.rediris.es --send-keys 6CDB8ABAB811462E0F10CA799817655FF0B0BF63
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/gpg/captura3.png" /> !!!!!! volver a hacer</p>
+<div class="admonition attention">
+<p class="admonition-title">Atención</p>
+<ul>
+<li>Necesitaremos como dependecia el paquete <code>dirmngr</code>.</li>
+</ul>
+</div>
+<h3 id="revocar-nuestra-clave-en-el-servidor">Revocar nuestra clave en el servidor<a class="headerlink" href="#revocar-nuestra-clave-en-el-servidor" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Creamos clave de revocación:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>gpg --pinentry-mode loopback --passphrase frasedepaso --gen-revoke jpcarmona92@gmail.com &gt; revocacion.txt
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note">
+<p>Nos preguntará de si estamos seguros de revocar la clave y la razón.</p>
+</div>
+<p><img alt="" src="../../img/gpg/captura3.png" /> !!!!!! volver a hacer</p>
+<ul>
+<li>Añadimos la clave de revocación a la base de datos(anillo de claves) de GPG temporal:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">export</span> <span class="nv">GNUPGHOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>mktemp -d<span class="k">)</span><span class="s2">&quot;</span>
+gpg --pinentry-mode loopback --passphrase frasedepaso --import juanpe_priv.key
+gpg --import revocacion.txt
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note">
+<p>Lo hacemos de esta manera si no queremos revocar localmente nuestra clave.</p>
+</div>
+<p><img alt="" src="../../img/gpg/captura3.png" /> !!!!!! volver a hacer</p>
+<ul>
+<li>Enviamos revocación al servidor:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>gpg --verbose --keyserver hkps://pgp.rediris.es --send-keys 6CDB8ABAB811462E0F10CA799817655FF0B0BF63
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note">
+<p>Tenemos que utilizar como identificador la huella de la clave.</p>
+</div>
+<p><img alt="" src="../../img/gpg/captura3.png" /> !!!!!! volver a hacer</p>
+<ul>
+<li>Para buscar claves mediante comandos:
+gpg --keyserver pgp.rediris.es --search-keys 'Rafael Luque Clave para prácticas SAD'</li>
+</ul>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"> <img alt="Licencia Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a> <br />Esta obra está bajo una <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"> Licencia Creative Commons Atribución 4.0 Internacional</a>
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/jpcarmona/" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/JPCR92" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://linkedin.com" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.583bbe55.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+          
+            
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.es.js"></script>
+              
+            
+          
+          
+            <script src="../../assets/javascripts/lunr/lunr.multi.js"></script>
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+    
+      
+        <script>!function(e,a,t,n,o,c,i){e.GoogleAnalyticsObject=o,e.ga=e.ga||function(){(e.ga.q=e.ga.q||[]).push(arguments)},e.ga.l=1*new Date,c=a.createElement(t),i=a.getElementsByTagName(t)[0],c.async=1,c.src="https://www.google-analytics.com/analytics.js",i.parentNode.insertBefore(c,i)}(window,document,"script",0,"ga"),ga("create","UA-36723568-3","mkdocs.org"),ga("set","anonymizeIp",!0),ga("send","pageview");var links=document.getElementsByTagName("a");if(Array.prototype.map.call(links,function(e){e.host!=document.location.host&&e.addEventListener("click",function(){var a=e.getAttribute("data-md-action")||"follow";ga("send","event","outbound",a,e.href)})}),document.forms.search){var query=document.forms.search.query;query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}</script>
+      
+    
+  </body>
+</html>
