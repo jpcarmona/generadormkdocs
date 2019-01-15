@@ -75,4 +75,5 @@ nav:
     - 'Fail2Ban': 'blog/fail2ban.md'
     - 'Acceso remoto Postgresql': 'blog/postgresclient.md'
     - 'Cifrado y firmas con GPG': 'blog/gpg.md'
+    - 'Interconexión de BBDD': 'blog/BBDD_1.md'
 - Sobre mí: 'about.md'
