@@ -3,14 +3,24 @@ h1 {
 }
 
 h2{
-	margin-top: -1rem !important;
+	margin-top: 2rem !important;
 }
 
 h3{
-	margin-left: 30px !important;
-	margin-top: -1rem !important;
+	margin-left: 10px !important;
+	margin-top: -2rem !important;
 }
 
 code{
 	font-size: 100% !important;
+}
+
+hr.h2 {
+  border: 10px solid red;
+  border-radius: 5px;
+}
+
+hr.h3 {
+  border: 5px solid green;
+  border-radius: 2px;
 }
