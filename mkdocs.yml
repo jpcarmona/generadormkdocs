@@ -74,4 +74,5 @@ nav:
     - 'Install Oracle 12': 'blog/oracleinstall.md'
     - 'Fail2Ban': 'blog/fail2ban.md'
     - 'Acceso remoto Postgresql': 'blog/postgresclient.md'
+    - 'Cifrado y firmas con GPG': 'blog/gpg.md'
 - Sobre mí: 'about.md'
