@@ -67,13 +67,14 @@ extra_css:
 #Navegación
 nav:
 - Inicio: 'index.md'
-- Blog:
-    - 'MkDocs': 'blog/mkdocs.md'
-    - 'Kernel Linux': 'blog/kernel.md'
-    - 'PL/SQL vs PL/PGSQL': 'blog/plpgsql.md'
-    - 'Install Oracle 12': 'blog/oracleinstall.md'
-    - 'Fail2Ban': 'blog/fail2ban.md'
-    - 'Acceso remoto Postgresql': 'blog/postgresclient.md'
-    - 'Cifrado y firmas con GPG': 'blog/gpg.md'
-    - 'Interconexión de BBDD': 'blog/BBDD_1.md'
+#  - 'Inicio': 'index.md'
+- 'MkDocs': 'blog/mkdocs.md'
+- 'Kernel Linux': 'blog/kernel.md'
+- 'PL/SQL vs PL/PGSQL': 'blog/plpgsql.md'
+- 'Install Oracle 12': 'blog/oracleinstall.md'
+- 'Fail2Ban': 'blog/fail2ban.md'
+- 'Acceso remoto Postgresql': 'blog/postgresclient.md'
+- 'Cifrado y firmas con GPG': 'blog/gpg.md'
+- 'Interconexión de BBDD': 'blog/BBDD_1.md'
 - Sobre mí: 'about.md'
+#  - 'Sobre mí': 'about.md'
