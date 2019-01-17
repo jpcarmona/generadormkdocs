@@ -24,3 +24,8 @@ hr.h3 {
   border: 5px solid green;
   border-radius: 2px;
 }
+
+/* Cambio color tabla contenidos ya visitados... */
+.md-nav__link[data-md-state="blur"] {
+    color: rgb(255, 0, 0);
+}
