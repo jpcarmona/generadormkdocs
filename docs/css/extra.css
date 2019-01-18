@@ -3,12 +3,12 @@ h1 {
 }
 
 h2{
-	margin-top: 2rem !important;
+	margin-top: 4rem !important;
 }
 
 h3{
 	margin-left: 10px !important;
-	margin-top: -2rem !important;
+	margin-top: 2rem !important;
 }
 
 code{
@@ -28,4 +28,9 @@ hr.h3 {
 /* Cambio color tabla contenidos ya visitados... */
 .md-nav__link[data-md-state="blur"] {
     color: rgb(255, 0, 0);
+}
+
+/* No mostrar en -Tabla de contenidos- las entradas "h3" (###) */
+div.md-sidebar__inner > nav.md-nav--secondary > ul.md-nav__list > li.md-nav__item > nav.md-nav > ul {
+	display: none;
 }

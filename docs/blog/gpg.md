@@ -208,8 +208,8 @@ for i in $(cat huellas) ;do gpg --batch --keyserver pgp.rediris.es --recv-keys $
 
 * Firma de claves públicas:
 ``` bash
-for i in $(cat huellas) ;do gpg --batch --pinentry-mode loopback --yes \
---passphrase-file frasedepaso --sign-key $i ; done;
+for clave in $(cat huellas) ;do gpg --batch --pinentry-mode loopback --yes \
+--passphrase-file frasedepaso --sign-key $clave ; done;
 ```
 
 * Subimos las claves públicas firmadas al servidor:
@@ -217,3 +217,129 @@ for i in $(cat huellas) ;do gpg --batch --pinentry-mode loopback --yes \
 for i in $(cat huellas) ;do gpg --keyserver pgp.rediris.es --send-keys $i ; done;
 ```
 
+<hr class="h2">
+
+## Envío de correos cifrados y firmados con Mutt
+
+Para el envío de correos voy a utilizar mutt, un agente de correo por línea de comandos.
+
+### Cifrado y firma con GPG
+
+* Lo primero que haremos será escribir el mensaje del correo:
+``` bash
+echo "Esto es el mensaje" > mensaje.txt
+```
+
+* Ahora procedemos a encryptar y firmar el mensaje:
+``` bash
+cat mensaje.txt | gpg --batch --pinentry-mode loopback --passphrase-file frasedepaso \
+--encrypt --sign --armor --local-user "iesgn 2019 SAD" --recipient "rluque.profesor@gmail.com" \
+> mensajecifrado.txt
+```
+
+!!! note ""
+	* `--local-user` : Es el identificador de la clave privada que usaremos para firmar.
+	* La contraseña que utilizamos para la frase de paso es la de la clave privada que utilizamos con la opción `--local-user`.
+	* `--recipient` : Es el identificador de la clave pública que usaremos para cifrar.
+
+<hr class="h3">
+
+### Configuración y envío de correo con Mutt
+
+* Configuración Mutt:
+``` bash
+cat << EOF > .muttrc
+set from = "jpcarmona92@gmail.com"
+set realname = "Juan Pedro Carmona"
+
+set smtp_url = "smtps://jpcarmona92@gmail.com@smtp.gmail.com:465/"
+set smtp_pass = "contraseña"
+EOF
+```
+
+!!! note ""
+	* `from` : Es la cuenta del correo que enviará los correos.
+	* `realname` : Es el nombre del emisor.
+	* `smtp_url` : Es el servidor smtp que utilizaremos.
+	* `smtp_pass` : Es la contraseña de la cuenta de correo emisora.
+
+* Envío de correo con Mutt:
+``` bash
+cat mensajecifrado.txt | mutt -s "Esto es el asunto" rluque.profesor@gmail.com
+```
+
+!!! attention "Atención"
+	Para enviar correos desde cualquier aplicación con el servidor smtp de gmail, tendremos que configurar en nuestra cuenta de Google, que permitimos el uso de aplicaciones no seguras.
+	[Tutorial de Google](https://support.google.com/accounts/answer/6010255?hl=es).
+
+<hr class="h2">
+
+## Envío de correos cifrados y firmados con Thunderbird
+
+* Instalamos Thunderbird:
+``` bash
+apt install thunderbird thunderbird-l10n-es-es
+```
+
+### Añadir cuenta de correo a Thunderbird
+
+En el menú --> Archivo --> Nuevo --> Cuenta de correo existente...
+Rellenamos los campos que aparecen.
+
+![](../../img/gpg/captura7.png)
+
+<hr class="h3">
+
+### Instalación complemento Enigmail
+
+En el menú --> Herramientas --> Complementos
+Buscamos Enigmail y lo agrefamos a Thunderbird.
+
+![](../../img/gpg/captura8.png)
+
+![](../../img/gpg/captura9.png)
+
+<hr class="h3">
+
+### Envío de correo cifrado y firmado
+
+En el menú --> Nuevo --> Mensaje
+
+![](../../img/gpg/captura10.png)
+
+* Para seleccionar la clave privada con la que firmar:
+
+En el menú --> Enigmail --> Preferencias --> Opciones de firmado/cifrado...
+
+Habilitamos soporte OpenGPG. Usamos un identificador de claves especifico y seleccionamos clave.
+
+![](../../img/gpg/captura11.png)
+
+* Para cifrar el mensaje:
+
+Por defecto si tenemos una clave pública añadido a nuestro anillo de claves GPG con el correo del destinatario, se cifrará con esa clave pública. Pero si queremo elegir otra realizamos lo siguiente:
+
+En el menú --> Enigmail --> Preferencias --> Editar reglas por-destinatario.
+
+Añadimos una nueva. Establecemos el correo de destinatario. Seleccionamos la clave a usar para el cifrado.
+
+![](../../img/gpg/captura12.png)
+
+![](../../img/gpg/captura13.png)
+
+Luego para activar el cifrado y la firma del mensaje:
+
+En el menú --> Enigmail --> Cifrar Mensaje
+
+En el menú --> Enigmail --> Firmar Mensaje
+
+Y listo ya podemos proceder a escribir el asunto, el mensaje y enviarlo.
+
+![](../../img/gpg/captura14.png)
+
+!!! note ""
+	Cuando envíemos el mensaje nos pedirá la frase de paso de nuestra clave privada para la firma.
+
+<hr class="h2">
+
+## Envío de correos cifrados y firmados en Windows
