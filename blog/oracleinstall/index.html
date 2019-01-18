@@ -1,0 +1,1362 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="El sitio de la informática">
+      
+      
+        <link rel="canonical" href="https://jpcarmona.github.io/web/blog/oracleinstall/">
+      
+      
+        <meta name="author" content="Juan Pedro Carmona Romero">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copiar al portapapeles">
+      
+        <meta name="lang:clipboard.copied" content="Copiado al portapapeles">
+      
+        <meta name="lang:search.language" content="en, es">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No se encontraron documentos">
+      
+        <meta name="lang:search.result.one" content="1 documento encontrado">
+      
+        <meta name="lang:search.result.other" content="# documentos encontrados">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
+    
+    
+      
+        <title>Install Oracle 12 - El Rincón Vacío</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.451f80e5.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.22915126.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,400i,700|Ubuntu+Mono">
+        <style>body,input{font-family:"Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="../../#instalacion-oracle-database-12c-version-21210-enterprise-edition-en-debian-jessie-811" tabindex="1" class="md-skip">
+        Saltar a contenido
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://jpcarmona.github.io/web/" title="El Rincón Vacío" class="md-header-nav__button md-logo">
+          
+            <img src="../../img/favicon.ico" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                El Rincón Vacío
+              </span>
+              <span class="md-header-nav__topic">
+                Install Oracle 12
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Teclee para comenzar búsqueda
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/jpcarmona/generadormkdocs/" title="Ir al repositorio" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      jpcarmona/generadormkdocs
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." title="Inicio" class="md-tabs__link">
+        Inicio
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../mkdocs/" title="Blog" class="md-tabs__link md-tabs__link--active">
+          Blog
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://jpcarmona.github.io/web/" title="El Rincón Vacío" class="md-nav__button md-logo">
+      
+        <img src="../../img/favicon.ico" width="48" height="48">
+      
+    </a>
+    El Rincón Vacío
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/jpcarmona/generadormkdocs/" title="Ir al repositorio" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      jpcarmona/generadormkdocs
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Inicio" class="md-nav__link">
+      Inicio
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Blog
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Blog
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../mkdocs/" title="MkDocs" class="md-nav__link">
+      MkDocs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../kernel/" title="Kernel Linux" class="md-nav__link">
+      Kernel Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../plpgsql/" title="PL/SQL vs PL/PGSQL" class="md-nav__link">
+      PL/SQL vs PL/PGSQL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Install Oracle 12
+      </label>
+    
+    <a href="./" title="Install Oracle 12" class="md-nav__link md-nav__link--active">
+      Install Oracle 12
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Tabla de contenidos</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-inicial-de-la-maquina" title="Configuración inicial de la máquina" class="md-nav__link">
+    Configuración inicial de la máquina
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-inicial-personalizada-para-oracle" title="Configuración inicial personalizada para Oracle" class="md-nav__link">
+    Configuración inicial personalizada para Oracle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#descargas-de-oracle-database-software" title="Descargas de Oracle Database Software" class="md-nav__link">
+    Descargas de Oracle Database Software
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalacion-de-oracle" title="Instalación de Oracle" class="md-nav__link">
+    Instalación de Oracle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accediendo-a-la-base-de-datos" title="Accediendo a la base de datos" class="md-nav__link">
+    Accediendo a la base de datos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iniciacion-de-la-base-de-datos" title="Iniciación de la base de datos" class="md-nav__link">
+    Iniciación de la base de datos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-acceso-remoto-oracle" title="Configuración acceso remoto Oracle" class="md-nav__link">
+    Configuración acceso remoto Oracle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalacion-de-cliente-sqlplus-remoto" title="Instalación de Cliente SQLPlus remoto" class="md-nav__link">
+    Instalación de Cliente SQLPlus remoto
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enlaces-de-interes" title="Enlaces de Interés" class="md-nav__link">
+    Enlaces de Interés
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fail2ban/" title="Fail2Ban" class="md-nav__link">
+      Fail2Ban
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../postgresclient/" title="Acceso remoto Postgresql" class="md-nav__link">
+      Acceso remoto Postgresql
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gpg/" title="Cifrado y firmas con GPG" class="md-nav__link">
+      Cifrado y firmas con GPG
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../BBDD_1/" title="Interconexión de BBDD" class="md-nav__link">
+      Interconexión de BBDD
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../about/" title="Sobre mí" class="md-nav__link">
+      Sobre mí
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Tabla de contenidos</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-inicial-de-la-maquina" title="Configuración inicial de la máquina" class="md-nav__link">
+    Configuración inicial de la máquina
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-inicial-personalizada-para-oracle" title="Configuración inicial personalizada para Oracle" class="md-nav__link">
+    Configuración inicial personalizada para Oracle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#descargas-de-oracle-database-software" title="Descargas de Oracle Database Software" class="md-nav__link">
+    Descargas de Oracle Database Software
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalacion-de-oracle" title="Instalación de Oracle" class="md-nav__link">
+    Instalación de Oracle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accediendo-a-la-base-de-datos" title="Accediendo a la base de datos" class="md-nav__link">
+    Accediendo a la base de datos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iniciacion-de-la-base-de-datos" title="Iniciación de la base de datos" class="md-nav__link">
+    Iniciación de la base de datos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-acceso-remoto-oracle" title="Configuración acceso remoto Oracle" class="md-nav__link">
+    Configuración acceso remoto Oracle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalacion-de-cliente-sqlplus-remoto" title="Instalación de Cliente SQLPlus remoto" class="md-nav__link">
+    Instalación de Cliente SQLPlus remoto
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enlaces-de-interes" title="Enlaces de Interés" class="md-nav__link">
+    Enlaces de Interés
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/jpcarmona/generadormkdocs/edit/master/docs/blog/oracleinstall.md" title="Editar esta página" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="instalacion-oracle-database-12c-version-21210-enterprise-edition-en-debian-jessie-811">Instalación Oracle Database 12c versión 2(12.1.0) Enterprise Edition en Debian Jessie 8.11<a class="headerlink" href="#instalacion-oracle-database-12c-version-21210-enterprise-edition-en-debian-jessie-811" title="Permanent link">&para;</a></h1>
+<p>Y aquí llega lo que no suele ser visto con Oracle, la instalación de su software privativo de base de datos en un sistema que no está soportado, en un sistema Debian. Así es, aquí descubrimeros que entresijos tiene realizar una instalación básica en varios pasos.</p>
+<h2 id="configuracion-inicial-de-la-maquina">Configuración inicial de la máquina<a class="headerlink" href="#configuracion-inicial-de-la-maquina" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<ul>
+<li>El espacio temporal: debe ser mayor que 500 MB. (Espacio en /tmp)</li>
+<li>El espacio de intercambio: debe ser mayor que 150 MB. (SWAP)</li>
+<li>El monitor: debe estar configurado para mostrar al menos 256 colores. (Tener instalado "xorg")</li>
+</ul>
+</div>
+<ul>
+<li>
+<p>Instalación de debian en VirtualBox con:</p>
+<ul>
+<li>30GB de disco duro</li>
+<li>2GB de RAM</li>
+<li>2 procesadores virtuales</li>
+<li>ISO imagen debian-8.11.0-amd64-netinst.iso
+<a href="https://cdimage.debian.org/cdimage/archive/8.11.0/amd64/iso-cd/debian-8.11.0-amd64-netinst.iso">Debian</a></li>
+<li>Conexión a Internet</li>
+</ul>
+</li>
+<li>
+<p>Instalación de paquetes con debian-installer:</p>
+<ul>
+<li>Utilidades estándar del sistema </li>
+<li>SSH server</li>
+</ul>
+</li>
+<li>
+<p>Reposistorios recomendados para debian:</p>
+</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>su -
+<span class="nb">echo</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">############################ Debian Main Repos ############################</span>
+<span class="s2">deb http://deb.debian.org/debian/ oldstable main contrib non-free</span>
+<span class="s2">deb-src http://deb.debian.org/debian/ oldstable main contrib non-free</span>
+
+<span class="s2">deb http://deb.debian.org/debian/ oldstable-updates main contrib non-free</span>
+<span class="s2">deb-src http://deb.debian.org/debian/ oldstable-updates main contrib non-free</span>
+
+<span class="s2">deb http://deb.debian.org/debian-security oldstable/updates main</span>
+<span class="s2">deb-src http://deb.debian.org/debian-security oldstable/updates main</span>
+
+<span class="s2">deb http://ftp.debian.org/debian jessie-backports main</span>
+<span class="s2">deb-src http://ftp.debian.org/debian jessie-backports main</span>
+<span class="s2">##########################################################################</span>
+<span class="s2">&quot;&quot;&quot;</span> &gt; /etc/apt/sources.list
+</pre></div>
+</td></tr></table>
+
+<p>Actualizamos la lista de paquetes y el sistema:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>apt update <span class="o">&amp;&amp;</span> apt -y upgrade
+</pre></div>
+</td></tr></table>
+
+<h2 id="configuracion-inicial-personalizada-para-oracle">Configuración inicial personalizada para Oracle<a class="headerlink" href="#configuracion-inicial-personalizada-para-oracle" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Se suele sugerir la siguiente estructura de grupos y usuarios:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>addgroup --system oinstall
+addgroup --system dba
+adduser --system --ingroup oinstall -shell /bin/bash oracle
+adduser oracle dba
+passwd oracle
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Creación de directorios requeridos por Oracle:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>mkdir -p /opt/oracle/product/12.1.0.2
+mkdir -p /opt/oraInventory
+chown -R oracle:dba /opt/ora*
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Para instalar oracle se necesitan crear los siguientes enlaces:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>ln -s /usr/bin/awk /bin/awk
+ln -s /usr/bin/basename /bin/basename
+ln -s /usr/bin/rpm /bin/rpm
+ln -s /usr/lib/x86_64-linux-gnu /usr/lib64
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Límites en el sistema (por seguridad):</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">## Valor del número máximo de manejadores de archivos. ##</span>
+<span class="s2">fs.file-max = 65536</span>
+<span class="s2">fs.aio-max-nr = 1048576</span>
+<span class="s2">## Valor de los parámetros de semáforo en el orden listado. ##</span>
+<span class="s2">## semmsl, semmns, semopm, semmni ##</span>
+<span class="s2">kernel.sem = 250 32000 100 128</span>
+<span class="s2">## Valor de los tamaños de segmento de memoria compartida. ##</span>
+<span class="s2">## (Oracle recomienda total de RAM -1 byte) 2GB ##</span>
+<span class="s2">kernel.shmmax = 2147483648</span>
+<span class="s2">kernel.shmall = 2097152</span>
+<span class="s2">kernel.shmmni = 4096</span>
+<span class="s2">## Valor del rango de números de puerto. ##</span>
+<span class="s2">net.ipv4.ip_local_port_range = 1024 65000</span>
+<span class="s2">## Valor del número gid del grupo dba. ##</span>
+<span class="s2">vm.hugetlb_shm_group = 114</span>
+<span class="s2">## Valor del número de páginas de memoria. ##</span>
+<span class="s2">vm.nr_hugepages = 64</span>
+<span class="s2">&quot;&quot;&quot;</span> &gt; /etc/sysctl.d/local-oracle.conf
+</pre></div>
+</td></tr></table>
+
+<div class="admonition attention">
+<p class="admonition-title">Atención</p>
+<p>Importante que <code>vm.hugetlb_shm_group</code> sea el GID del grupo <code>dba</code>.
+<code>bash
+    cat /etc/group | grep dba</code></p>
+</div>
+<p>Cargamos la configuración al sistema:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>sysctl -p /etc/sysctl.d/local-oracle.conf  
+</pre></div>
+</td></tr></table>
+
+<p>También creamos esta configuración por seguridad:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">## Número máximo de procesos disponibles para un solo usuario. ##</span>
+<span class="s2">oracle          soft    nproc           2047</span>
+<span class="s2">oracle          hard    nproc           16384</span>
+<span class="s2">## Número máximo de descriptores de archivo abiertos para un solo usuario. ##</span>
+<span class="s2">oracle          soft    nofile          1024</span>
+<span class="s2">oracle          hard    nofile          65536</span>
+<span class="s2">## Cantidad de RAM para el uso de páginas de memoria. ##</span>
+<span class="s2">oracle          soft    memlock         204800</span>
+<span class="s2">oracle          hard    memlock         204800</span>
+<span class="s2">&quot;&quot;&quot;</span> &gt; /etc/security/limits.d/local-oracle.conf
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Variables de entorno para Oracle:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">## Nombre del equipo ##</span>
+<span class="s2">export ORACLE_HOSTNAME=localhost</span>
+<span class="s2">## Usuario con permiso en archivos Oracle. ##</span>
+<span class="s2">export ORACLE_OWNER=oracle</span>
+<span class="s2">## Directorio que almacenará los distintos servicios de Oracle. ##</span>
+<span class="s2">export ORACLE_BASE=/opt/oracle</span>
+<span class="s2">## Directorio que almacenará la base de datos Oracle. ##</span>
+<span class="s2">export ORACLE_HOME=/opt/oracle/product/12.1.0.2/dbhome_1</span>
+<span class="s2">## Nombre único de la base de datos. ##</span>
+<span class="s2">export ORACLE_UNQNAME=orcl</span>
+<span class="s2">## Identificador de servicio de escucha. ##</span>
+<span class="s2">export ORACLE_SID=orcl</span>
+<span class="s2">## Ruta a archivos binarios. ##</span>
+<span class="s2">export PATH=</span><span class="nv">$PATH</span><span class="s2">:/opt/oracle/product/12.1.0.2/dbhome_1/bin</span>
+<span class="s2">## Ruta a la biblioteca. ##</span>
+<span class="s2">export LD_LIBRARY_PATH=</span><span class="nv">$LD_LIBRARY_PATH</span><span class="s2">:/usr/lib/x86_64-linux-gnu:/bin/lib:/lib/x86_64-linux-gnu/:/usr/lib64</span>
+<span class="s2">&quot;&quot;&quot;</span> &gt;&gt; /etc/bash.bashrc
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Cargamos las variables de entorno:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">source</span> /etc/bash.bashrc
+</pre></div>
+</td></tr></table>
+
+<div class="admonition attention">
+<p class="admonition-title">Atención</p>
+<p>Importante establecer correctamente las variables de entorno.</p>
+</div>
+<ul>
+<li>Instalación de paquetes necesarios:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>apt install build-essential binutils libcap-dev gcc g++ libc6-dev ksh libaio-dev make libxi-dev libxtst-dev libxau-dev libxcb1-dev sysstat rpm xauth xorg unzip
+</pre></div>
+</td></tr></table>
+
+<h2 id="descargas-de-oracle-database-software">Descargas de Oracle Database Software<a class="headerlink" href="#descargas-de-oracle-database-software" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p>Esta acción la realizaremos en el equipo anfitrión con entorno gráfico.</p>
+</div>
+<p>Link para descarga:
+<a href="https://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html?ssSourceSiteId=otnes">Oracle</a></p>
+<p>Primero iniciamos sesión y aceptamos el "License Agreement". Luego elegimos el siguiente:</p>
+<p>Oracle Database 12c Release 1<br />
+ (12.1.0.2.0) Enterprise Edition<br />
+ linux x86-64   File 1  (3.2 GB)  </p>
+<ul>
+<li>Descomprimimos el zip:
+Abrimos consola y nos situamos en el directorio de la descarga:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">cd</span> Descargas
+unzip linuxx64_12102_database.zip
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Pasamos lo descomprimido a la máquina virtual:<br />
+Aparecerá una carpeta <code>database</code>, esa carpeta la copiaremos mediante <code>scp</code> a la máquina virtual:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>scp -r database/ oracle@192.168.1.25:
+</pre></div>
+</td></tr></table>
+
+<h2 id="instalacion-de-oracle">Instalación de Oracle<a class="headerlink" href="#instalacion-de-oracle" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ejecutaremos mediante <code>ssh</code> y <code>X11forward</code> el instalador de Oracle con entorno gráfico:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>ssh -XC oracle@192.168.1.25
+database/runInstaller -IgnoreSysPreReqs
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note">
+<p>La opción <code>-IgnoreSysPreReqs</code> es para que ignorar los prerequisitos del sistema.<br />
+La opción -X ejecuta aplicaciones gráficas.<br />
+La opción -C es para comprimir los datos de la conexión.  </p>
+</div>
+<hr />
+<ul>
+<li>Configurar Actualizaciones de Seguridad</li>
+</ul>
+<p>Demarcamos la casilla para recibir actualizaciones y continuamos con <code>Siguiente &gt;</code>.</p>
+<p><img alt="" src="../../img/oracleinstall/captura1.png" /></p>
+<hr />
+<p>Nos aparecerá una ventana para decirnos que Oracle no está soportado para este sistema
+y que el instalador no realizará las comprobaciones de requisitos en el sistema,
+la ignoramos y continuamos diciendo <code>Sí</code>.</p>
+<p><img alt="" src="../../img/oracleinstall/captura2.png" /></p>
+<hr />
+<ul>
+<li>Seleccionar Opción de Instalación</li>
+</ul>
+<p>Elegimos la opción para "Crear y configurar base de datos" ya que vamos a crear una nueva base de datos y continuamos con <code>Siguiente &gt;</code>.</p>
+<p><img alt="" src="../../img/oracleinstall/captura3.png" /></p>
+<hr />
+<ul>
+<li>Clase de Sistema</li>
+</ul>
+<p>Elegimos la opción "Clase de Servidor" y continuamos con <code>Siguiente &gt;</code>.</p>
+<p><img alt="" src="../../img/oracleinstall/captura4.png" /></p>
+<hr />
+<ul>
+<li>Opciones de Instalción de Grid</li>
+</ul>
+<p>Elegimos "Instalación de Base de Datos de Instancia Única"  y continuamos con <code>Siguiente &gt;</code>.</p>
+<p><img alt="" src="../../img/oracleinstall/captura5.png" /></p>
+<hr />
+<ul>
+<li>Tipo de Instalación</li>
+</ul>
+<p>Elegimos Avanzada para configurar mas a fondo.</p>
+<p><img alt="" src="../../img/oracleinstall/captura6.png" /></p>
+<hr />
+<ul>
+<li>Idiomas</li>
+</ul>
+<p>Dejamos por defecto.</p>
+<p><img alt="" src="../../img/oracleinstall/captura7.png" /></p>
+<hr />
+<ul>
+<li>Edición de Base de Datos</li>
+</ul>
+<p>Solo nos deja Enterprise Edition.</p>
+<p><img alt="" src="../../img/oracleinstall/captura8.png" /></p>
+<hr />
+<ul>
+<li>Ubicación de Instalación</li>
+</ul>
+<p>Si tenemos bien definidas las variavles de entorno se configura automáticamente.</p>
+<p><img alt="" src="../../img/oracleinstall/captura9.png" /></p>
+<hr />
+<ul>
+<li>Crear Inventario</li>
+</ul>
+<p>Si tenemos bien definidas las variavles de entorno se configura automáticamente.</p>
+<p><img alt="" src="../../img/oracleinstall/captura10.png" /></p>
+<hr />
+<ul>
+<li>Tipo de COnfiguración</li>
+</ul>
+<p>Para Uso General.</p>
+<p><img alt="" src="../../img/oracleinstall/captura11.png" /></p>
+<hr />
+<ul>
+<li>Especificar Identificadores de Base de Datos</li>
+</ul>
+<p>Dejamos valores por defecto.</p>
+<p><img alt="" src="../../img/oracleinstall/captura12.png" /></p>
+<hr />
+<ul>
+<li>Opciones de Configuración</li>
+</ul>
+<p>En "Juego de Caracteres" elegimos "Unicode".</p>
+<p><img alt="" src="../../img/oracleinstall/captura14.png" /></p>
+<p>Y en "Esquemas de Ejemplo" marcamos la casilla para crear la base de datos con esquemas de ejemplo.</p>
+<p><img alt="" src="../../img/oracleinstall/captura13.png" /></p>
+<hr />
+<ul>
+<li>Almacenamiento en la base de datos</li>
+</ul>
+<p>Dejamos por defecto.</p>
+<p><img alt="" src="../../img/oracleinstall/captura15.png" /></p>
+<hr />
+<ul>
+<li>Opciones de Gestión</li>
+</ul>
+<p>Saltamos este paso y continuamos con <code>Siguiente &gt;</code>.</p>
+<p><img alt="" src="../../img/oracleinstall/captura16.png" /></p>
+<hr />
+<ul>
+<li>Opciones de Recuperación</li>
+</ul>
+<p>Saltamos este paso y continuamos con <code>Siguiente &gt;</code>.</p>
+<p><img alt="" src="../../img/oracleinstall/captura17.png" /></p>
+<hr />
+<ul>
+<li>Contraseñas de Esquemas</li>
+</ul>
+<p>Para mayor comodidad usamos la misma contraseña para todas las cuentas. Además Oracle recomienda una contraseña de al menos 8 caracteres, al menos una en mayúscula, otra en minúscula y al menos un carácter alfanumérico.</p>
+<p><img alt="" src="../../img/oracleinstall/captura18.png" /></p>
+<hr />
+<ul>
+<li>Grupos del Sistema Operativo con privilegios</li>
+</ul>
+<p>Dejamos por defecto.</p>
+<p><img alt="" src="../../img/oracleinstall/captura19.png" /></p>
+<hr />
+<ul>
+<li>Resumen de Instalación</li>
+</ul>
+<p>Aquí vemos la configuración final de la instalación para poder comprobar si tenemos algún error.
+Seleccionamos "Instalar".</p>
+<p><img alt="" src="../../img/oracleinstall/captura20.png" /></p>
+<hr />
+<ul>
+<li>Instalar Producto</li>
+</ul>
+<p>Este paso tardará algunos minutos.</p>
+<p><img alt="" src="../../img/oracleinstall/captura21.png" /></p>
+<hr />
+<ul>
+<li>Ejecutar Scripts de Configuración</li>
+</ul>
+<p>Finalizando la instalación Oracle nos pide que ejecutemos unos scripts como ROOT:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>/opt/oraInventory/orainstRoot.sh
+/opt/oracle/product/12.2.0/dbhome_1/root.sh
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/oracleinstall/captura22.png" /></p>
+<hr />
+<ul>
+<li>Asistente de Configuración de base de Datos</li>
+</ul>
+<p>Al finalizar la ejecución de los scripts pulsamos <code>Aceptar</code> y comenzará el proceso de creación de la base de datos que tardará aún mas tiempo que la instalación del software. Así que a esperar...</p>
+<p><img alt="" src="../../img/oracleinstall/captura23.png" /></p>
+<hr />
+<ul>
+<li>Fin Configuración</li>
+</ul>
+<p>Pasados bastantes minutos Oracle nos muestra alguna información de la base de datos como la URL de "Enterprise Manager Database Express" en:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>https://localhost:5500/em
+</pre></div>
+</td></tr></table>
+
+<p>Para acceder a dicha aplicación web necesitaremos tener instalado Adobe Flash Player y aceptar la excepción de seguridad de esa página. </p>
+<div class="admonition note">
+<p>Los accesos desde otras redes están abiertas por defecto. <br />
+<code>https://192.168.1.25:5500/em</code></p>
+</div>
+<p>Aceptamos.</p>
+<p><img alt="" src="../../img/oracleinstall/captura24.png" /></p>
+<p><img alt="" src="../../img/oracleinstall/captura28.png" /></p>
+<hr />
+<ul>
+<li>Fin de la instalación</li>
+</ul>
+<p><img alt="" src="../../img/oracleinstall/captura25.png" /></p>
+<h2 id="accediendo-a-la-base-de-datos">Accediendo a la base de datos<a class="headerlink" href="#accediendo-a-la-base-de-datos" title="Permanent link">&para;</a></h2>
+<p>El acceso a la base de datos lo realizaremos mediante línea de comandos con "sqlplus".</p>
+<p>Podemos instalar un paquete que nos ayudará con un uso mas amigable de "sqlplus":</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>apt install rlwrap
+</pre></div>
+</td></tr></table>
+
+<p>Accedemos a la base de datos:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>rlwrap sqlplus sys/PASS as sysdba
+</pre></div>
+</td></tr></table>
+
+<p>Ejecutamos consulta para ver la versión de Oracle:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">v$version</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/oracleinstall/captura26.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Para poder crear usuarios ejecutamos lo siguiente:</p>
+<p><code>alter session set "_ORACLE_SCRIPT"=true;</code><br />
+-\ \ \ \ \ \ -Ó  <br />
+<code>echo 'alter session set "_ORACLE_SCRIPT"=true;' &gt;&gt; $ORACLE_HOME/sqlplus/admin/glogin.sql</code> </p>
+</div>
+<h2 id="iniciacion-de-la-base-de-datos">Iniciación de la base de datos<a class="headerlink" href="#iniciacion-de-la-base-de-datos" title="Permanent link">&para;</a></h2>
+<p>Por defecto si reinicio la máquina no arranca oracle asi que de momento la arrancaremos manualmente:</p>
+<ul>
+<li>Estado del Listener</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>lsnrctl status
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/oracleinstall/captura30.png" /></p>
+<ul>
+<li>Arrancamos el Listener:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>lsnrctl start
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/oracleinstall/captura31.png" /></p>
+<ul>
+<li>Arrancamos la base de datos:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>sqlplus / as sysdba
+</pre></div>
+</td></tr></table>
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">startup</span>
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/oracleinstall/captura32.png" /></p>
+<h2 id="configuracion-acceso-remoto-oracle">Configuración acceso remoto Oracle<a class="headerlink" href="#configuracion-acceso-remoto-oracle" title="Permanent link">&para;</a></h2>
+<p>Si necesitamos acceder mediante la red seguiremos los siguientes pasos:</p>
+<ul>
+<li>Editamos la configuración del "Listener" de oracle en <code>$ORACLE_HOME/network/admin/listener.ora</code>:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>nano <span class="nv">$ORACLE_HOME</span>/network/admin/listener.ora
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Dejamos el fichero tal que así para que puedan acceder desde cualquier red:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nv">SID_LIST_LISTENER</span> <span class="o">=</span>
+ <span class="o">(</span><span class="nv">SID_LIST</span> <span class="o">=</span>
+  <span class="o">(</span><span class="nv">SID_DESC</span> <span class="o">=</span>
+   <span class="o">(</span><span class="nv">GLOBAL_DBNAME</span> <span class="o">=</span> orcl<span class="o">)</span>
+   <span class="o">(</span><span class="nv">ORACLE_HOME</span> <span class="o">=</span> /opt/oracle/product/12.1.0.2/dbhome_1<span class="o">)</span>
+   <span class="o">(</span><span class="nv">SID_NAME</span> <span class="o">=</span> orcl<span class="o">)</span>
+  <span class="o">)</span>
+ <span class="o">)</span>
+
+<span class="nv">LISTENER</span><span class="o">=</span>
+ <span class="o">(</span><span class="nv">DESCRIPTION_LIST</span> <span class="o">=</span>
+  <span class="o">(</span><span class="nv">DESCRIPTION</span> <span class="o">=</span>
+   <span class="o">(</span><span class="nv">ADDRESS_LIST</span> <span class="o">=</span>
+    <span class="o">(</span><span class="nv">ADDRESS</span> <span class="o">=</span> <span class="o">(</span><span class="nv">PROTOCOL</span> <span class="o">=</span> IPC<span class="o">)(</span><span class="nv">KEY</span> <span class="o">=</span> EXTPROC1521<span class="o">))</span>
+   <span class="o">)</span>
+   <span class="o">(</span><span class="nv">ADDRESS_LIST</span> <span class="o">=</span>
+<span class="hll">    <span class="o">(</span><span class="nv">ADDRESS</span> <span class="o">=</span> <span class="o">(</span><span class="nv">PROTOCOL</span> <span class="o">=</span> TCP<span class="o">)(</span><span class="nv">HOST</span> <span class="o">=</span> <span class="m">0</span>.0.0.0<span class="o">)(</span><span class="nv">PORT</span> <span class="o">=</span> <span class="m">1521</span><span class="o">))</span>
+</span>   <span class="o">)</span>
+  <span class="o">)</span>
+ <span class="o">)</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Reiniciamos el "Listener" con:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>lsnrctl stop
+lsnrctl start
+</pre></div>
+</td></tr></table>
+
+<h2 id="instalacion-de-cliente-sqlplus-remoto">Instalación de Cliente SQLPlus remoto<a class="headerlink" href="#instalacion-de-cliente-sqlplus-remoto" title="Permanent link">&para;</a></h2>
+<p>Lo primero será instalar <code>alien</code> el cual nos permite reempaquetar un fichero <code>.rpm</code> en <code>.deb</code>:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>apt install alien
+</pre></div>
+</td></tr></table>
+
+<p>Luego nos descargamos los ficheros RPM necesarios de la página de <a href="https://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html">Oracle</a></p>
+<p>Aceptamos los términos y elegimos los siguientes paquetes:</p>
+<p>-- Version 12.1.0.2.0 --<br />
+ oracle-instantclient12.1-basic-12.1.0.2.0-1.x86_64.rpm<br />
+ oracle-instantclient12.1-sqlplus-12.1.0.2.0-1.x86_64.rpm<br />
+ oracle-instantclient12.1-devel-12.1.0.2.0-1.x86_64.rpm  </p>
+<p>Reempaquetamos:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>alien --to-deb --scripts oracle-instantclient12.1-*.rpm
+</pre></div>
+</td></tr></table>
+
+<p>Instalamos los paquetes generados:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>dpkg -i oracle-instantclient12.1-*.rpm
+</pre></div>
+</td></tr></table>
+
+<p>Añadimos la variabe de entorno necesaria:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">export LD_LIBRARY_PATH=/usr/lib/oracle/12.1/client64/lib/:$LD_LIBRARY_PATH</span>
+<span class="s1">&#39;&#39;&#39;</span> &gt;&gt; /etc/bash.bashrc
+</pre></div>
+</td></tr></table>
+
+<p>Ya podemos usar SQLPlus remotamente:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>sqlplus64 system/PASS@//192.168.1.25:1521/orcl
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/oracleinstall/captura27.png" /></p>
+<p>Y con esto y un bizcocho se acabó Oracle!! <br />
+De momento...</p>
+<h2 id="enlaces-de-interes">Enlaces de Interés<a class="headerlink" href="#enlaces-de-interes" title="Permanent link">&para;</a></h2>
+<p><a href="https://docs.oracle.com/database/121/LADBI/toc.htm">Oracle Oficial</a><br />
+<a href="https://wiki.debian.org/DataBase/Oracle">Wiki Debian</a><br />
+<a href="https://debian-administration.org/article/656/Installing_Oracle11_and_Oracle12_on_Debian_Wheezy_Squeeze">debian-administration</a><br />
+<a href="https://oracle-base.com/articles/12c/oracle-db-12cr1-installation-on-oracle-linux-7">oracle-base</a><br />
+<a href="http://dbaora.com/install-oracle-12cr1-on-oel7/">dbaora</a><br />
+<a href="https://gemsofprogramming.wordpress.com/2013/09/19/installing-oracle-12c-on-ubuntu-12-04-64-bit-a-hard-journey-but-its-worth-it/">gemsofprogramming</a><br />
+<a href="https://docs.oracle.com/html/B14402_01/qig_master.htm#BAGGEBGG">Oracle Oficial 10g</a><br />
+<a href="https://juanjoselo.wordpress.com/2017/10/25/instalacion-y-configuracion-de-oracle-12c-en-debian-8-jessie/">Blog juanjo</a><br />
+<a href="https://openbinary20.com/2016/11/10/instalacion-y-configuracion-de-oracle-12c-en-debian-jessie/">Blog Aitor</a></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../plpgsql/" title="PL/SQL vs PL/PGSQL" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Anterior
+                </span>
+                PL/SQL vs PL/PGSQL
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../fail2ban/" title="Fail2Ban" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Siguiente
+                </span>
+                Fail2Ban
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"> <img alt="Licencia Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a> <br />Esta obra está bajo una <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"> Licencia Creative Commons Atribución 4.0 Internacional</a>
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/jpcarmona/" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/JPCR92" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://linkedin.com" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.583bbe55.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+          
+            
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.es.js"></script>
+              
+            
+          
+          
+            <script src="../../assets/javascripts/lunr/lunr.multi.js"></script>
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+    
+      
+        <script>!function(e,a,t,n,o,c,i){e.GoogleAnalyticsObject=o,e.ga=e.ga||function(){(e.ga.q=e.ga.q||[]).push(arguments)},e.ga.l=1*new Date,c=a.createElement(t),i=a.getElementsByTagName(t)[0],c.async=1,c.src="https://www.google-analytics.com/analytics.js",i.parentNode.insertBefore(c,i)}(window,document,"script",0,"ga"),ga("create","UA-36723568-3","mkdocs.org"),ga("set","anonymizeIp",!0),ga("send","pageview");var links=document.getElementsByTagName("a");if(Array.prototype.map.call(links,function(e){e.host!=document.location.host&&e.addEventListener("click",function(){var a=e.getAttribute("data-md-action")||"follow";ga("send","event","outbound",a,e.href)})}),document.forms.search){var query=document.forms.search.query;query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}</script>
+      
+    
+  </body>
+</html>
