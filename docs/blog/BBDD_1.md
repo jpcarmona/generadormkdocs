@@ -18,37 +18,37 @@ Tenemos 2 máquinas Centos con Oracle 11g XE levantadas mediante Vagrant y Virtu
 ``` bash
 Vagrant.configure("2") do |config|
 
-  config.vm.define "nodo1" do |nodo1|
+	config.vm.define "nodo1" do |nodo1|
 
-    config.vm.provider "virtualbox" do |vb|
-      vb.name = "oracle1"
-      vb.memory = 2048
-      vb.cpus = 1
-    end
+		config.vm.provider "virtualbox" do |vb|
+			vb.name = "oracle1"
+			vb.memory = 2048
+			vb.cpus = 1
+		end
 
-    nodo1.vm.box = "neko-neko/centos6-oracle-11g-XE"
-    nodo1.vm.hostname = "oracle1"
-    nodo1.vm.network "public_network",
-      bridge: "wlan0", 
-      use_dhcp_assigned_default_route: true
+		nodo1.vm.box = "neko-neko/centos6-oracle-11g-XE"
+		nodo1.vm.hostname = "oracle1"
+		nodo1.vm.network "public_network",
+			bridge: "wlan0", 
+			use_dhcp_assigned_default_route: true
 
-  end
+	end
 
-  config.vm.define "nodo2" do |nodo2|
+	config.vm.define "nodo2" do |nodo2|
 
-    config.vm.provider "virtualbox" do |vb|
-      vb.name = "oracle2"
-      vb.memory = 2048
-      vb.cpus = 1
-    end
+		config.vm.provider "virtualbox" do |vb|
+			vb.name = "oracle2"
+			vb.memory = 2048
+			vb.cpus = 1
+		end
 
-    nodo2.vm.box = "neko-neko/centos6-oracle-11g-XE"
-    nodo2.vm.hostname = "oracle2"
-    nodo2.vm.network "public_network",
-      bridge: "wlan0",
-      use_dhcp_assigned_default_route: true
+		nodo2.vm.box = "neko-neko/centos6-oracle-11g-XE"
+		nodo2.vm.hostname = "oracle2"
+		nodo2.vm.network "public_network",
+			bridge: "wlan0",
+			use_dhcp_assigned_default_route: true
 
-  end
+	end
 
 end
 ```
@@ -74,23 +74,38 @@ EOF
 
 ### Fichero `listener.ora` en "servidor"
 
+Este apartado es para el servidor de escucha.
+
 Lo primero será modificar el fichero de configuración `listener.ora`. En este fichero podremos configurar el interlocutor de oracle(listener) el cual se encarga de aceptar peticiones remotas desde la red(TCP). Lo encontraremos en el directorio `$ORACLE_HOME/network/admin`. 
 
 * Quedaría algo así:
-``` bash
+``` sql
 LISTENER =
-  (DESCRIPTION_LIST =
-    (DESCRIPTION =
-      (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC_FOR_XE))
-      (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
-      (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.24)(PORT = 1522)) ## En 12c es necesario en 11g no.
+	(DESCRIPTION_LIST =
+		(DESCRIPTION =
+			(ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
+		)
+	)
+
+SID_LIST_LISTENER =
+  (SID_LIST =
+    (SID_DESC =
+      (SID_NAME = XE)
+      (GLOBAL_DBNAME = XE)
+      (ORACLE_HOME = /u01/app/oracle/product/11.2.0/xe)
     )
   )
+
+DEFAULT_SERVICE_LISTENER = (XE)
 ```
 
-!!! note ""
-  `HOST` es la ip o nombre de la máquina dónde se encuentra la instancia de Oracle, en este caso del "servidor". Podemos utilizar tantos nombres e ips que tenga.
-  `PORT` utilizamos uno distinto para cada uno.
+Lo que tenemos lo dividimos en 2 partes:
+
+* LISTENER:
+Es dónde especificamos los protocolos,IPS o nombres(HOST), puertos y etc. desde los que se podrán conectar remotamente a este servidor.
+
+* SID_LIST_LISTENER:
+Son los nombres de los servicios de escucha dónde especificamos los nombres de las instancias y directorio de las bases de datos.
 
 ![](../../img/interconexionBBDD/captura1.png)
 
@@ -99,25 +114,100 @@ LISTENER =
 lsnrctl stop && lsnrctl start
 ```
 
-!!! note ""
-	Esta acción tardará un poco( En 12c tarda en 11g no).
+* Vemos el estado del listener:
+``` bash
+lsnrctl status
+```
+
+![](../../img/interconexionBBDD/captura2.png)
+
+* Para averiguar el `SID_NAME`, `GLOBAL_DBNAME` y el nombre del servidor:
+``` sql
+SELECT SYS_CONTEXT('USERENV','INSTANCE_NAME') FROM dual;
+
+SELECT * FROM global_name;
+
+SELECT SYS_CONTEXT('USERENV', 'SERVER_HOST') FROM dual;
+```
+
+![](../../img/interconexionBBDD/captura3.png)
+
+!!! note "¿ Qué es el `SID_NAME` ?"
+	Identificador del Sistema Oracle: Es un nombre único para una instancia de Oracle Database en un host concreto. El identificador del sistema Oracle (SID) ayuda a identificar el archivo de control así como a ubicar los archivos necesarios para abrir la base de datos. Suele ser el mismo que el del `GLOBAL_DBNAME`.
 
 <hr class="h3">
 
 ### Fichero `tnsnames.ora` en "cliente"
 
-* Encontrar SID en servidor:
+Este apartado es para el cliente desde el cual nos conectaremos.
+
+Primero realizaremos varias pruebas para verificar que tenemos conexión con el servidor de escucha.
+
+* Pruebas con `tnsping`:
 ``` bash
+tnsping 192.168.1.31
+```
+
+![](../../img/interconexionBBDD/captura4.png)
+
+Como vemos el primer intento a `192.168.1.31`(Servidor de escucha) tiene éxito, pero intentamos realizar esta operación a una IP inexistente y da error.
+
+* Pruebas de conexión con `sqlplus`:
+``` bash
+rlwrap sqlplus system/vagrant@//192.168.1.31:1521/XE
+```
+
+![](../../img/interconexionBBDD/captura5.png)
+
+Podemos ver que estamos conectado al servidor de escucha con nombre "oracle1".
+
+Ahora para realizar la interconexión del servidor necesitamos configurar el fichero `tnsnames.ora`. En este fichero podemos configurar y "mapear" los nombres de los servicios que está escuchando el servidor. Lo encontraremos en el directorio `$ORACLE_HOME/network/admin`. 
+
+* Quedaría algo así:
+``` sql
+tns_ora1 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.31)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = XE)
+    )
+  )
 
 ```
 
-``` bash
-Identificador del Sistema Oracle: Es un nombre único para una instancia de Oracle Database en un host concreto. El identificador del sistema Oracle (SID) ayuda a identificar el archivo de control así como a ubicar los archivos necesarios para abrir la base de datos. Al introducir el nombre de la base de datos global, Oracle Universal Installer rellena automáticamente el campo Identificador del Sistema Oracle con el nombre de la base de datos. Puede modificar este nombre en la instalación avanzada. 
+![](../../img/interconexionBBDD/captura6.png)
 
-Oracle Universal Installer limita el SID a 12 caracteres alfanuméricos para bases de datos de instancia única. Para las bases de datos Oracle RAC, el prefijo SID, que está compuesto por los ocho primeros caracteres del SID, debe ser un nombre único para cada base de datos. El SID no puede contener el carácter de subrayado (_), el signo del dólar ( $) ni la almohadilla numérica (#).
+* Volvemos a realizar una prueba con `tnsping` pero esta vez usando el nombre especificado:
+``` bash
+tnsping tna_ora1
 ```
+
+![](../../img/interconexionBBDD/captura7.png)
+
+Como vemos el primer intento a "tns_ora1"(Servidor de escucha) tiene éxito, pero intentamos realizar esta operación a un nombre no configurado y da error.
 
 <hr class="h3">
+
+### Configuración de interconexión mediante enlace de base de datos
+
+Ahora necesitamos configurar dicho enlace en el cliente desde "sqlplus".
+
+* Configuración enlace:
+``` sql
+CREATE DATABASE LINK link_ora1
+CONNECT TO scott
+IDENTIFIED BY tiger
+USING 'tns_ora1';
+```
+
+SELECT *
+FROM scott.dept@link_ora1;
+
+
+
+<hr class="h3">
+
 
 
 
@@ -125,17 +215,6 @@ Oracle Universal Installer limita el SID a 12 caracteres alfanuméricos para bas
 
 ## Interconexión entre BBDD Oracle y Postgres(o MariaDB) con Heterogeneus Services
 
-
-sqlplus sys/vagrant@//192.168.1.26:1521/XE
-
-
-![](../../img/interconexionBBDD/captura1.png)
-
-rlwrap sqlplus sys/vagrant as sysdba
-
-export NLS_LANG='SPANISH_SPAIN.AL32UTF8'
-
-sqlplus sys/Jporacle-1 as sysdba
 
 
 Creación squema scott:

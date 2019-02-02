@@ -1,4 +1,4 @@
-# Instalación Oracle Database 12c versión 2(12.1.0) Enterprise Edition en Debian Jessie 8.11  
+# Instalación Oracle Database 12c versión 1(12.1.0) Enterprise Edition en Debian Jessie 8.11  
 
 Y aquí llega lo que no suele ser visto con Oracle, la instalación de su software privativo de base de datos en un sistema que no está soportado, en un sistema Debian. Así es, aquí descubrimeros que entresijos tiene realizar una instalación básica en varios pasos.
 

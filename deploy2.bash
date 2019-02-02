@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ~/entornos/mkdocs_env/bin/activate
+
 python3 genindex.py
 
 git add * 2>/dev/null
