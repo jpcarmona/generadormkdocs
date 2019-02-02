@@ -458,6 +458,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#configuracion-de-interconexion-mediante-enlace-de-base-de-datos" title="Configuración de interconexión mediante enlace de base de datos" class="md-nav__link">
+    Configuración de interconexión mediante enlace de base de datos
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -554,6 +561,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#configuracion-de-interconexion-mediante-enlace-de-base-de-datos" title="Configuración de interconexión mediante enlace de base de datos" class="md-nav__link">
+    Configuración de interconexión mediante enlace de base de datos
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -641,37 +655,37 @@
 34
 35</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>Vagrant.configure<span class="o">(</span><span class="s2">&quot;2&quot;</span><span class="o">)</span> <span class="k">do</span> <span class="p">|</span>config<span class="p">|</span>
 
-  config.vm.define <span class="s2">&quot;nodo1&quot;</span> <span class="k">do</span> <span class="p">|</span>nodo1<span class="p">|</span>
+    config.vm.define <span class="s2">&quot;nodo1&quot;</span> <span class="k">do</span> <span class="p">|</span>nodo1<span class="p">|</span>
 
-    config.vm.provider <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="p">|</span>vb<span class="p">|</span>
-      vb.name <span class="o">=</span> <span class="s2">&quot;oracle1&quot;</span>
-      vb.memory <span class="o">=</span> <span class="m">2048</span>
-      vb.cpus <span class="o">=</span> <span class="m">1</span>
+        config.vm.provider <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="p">|</span>vb<span class="p">|</span>
+            vb.name <span class="o">=</span> <span class="s2">&quot;oracle1&quot;</span>
+            vb.memory <span class="o">=</span> <span class="m">2048</span>
+            vb.cpus <span class="o">=</span> <span class="m">1</span>
+        end
+
+        nodo1.vm.box <span class="o">=</span> <span class="s2">&quot;neko-neko/centos6-oracle-11g-XE&quot;</span>
+        nodo1.vm.hostname <span class="o">=</span> <span class="s2">&quot;oracle1&quot;</span>
+        nodo1.vm.network <span class="s2">&quot;public_network&quot;</span>,
+            bridge: <span class="s2">&quot;wlan0&quot;</span>, 
+            use_dhcp_assigned_default_route: <span class="nb">true</span>
+
     end
 
-    nodo1.vm.box <span class="o">=</span> <span class="s2">&quot;neko-neko/centos6-oracle-11g-XE&quot;</span>
-    nodo1.vm.hostname <span class="o">=</span> <span class="s2">&quot;oracle1&quot;</span>
-    nodo1.vm.network <span class="s2">&quot;public_network&quot;</span>,
-      bridge: <span class="s2">&quot;wlan0&quot;</span>, 
-      use_dhcp_assigned_default_route: <span class="nb">true</span>
+    config.vm.define <span class="s2">&quot;nodo2&quot;</span> <span class="k">do</span> <span class="p">|</span>nodo2<span class="p">|</span>
 
-  end
+        config.vm.provider <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="p">|</span>vb<span class="p">|</span>
+            vb.name <span class="o">=</span> <span class="s2">&quot;oracle2&quot;</span>
+            vb.memory <span class="o">=</span> <span class="m">2048</span>
+            vb.cpus <span class="o">=</span> <span class="m">1</span>
+        end
 
-  config.vm.define <span class="s2">&quot;nodo2&quot;</span> <span class="k">do</span> <span class="p">|</span>nodo2<span class="p">|</span>
+        nodo2.vm.box <span class="o">=</span> <span class="s2">&quot;neko-neko/centos6-oracle-11g-XE&quot;</span>
+        nodo2.vm.hostname <span class="o">=</span> <span class="s2">&quot;oracle2&quot;</span>
+        nodo2.vm.network <span class="s2">&quot;public_network&quot;</span>,
+            bridge: <span class="s2">&quot;wlan0&quot;</span>,
+            use_dhcp_assigned_default_route: <span class="nb">true</span>
 
-    config.vm.provider <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="p">|</span>vb<span class="p">|</span>
-      vb.name <span class="o">=</span> <span class="s2">&quot;oracle2&quot;</span>
-      vb.memory <span class="o">=</span> <span class="m">2048</span>
-      vb.cpus <span class="o">=</span> <span class="m">1</span>
     end
-
-    nodo2.vm.box <span class="o">=</span> <span class="s2">&quot;neko-neko/centos6-oracle-11g-XE&quot;</span>
-    nodo2.vm.hostname <span class="o">=</span> <span class="s2">&quot;oracle2&quot;</span>
-    nodo2.vm.network <span class="s2">&quot;public_network&quot;</span>,
-      bridge: <span class="s2">&quot;wlan0&quot;</span>,
-      use_dhcp_assigned_default_route: <span class="nb">true</span>
-
-  end
 
 end
 </pre></div>
@@ -710,7 +724,118 @@ cat <span class="s">&lt;&lt;EOF&gt;&gt;$ORACLE_HOME/sqlplus/admin/glogin.sql</sp
 </td></tr></table>
 
 <h3 id="fichero-listenerora-en-servidor">Fichero <code>listener.ora</code> en "servidor"<a class="headerlink" href="#fichero-listenerora-en-servidor" title="Permanent link">&para;</a></h3>
+<p>Este apartado es para el servidor de escucha.</p>
 <p>Lo primero será modificar el fichero de configuración <code>listener.ora</code>. En este fichero podremos configurar el interlocutor de oracle(listener) el cual se encarga de aceptar peticiones remotas desde la red(TCP). Lo encontraremos en el directorio <code>$ORACLE_HOME/network/admin</code>. </p>
+<ul>
+<li>Quedaría algo así:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">LISTENER</span> <span class="o">=</span>
+    <span class="p">(</span><span class="n">DESCRIPTION_LIST</span> <span class="o">=</span>
+        <span class="p">(</span><span class="n">DESCRIPTION</span> <span class="o">=</span>
+            <span class="p">(</span><span class="n">ADDRESS</span> <span class="o">=</span> <span class="p">(</span><span class="n">PROTOCOL</span> <span class="o">=</span> <span class="n">TCP</span><span class="p">)(</span><span class="k">HOST</span> <span class="o">=</span> <span class="n">localhost</span><span class="p">)(</span><span class="n">PORT</span> <span class="o">=</span> <span class="mi">1521</span><span class="p">))</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">SID_LIST_LISTENER</span> <span class="o">=</span>
+  <span class="p">(</span><span class="n">SID_LIST</span> <span class="o">=</span>
+    <span class="p">(</span><span class="n">SID_DESC</span> <span class="o">=</span>
+      <span class="p">(</span><span class="n">SID_NAME</span> <span class="o">=</span> <span class="n">XE</span><span class="p">)</span>
+      <span class="p">(</span><span class="n">GLOBAL_DBNAME</span> <span class="o">=</span> <span class="n">XE</span><span class="p">)</span>
+      <span class="p">(</span><span class="n">ORACLE_HOME</span> <span class="o">=</span> <span class="o">/</span><span class="n">u01</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">oracle</span><span class="o">/</span><span class="n">product</span><span class="o">/</span><span class="mi">11</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="n">xe</span><span class="p">)</span>
+    <span class="p">)</span>
+  <span class="p">)</span>
+
+<span class="n">DEFAULT_SERVICE_LISTENER</span> <span class="o">=</span> <span class="p">(</span><span class="n">XE</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>Lo que tenemos lo dividimos en 2 partes:</p>
+<ul>
+<li>
+<p>LISTENER:
+Es dónde especificamos los protocolos,IPS o nombres(HOST), puertos y etc. desde los que se podrán conectar remotamente a este servidor.</p>
+</li>
+<li>
+<p>SID_LIST_LISTENER:
+Son los nombres de los servicios de escucha dónde especificamos los nombres de las instancias y directorio de las bases de datos.</p>
+</li>
+</ul>
+<p><img alt="" src="../../img/interconexionBBDD/captura1.png" /></p>
+<ul>
+<li>Ahora reiniciamos el servicio del listener:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>lsnrctl stop <span class="o">&amp;&amp;</span> lsnrctl start
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Vemos el estado del listener:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>lsnrctl status
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/interconexionBBDD/captura2.png" /></p>
+<ul>
+<li>Para averiguar el <code>SID_NAME</code>, <code>GLOBAL_DBNAME</code> y el nombre del servidor:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="n">SYS_CONTEXT</span><span class="p">(</span><span class="s1">&#39;USERENV&#39;</span><span class="p">,</span><span class="s1">&#39;INSTANCE_NAME&#39;</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">dual</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">global_name</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">SYS_CONTEXT</span><span class="p">(</span><span class="s1">&#39;USERENV&#39;</span><span class="p">,</span> <span class="s1">&#39;SERVER_HOST&#39;</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">dual</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/interconexionBBDD/captura3.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">¿ Qué es el <code>SID_NAME</code> ?</p>
+<p>Identificador del Sistema Oracle: Es un nombre único para una instancia de Oracle Database en un host concreto. El identificador del sistema Oracle (SID) ayuda a identificar el archivo de control así como a ubicar los archivos necesarios para abrir la base de datos. Suele ser el mismo que el del <code>GLOBAL_DBNAME</code>.</p>
+</div>
+<hr class="h3">
+
+<h3 id="fichero-tnsnamesora-en-cliente">Fichero <code>tnsnames.ora</code> en "cliente"<a class="headerlink" href="#fichero-tnsnamesora-en-cliente" title="Permanent link">&para;</a></h3>
+<p>Este apartado es para el cliente desde el cual nos conectaremos.</p>
+<p>Primero realizaremos varias pruebas para verificar que tenemos conexión con el servidor de escucha.</p>
+<ul>
+<li>Pruebas con <code>tnsping</code>:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>tnsping <span class="m">192</span>.168.1.31
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/interconexionBBDD/captura4.png" /></p>
+<p>Como vemos el primer intento a <code>192.168.1.31</code>(Servidor de escucha) tiene éxito, pero intentamos realizar esta operación a una IP inexistente y da error.</p>
+<ul>
+<li>Pruebas de conexión con <code>sqlplus</code>:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>rlwrap sqlplus system/vagrant@//192.168.1.31:1521/XE
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/interconexionBBDD/captura5.png" /></p>
+<p>Podemos ver que estamos conectado al servidor de escucha con nombre "oracle1".</p>
+<p>Ahora para realizar la interconexión del servidor necesitamos configurar el fichero <code>tnsnames.ora</code>. En este fichero podemos configurar y "mapear" los nombres de los servicios que está escuchando el servidor. Lo encontraremos en el directorio <code>$ORACLE_HOME/network/admin</code>. </p>
 <ul>
 <li>Quedaría algo así:</li>
 </ul>
@@ -721,58 +846,50 @@ cat <span class="s">&lt;&lt;EOF&gt;&gt;$ORACLE_HOME/sqlplus/admin/glogin.sql</sp
 5
 6
 7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nv">LISTENER</span> <span class="o">=</span>
-  <span class="o">(</span><span class="nv">DESCRIPTION_LIST</span> <span class="o">=</span>
-    <span class="o">(</span><span class="nv">DESCRIPTION</span> <span class="o">=</span>
-      <span class="o">(</span><span class="nv">ADDRESS</span> <span class="o">=</span> <span class="o">(</span><span class="nv">PROTOCOL</span> <span class="o">=</span> IPC<span class="o">)(</span><span class="nv">KEY</span> <span class="o">=</span> EXTPROC_FOR_XE<span class="o">))</span>
-      <span class="o">(</span><span class="nv">ADDRESS</span> <span class="o">=</span> <span class="o">(</span><span class="nv">PROTOCOL</span> <span class="o">=</span> TCP<span class="o">)(</span><span class="nv">HOST</span> <span class="o">=</span> localhost<span class="o">)(</span><span class="nv">PORT</span> <span class="o">=</span> <span class="m">1521</span><span class="o">))</span>
-      <span class="o">(</span><span class="nv">ADDRESS</span> <span class="o">=</span> <span class="o">(</span><span class="nv">PROTOCOL</span> <span class="o">=</span> TCP<span class="o">)(</span><span class="nv">HOST</span> <span class="o">=</span> <span class="m">192</span>.168.1.24<span class="o">)(</span><span class="nv">PORT</span> <span class="o">=</span> <span class="m">1522</span><span class="o">))</span> <span class="c1">## En 12c es necesario en 11g no.</span>
-    <span class="o">)</span>
-  <span class="o">)</span>
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">tns_ora1</span> <span class="o">=</span>
+  <span class="p">(</span><span class="n">DESCRIPTION</span> <span class="o">=</span>
+    <span class="p">(</span><span class="n">ADDRESS</span> <span class="o">=</span> <span class="p">(</span><span class="n">PROTOCOL</span> <span class="o">=</span> <span class="n">TCP</span><span class="p">)(</span><span class="k">HOST</span> <span class="o">=</span> <span class="mi">192</span><span class="p">.</span><span class="mi">168</span><span class="p">.</span><span class="mi">1</span><span class="p">.</span><span class="mi">31</span><span class="p">)(</span><span class="n">PORT</span> <span class="o">=</span> <span class="mi">1521</span><span class="p">))</span>
+    <span class="p">(</span><span class="n">CONNECT_DATA</span> <span class="o">=</span>
+      <span class="p">(</span><span class="n">SERVER</span> <span class="o">=</span> <span class="n">DEDICATED</span><span class="p">)</span>
+      <span class="p">(</span><span class="n">SERVICE_NAME</span> <span class="o">=</span> <span class="n">XE</span><span class="p">)</span>
+    <span class="p">)</span>
+  <span class="p">)</span>
 </pre></div>
 </td></tr></table>
 
-<div class="admonition note"></div>
-<p><code>HOST</code> es la ip o nombre de la máquina dónde se encuentra la instancia de Oracle, en este caso del "servidor". Podemos utilizar tantos nombres e ips que tenga.
-  <code>PORT</code> utilizamos uno distinto para cada uno.</p>
-<p><img alt="" src="../../img/interconexionBBDD/captura1.png" /></p>
+<p><img alt="" src="../../img/interconexionBBDD/captura6.png" /></p>
 <ul>
-<li>Ahora reiniciamos el servicio del listener:</li>
+<li>Volvemos a realizar una prueba con <code>tnsping</code> pero esta vez usando el nombre especificado:</li>
 </ul>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>lsnrctl stop <span class="o">&amp;&amp;</span> lsnrctl start
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>tnsping tna_ora1
 </pre></div>
 </td></tr></table>
 
-<div class="admonition note">
-<p>Esta acción tardará un poco( En 12c tarda en 11g no).</p>
-</div>
+<p><img alt="" src="../../img/interconexionBBDD/captura7.png" /></p>
+<p>Como vemos el primer intento a "tns_ora1"(Servidor de escucha) tiene éxito, pero intentamos realizar esta operación a un nombre no configurado y da error.</p>
 <hr class="h3">
 
-<h3 id="fichero-tnsnamesora-en-cliente">Fichero <code>tnsnames.ora</code> en "cliente"<a class="headerlink" href="#fichero-tnsnamesora-en-cliente" title="Permanent link">&para;</a></h3>
+<h3 id="configuracion-de-interconexion-mediante-enlace-de-base-de-datos">Configuración de interconexión mediante enlace de base de datos<a class="headerlink" href="#configuracion-de-interconexion-mediante-enlace-de-base-de-datos" title="Permanent link">&para;</a></h3>
+<p>Ahora necesitamos configurar dicho enlace en el cliente desde "sqlplus".</p>
 <ul>
-<li>Encontrar SID en servidor:</li>
+<li>Configuración enlace:</li>
 </ul>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>
-</pre></div>
-</td></tr></table>
-
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>Identificador del Sistema Oracle: Es un nombre único para una instancia de Oracle Database en un host concreto. El identificador del sistema Oracle <span class="o">(</span>SID<span class="o">)</span> ayuda a identificar el archivo de control así como a ubicar los archivos necesarios para abrir la base de datos. Al introducir el nombre de la base de datos global, Oracle Universal Installer rellena automáticamente el campo Identificador del Sistema Oracle con el nombre de la base de datos. Puede modificar este nombre en la instalación avanzada. 
-
-Oracle Universal Installer limita el SID a <span class="m">12</span> caracteres alfanuméricos para bases de datos de instancia única. Para las bases de datos Oracle RAC, el prefijo SID, que está compuesto por los ocho primeros caracteres del SID, debe ser un nombre único para cada base de datos. El SID no puede contener el carácter de subrayado <span class="o">(</span>_<span class="o">)</span>, el signo del dólar <span class="o">(</span> $<span class="o">)</span> ni la almohadilla numérica <span class="o">(</span><span class="c1">#).</span>
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">LINK</span> <span class="n">link_ora1</span>
+<span class="k">CONNECT</span> <span class="k">TO</span> <span class="n">scott</span>
+<span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="n">tiger</span>
+<span class="k">USING</span> <span class="s1">&#39;tns_ora1&#39;</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
 
+<p>SELECT *
+FROM scott.dept@link_ora1;</p>
 <hr class="h3">
 
 <h2 id="interconexion-entre-dos-bbdd-postgres">Interconexión entre dos BBDD Postgres<a class="headerlink" href="#interconexion-entre-dos-bbdd-postgres" title="Permanent link">&para;</a></h2>
 <h2 id="interconexion-entre-bbdd-oracle-y-postgreso-mariadb-con-heterogeneus-services">Interconexión entre BBDD Oracle y Postgres(o MariaDB) con Heterogeneus Services<a class="headerlink" href="#interconexion-entre-bbdd-oracle-y-postgreso-mariadb-con-heterogeneus-services" title="Permanent link">&para;</a></h2>
-<p>sqlplus sys/vagrant@//192.168.1.26:1521/XE</p>
-<p><img alt="" src="../../img/interconexionBBDD/captura1.png" /></p>
-<p>rlwrap sqlplus sys/vagrant as sysdba</p>
-<p>export NLS_LANG='SPANISH_SPAIN.AL32UTF8'</p>
-<p>sqlplus sys/Jporacle-1 as sysdba</p>
 <p>Creación squema scott:</p>
 <p>CREATE USER SCOTT IDENTIFIED BY tiger DEFAULT TABLESPACE USERS TEMPORARY TABLESPACE TEMP PROFILE DEFAULT;</p>
 <p>GRANT CONNECT, RESOURCE TO SCOTT;</p>
