@@ -434,6 +434,33 @@
     Interconexión entre dos BBDD Oracle
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#entorno-vagrant" title="Entorno Vagrant" class="md-nav__link">
+    Entorno Vagrant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fichero-listenerora-en-servidor" title="Fichero listener.ora en "servidor"" class="md-nav__link">
+    Fichero listener.ora en "servidor"
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fichero-tnsnamesora-en-cliente" title="Fichero tnsnames.ora en "cliente"" class="md-nav__link">
+    Fichero tnsnames.ora en "cliente"
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -503,6 +530,33 @@
     Interconexión entre dos BBDD Oracle
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#entorno-vagrant" title="Entorno Vagrant" class="md-nav__link">
+    Entorno Vagrant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fichero-listenerora-en-servidor" title="Fichero listener.ora en "servidor"" class="md-nav__link">
+    Fichero listener.ora en "servidor"
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fichero-tnsnamesora-en-cliente" title="Fichero tnsnames.ora en "cliente"" class="md-nav__link">
+    Fichero tnsnames.ora en "cliente"
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -539,12 +593,234 @@
                 
                 
                 <h1 id="interconexion-de-servidores-de-bases-de-datos">Interconexión de Servidores de Bases de Datos<a class="headerlink" href="#interconexion-de-servidores-de-bases-de-datos" title="Permanent link">&para;</a></h1>
+<hr class="h3">
+
 <p>Las interconexiones de servidores de bases de datos son operaciones que pueden ser muy útiles en diferentes contextos. Básicamente, se trata de acceder a datos que no están almacenados en nuestra base de datos, pudiendo combinarlos con los que ya tenemos.</p>
 <p>En esta entrada veremos varias formas de crear un enlace entre distintos servidores de bases de datos.</p>
+<hr class="h3">
+
 <h2 id="interconexion-entre-dos-bbdd-oracle">Interconexión entre dos BBDD Oracle<a class="headerlink" href="#interconexion-entre-dos-bbdd-oracle" title="Permanent link">&para;</a></h2>
+<h3 id="entorno-vagrant">Entorno Vagrant<a class="headerlink" href="#entorno-vagrant" title="Permanent link">&para;</a></h3>
+<p>Tenemos 2 máquinas Centos con Oracle 11g XE levantadas mediante Vagrant y VirtualBox. Una la utiliaremos como "servidor" para la interconexión de datos y otra como "cliente".</p>
+<ul>
+<li>Fichero Vagrant:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>Vagrant.configure<span class="o">(</span><span class="s2">&quot;2&quot;</span><span class="o">)</span> <span class="k">do</span> <span class="p">|</span>config<span class="p">|</span>
+
+  config.vm.define <span class="s2">&quot;nodo1&quot;</span> <span class="k">do</span> <span class="p">|</span>nodo1<span class="p">|</span>
+
+    config.vm.provider <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="p">|</span>vb<span class="p">|</span>
+      vb.name <span class="o">=</span> <span class="s2">&quot;oracle1&quot;</span>
+      vb.memory <span class="o">=</span> <span class="m">2048</span>
+      vb.cpus <span class="o">=</span> <span class="m">1</span>
+    end
+
+    nodo1.vm.box <span class="o">=</span> <span class="s2">&quot;neko-neko/centos6-oracle-11g-XE&quot;</span>
+    nodo1.vm.hostname <span class="o">=</span> <span class="s2">&quot;oracle1&quot;</span>
+    nodo1.vm.network <span class="s2">&quot;public_network&quot;</span>,
+      bridge: <span class="s2">&quot;wlan0&quot;</span>, 
+      use_dhcp_assigned_default_route: <span class="nb">true</span>
+
+  end
+
+  config.vm.define <span class="s2">&quot;nodo2&quot;</span> <span class="k">do</span> <span class="p">|</span>nodo2<span class="p">|</span>
+
+    config.vm.provider <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="p">|</span>vb<span class="p">|</span>
+      vb.name <span class="o">=</span> <span class="s2">&quot;oracle2&quot;</span>
+      vb.memory <span class="o">=</span> <span class="m">2048</span>
+      vb.cpus <span class="o">=</span> <span class="m">1</span>
+    end
+
+    nodo2.vm.box <span class="o">=</span> <span class="s2">&quot;neko-neko/centos6-oracle-11g-XE&quot;</span>
+    nodo2.vm.hostname <span class="o">=</span> <span class="s2">&quot;oracle2&quot;</span>
+    nodo2.vm.network <span class="s2">&quot;public_network&quot;</span>,
+      bridge: <span class="s2">&quot;wlan0&quot;</span>,
+      use_dhcp_assigned_default_route: <span class="nb">true</span>
+
+  end
+
+end
+</pre></div>
+</td></tr></table>
+
+<p>Mi red es una <code>192.168.1.0</code>.</p>
+<ul>
+<li>Acciones iniciales en la máquina:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>sudo su -
+yum -y update
+yum -y install nano rlwrap
+sed -ri <span class="s1">&#39;s/NLS_LANG=.*/NLS_LANG=&quot;SPANISH_SPAIN.AL32UTF8&quot;/g&#39;</span> /etc/profile.d/oracle_env.sh
+<span class="nb">export</span> <span class="nv">NLS_LANG</span><span class="o">=</span><span class="s1">&#39;SPANISH_SPAIN.AL32UTF8&#39;</span>
+rlwrap sqlplus sys/vagrant as sysdba
+
+cat <span class="s">&lt;&lt;EOF&gt;&gt;$ORACLE_HOME/sqlplus/admin/glogin.sql</span>
+<span class="s">alter session set NLS_DATE_FORMAT = &#39;DD-MM-YYYY HH24:mi:ss&#39;;</span>
+<span class="s">set sqlprompt &quot;_DATE _USER&#39;@&#39;_CONNECT_IDENTIFIER &#39;SQL&#39;&gt; &quot;</span>
+<span class="s">set pagesize 2000 linesize 100</span>
+<span class="s">set serveroutput on</span>
+<span class="s">EOF</span>
+</pre></div>
+</td></tr></table>
+
+<h3 id="fichero-listenerora-en-servidor">Fichero <code>listener.ora</code> en "servidor"<a class="headerlink" href="#fichero-listenerora-en-servidor" title="Permanent link">&para;</a></h3>
+<p>Lo primero será modificar el fichero de configuración <code>listener.ora</code>. En este fichero podremos configurar el interlocutor de oracle(listener) el cual se encarga de aceptar peticiones remotas desde la red(TCP). Lo encontraremos en el directorio <code>$ORACLE_HOME/network/admin</code>. </p>
+<ul>
+<li>Quedaría algo así:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nv">LISTENER</span> <span class="o">=</span>
+  <span class="o">(</span><span class="nv">DESCRIPTION_LIST</span> <span class="o">=</span>
+    <span class="o">(</span><span class="nv">DESCRIPTION</span> <span class="o">=</span>
+      <span class="o">(</span><span class="nv">ADDRESS</span> <span class="o">=</span> <span class="o">(</span><span class="nv">PROTOCOL</span> <span class="o">=</span> IPC<span class="o">)(</span><span class="nv">KEY</span> <span class="o">=</span> EXTPROC_FOR_XE<span class="o">))</span>
+      <span class="o">(</span><span class="nv">ADDRESS</span> <span class="o">=</span> <span class="o">(</span><span class="nv">PROTOCOL</span> <span class="o">=</span> TCP<span class="o">)(</span><span class="nv">HOST</span> <span class="o">=</span> localhost<span class="o">)(</span><span class="nv">PORT</span> <span class="o">=</span> <span class="m">1521</span><span class="o">))</span>
+      <span class="o">(</span><span class="nv">ADDRESS</span> <span class="o">=</span> <span class="o">(</span><span class="nv">PROTOCOL</span> <span class="o">=</span> TCP<span class="o">)(</span><span class="nv">HOST</span> <span class="o">=</span> <span class="m">192</span>.168.1.24<span class="o">)(</span><span class="nv">PORT</span> <span class="o">=</span> <span class="m">1522</span><span class="o">))</span> <span class="c1">## En 12c es necesario en 11g no.</span>
+    <span class="o">)</span>
+  <span class="o">)</span>
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note"></div>
+<p><code>HOST</code> es la ip o nombre de la máquina dónde se encuentra la instancia de Oracle, en este caso del "servidor". Podemos utilizar tantos nombres e ips que tenga.
+  <code>PORT</code> utilizamos uno distinto para cada uno.</p>
+<p><img alt="" src="../../img/interconexionBBDD/captura1.png" /></p>
+<ul>
+<li>Ahora reiniciamos el servicio del listener:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>lsnrctl stop <span class="o">&amp;&amp;</span> lsnrctl start
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note">
+<p>Esta acción tardará un poco( En 12c tarda en 11g no).</p>
+</div>
+<hr class="h3">
+
+<h3 id="fichero-tnsnamesora-en-cliente">Fichero <code>tnsnames.ora</code> en "cliente"<a class="headerlink" href="#fichero-tnsnamesora-en-cliente" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Encontrar SID en servidor:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>
+</pre></div>
+</td></tr></table>
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>Identificador del Sistema Oracle: Es un nombre único para una instancia de Oracle Database en un host concreto. El identificador del sistema Oracle <span class="o">(</span>SID<span class="o">)</span> ayuda a identificar el archivo de control así como a ubicar los archivos necesarios para abrir la base de datos. Al introducir el nombre de la base de datos global, Oracle Universal Installer rellena automáticamente el campo Identificador del Sistema Oracle con el nombre de la base de datos. Puede modificar este nombre en la instalación avanzada. 
+
+Oracle Universal Installer limita el SID a <span class="m">12</span> caracteres alfanuméricos para bases de datos de instancia única. Para las bases de datos Oracle RAC, el prefijo SID, que está compuesto por los ocho primeros caracteres del SID, debe ser un nombre único para cada base de datos. El SID no puede contener el carácter de subrayado <span class="o">(</span>_<span class="o">)</span>, el signo del dólar <span class="o">(</span> $<span class="o">)</span> ni la almohadilla numérica <span class="o">(</span><span class="c1">#).</span>
+</pre></div>
+</td></tr></table>
+
+<hr class="h3">
+
 <h2 id="interconexion-entre-dos-bbdd-postgres">Interconexión entre dos BBDD Postgres<a class="headerlink" href="#interconexion-entre-dos-bbdd-postgres" title="Permanent link">&para;</a></h2>
 <h2 id="interconexion-entre-bbdd-oracle-y-postgreso-mariadb-con-heterogeneus-services">Interconexión entre BBDD Oracle y Postgres(o MariaDB) con Heterogeneus Services<a class="headerlink" href="#interconexion-entre-bbdd-oracle-y-postgreso-mariadb-con-heterogeneus-services" title="Permanent link">&para;</a></h2>
-<p>prueba travis 1</p>
+<p>sqlplus sys/vagrant@//192.168.1.26:1521/XE</p>
+<p><img alt="" src="../../img/interconexionBBDD/captura1.png" /></p>
+<p>rlwrap sqlplus sys/vagrant as sysdba</p>
+<p>export NLS_LANG='SPANISH_SPAIN.AL32UTF8'</p>
+<p>sqlplus sys/Jporacle-1 as sysdba</p>
+<p>Creación squema scott:</p>
+<p>CREATE USER SCOTT IDENTIFIED BY tiger DEFAULT TABLESPACE USERS TEMPORARY TABLESPACE TEMP PROFILE DEFAULT;</p>
+<p>GRANT CONNECT, RESOURCE TO SCOTT;</p>
+<p>ALTER USER SCOTT ACCOUNT UNLOCK;</p>
+<p>CREATE TABLE SCOTT.DEPT
+(
+ DEPTNO NUMBER(2),
+ DNAME VARCHAR2(14),
+ LOC VARCHAR2(13),
+ CONSTRAINT PK_DEPT PRIMARY KEY (DEPTNO)
+);</p>
+<p>INSERT INTO SCOTT.DEPT VALUES (10, 'ACCOUNTING', 'NEW YORK');
+INSERT INTO SCOTT.DEPT VALUES (20, 'RESEARCH', 'DALLAS');
+INSERT INTO SCOTT.DEPT VALUES (30, 'SALES', 'CHICAGO');
+INSERT INTO SCOTT.DEPT VALUES (40, 'OPERATIONS', 'BOSTON');</p>
+<p>COMMIT;</p>
+<p>conn scott/tiger</p>
+<p>CREATE USER SCOTT IDENTIFIED BY tiger DEFAULT TABLESPACE USERS TEMPORARY TABLESPACE TEMP PROFILE DEFAULT;</p>
+<p>GRANT CONNECT, RESOURCE TO SCOTT;</p>
+<p>ALTER USER SCOTT ACCOUNT UNLOCK;</p>
+<p>CREATE TABLE SCOTT.EMP
+(
+ EMPNO NUMBER(4),
+ ENAME VARCHAR2(10),
+ JOB VARCHAR2(9),
+ MGR NUMBER(4),
+ HIREDATE DATE,
+ SAL NUMBER(7, 2),
+ COMM NUMBER(7, 2),
+ DEPTNO NUMBER(2),
+ CONSTRAINT FK_DEPTNO FOREIGN KEY (DEPTNO) REFERENCES SCOTT.DEPT (DEPTNO),
+ CONSTRAINT PK_EMP PRIMARY KEY (EMPNO)
+);</p>
+<p>INSERT INTO SCOTT.EMP VALUES(7369,'SMITH','CLERK',7902,TO_DATE('17-DIC-1980','DD-MON-YYYY'),800,NULL,20);
+INSERT INTO SCOTT.EMP VALUES(7499,'ALLEN','SALESMAN',7698,TO_DATE('20-FEB-1981','DD-MON-YYYY'),1600,300,30);
+INSERT INTO SCOTT.EMP VALUES(7521,'WARD','SALESMAN',7698,TO_DATE('22-FEB-1981','DD-MON-YYYY'),1250,500,30);
+INSERT INTO SCOTT.EMP VALUES(7566,'JONES','MANAGER',7839,TO_DATE('2-ABR-1981','DD-MON-YYYY'),2975,NULL,20);
+INSERT INTO SCOTT.EMP VALUES(7654,'MARTIN','SALESMAN',7698,TO_DATE('28-SEP-1981','DD-MON-YYYY'),1250,1400,30);
+INSERT INTO SCOTT.EMP VALUES(7698,'BLAKE','MANAGER',7839,TO_DATE('1-MAY-1981','DD-MON-YYYY'),2850,NULL,30);
+INSERT INTO SCOTT.EMP VALUES(7782,'CLARK','MANAGER',7839,TO_DATE('9-JUN-1981','DD-MON-YYYY'),2450,NULL,10);
+INSERT INTO SCOTT.EMP VALUES(7788,'SCOTT','ANALYST',7566,TO_DATE('09-DIC-1982','DD-MON-YYYY'),3000,NULL,20);
+INSERT INTO SCOTT.EMP VALUES(7839,'KING','PRESIDENT',NULL,TO_DATE('17-NOV-1981','DD-MON-YYYY'),5000,NULL,10);
+INSERT INTO SCOTT.EMP VALUES(7844,'TURNER','SALESMAN',7698,TO_DATE('8-SEP-1981','DD-MON-YYYY'),1500,0,30);
+INSERT INTO SCOTT.EMP VALUES(7876,'ADAMS','CLERK',7788,TO_DATE('12-ENE-1983','DD-MON-YYYY'),1100,NULL,20);
+INSERT INTO SCOTT.EMP VALUES(7900,'JAMES','CLERK',7698,TO_DATE('3-DIC-1981','DD-MON-YYYY'),950,NULL,30);
+INSERT INTO SCOTT.EMP VALUES(7902,'FORD','ANALYST',7566,TO_DATE('3-DIC-1981','DD-MON-YYYY'),3000,NULL,20);
+INSERT INTO SCOTT.EMP VALUES(7934,'MILLER','CLERK',7782,TO_DATE('23-ENE-1982','DD-MON-YYYY'),1300,NULL,10);</p>
+<p>COMMIT;</p>
                 
                   
                 

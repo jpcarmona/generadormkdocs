@@ -525,7 +525,7 @@
                 
                 
                 <h1 id="mkdocs">MkDocs<a class="headerlink" href="#mkdocs" title="Permanent link">&para;</a></h1>
-<p>En este post veremos como crear páginas estáticas con MkDocs en un entorno Debian Stretch y luego desplegarlas con GitHubPages .</p>
+<p>En este post veremos como crear páginas estáticas con MkDocs en un entorno de Python3 y luego desplegarlas con GitHubPages .</p>
 <h2 id="instalacion">Instalación<a class="headerlink" href="#instalacion" title="Permanent link">&para;</a></h2>
 <p>Antes de instalar algo en Entornos Debian:  </p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>sudo apt update
@@ -572,15 +572,23 @@ sudo apt-get install python3-pip
 </pre></div>
 </td></tr></table>
 
-<p>La configuración se realiza en el fihero </p>
+<p>La configuración se realiza en el fichero </p>
 <p>Para más documentación visita:<br />
 <a href="https://www.mkdocs.org">mkdocs.org</a><br />
 <a href="https://help.github.com/categories/github-pages-basics">pages.github.com</a>  </p>
-<p>De esta forma podrías insertar una imagen
-<img alt="nombre de la imagen" src="/ruta/a/la/imagen.jpg" title="Título alternativo" /></p>
-<p>O dos, sin ensuciar tu espacio de escritura.
-<img alt="nombre de la imagen2" src="/ruta/a/la/imagen2.jpg" title="Título alternativo" /> </p>
-<p><img alt="" src="../../img/oracleinstall/captura27.png" /></p>
+<p>De esta forma podrías insertar una imagen</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>![nombre de la imagen][img1]
+![nombre de la imagen2][img2] 
+</pre></div>
+</td></tr></table>
+
+<p>O dos, sin ensuciar tu espacio de escritura.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>[img1]: /ruta/a/la/imagen.jpg &quot;Título alternativo&quot;
+[img2]: /ruta/a/la/imagen2.jpg &quot;Título alternativo&quot;
+</pre></div>
+</td></tr></table>
                 
                   
                 

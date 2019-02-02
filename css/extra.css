@@ -28,6 +28,7 @@ hr.h3 {
 /* Cambio color tabla contenidos ya visitados... */
 .md-nav__link[data-md-state="blur"] {
     color: rgb(255, 0, 0);
+    background-color: rgb(200, 255, 200);
 }
 
 /* No mostrar en -Tabla de contenidos- las entradas "h3" (###) */

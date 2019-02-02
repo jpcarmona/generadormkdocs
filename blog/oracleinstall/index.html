@@ -735,6 +735,17 @@ ln -s /usr/lib/x86_64-linux-gnu /usr/lib64
 </td></tr></table>
 
 <ul>
+<li>Calcular valores limites en el sistema:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>free -b <span class="p">|</span> grep -Ei <span class="s1">&#39;mem:&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="c1">## kernel.shmmax -1</span>
+getconf PAGE_SIZE <span class="c1">## kernel.shmmni</span>
+kernel.shmmax -1 / kernel.shmmni <span class="c1">## kernel.shmall</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
 <li>Límites en el sistema (por seguridad):</li>
 </ul>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -764,8 +775,8 @@ ln -s /usr/lib/x86_64-linux-gnu /usr/lib64
 <span class="s2">kernel.sem = 250 32000 100 128</span>
 <span class="s2">## Valor de los tamaños de segmento de memoria compartida. ##</span>
 <span class="s2">## (Oracle recomienda total de RAM -1 byte) 2GB ##</span>
-<span class="s2">kernel.shmmax = 2147483648</span>
-<span class="s2">kernel.shmall = 2097152</span>
+<span class="s2">kernel.shmmax = 2107670527</span>
+<span class="s2">kernel.shmall = 514567</span>
 <span class="s2">kernel.shmmni = 4096</span>
 <span class="s2">## Valor del rango de números de puerto. ##</span>
 <span class="s2">net.ipv4.ip_local_port_range = 1024 65000</span>
@@ -784,7 +795,7 @@ ln -s /usr/lib/x86_64-linux-gnu /usr/lib64
     cat /etc/group | grep dba</code></p>
 </div>
 <p>Cargamos la configuración al sistema:</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>sysctl -p /etc/sysctl.d/local-oracle.conf  
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>sysctl -p /etc/sysctl.d/local-oracle.conf
 </pre></div>
 </td></tr></table>
 
@@ -833,7 +844,9 @@ ln -s /usr/lib/x86_64-linux-gnu /usr/lib64
 15
 16
 17
-18</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;&quot;&quot;</span>
+18
+19
+20</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">## Nombre del equipo ##</span>
 <span class="s2">export ORACLE_HOSTNAME=localhost</span>
 <span class="s2">## Usuario con permiso en archivos Oracle. ##</span>
@@ -843,13 +856,15 @@ ln -s /usr/lib/x86_64-linux-gnu /usr/lib64
 <span class="s2">## Directorio que almacenará la base de datos Oracle. ##</span>
 <span class="s2">export ORACLE_HOME=/opt/oracle/product/12.1.0.2/dbhome_1</span>
 <span class="s2">## Nombre único de la base de datos. ##</span>
-<span class="s2">export ORACLE_UNQNAME=orcl</span>
+<span class="s2">export ORACLE_UNQNAME=oraname</span>
 <span class="s2">## Identificador de servicio de escucha. ##</span>
-<span class="s2">export ORACLE_SID=orcl</span>
+<span class="s2">export ORACLE_SID=orasid</span>
 <span class="s2">## Ruta a archivos binarios. ##</span>
 <span class="s2">export PATH=</span><span class="nv">$PATH</span><span class="s2">:/opt/oracle/product/12.1.0.2/dbhome_1/bin</span>
 <span class="s2">## Ruta a la biblioteca. ##</span>
-<span class="s2">export LD_LIBRARY_PATH=</span><span class="nv">$LD_LIBRARY_PATH</span><span class="s2">:/usr/lib/x86_64-linux-gnu:/bin/lib:/lib/x86_64-linux-gnu/:/usr/lib64</span>
+<span class="s2">export LD_LIBRARY_PATH=/opt/oracle/product/12.1.0.2/dbhome_1/lib</span>
+<span class="s2">## Idioma</span>
+<span class="s2">export NLS_LANG=&#39;SPANISH_SPAIN.AL32UTF8&#39;</span>
 <span class="s2">&quot;&quot;&quot;</span> &gt;&gt; /etc/bash.bashrc
 </pre></div>
 </td></tr></table>
@@ -866,9 +881,17 @@ ln -s /usr/lib/x86_64-linux-gnu /usr/lib64
 <p>Importante establecer correctamente las variables de entorno.</p>
 </div>
 <ul>
+<li>Configuración idioma sistema para instalación en español:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>dpkg-reconfigure locales
+</pre></div>
+</td></tr></table>
+
+<p>Elegimos <code>es_ES.UTF-8 UTF-8</code>.</p>
+<ul>
 <li>Instalación de paquetes necesarios:</li>
 </ul>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>apt install build-essential binutils libcap-dev gcc g++ libc6-dev ksh libaio-dev make libxi-dev libxtst-dev libxau-dev libxcb1-dev sysstat rpm xauth xorg unzip
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>apt -y install build-essential binutils libcap-dev gcc g++ libc6-dev ksh libaio-dev make libxi-dev libxtst-dev libxau-dev libxcb1-dev sysstat rpm xauth xorg unzip
 </pre></div>
 </td></tr></table>
 
@@ -906,7 +929,7 @@ Aparecerá una carpeta <code>database</code>, esa carpeta la copiaremos mediante
 </ul>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>ssh -XC oracle@192.168.1.25
-database/runInstaller -IgnoreSysPreReqs
+database/runInstaller -IgnoreSysPreReqs -ignorePrereq
 </pre></div>
 </td></tr></table>
 
