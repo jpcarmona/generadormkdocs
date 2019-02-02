@@ -1,5 +1,7 @@
 #!/bin/bash
 
+python3 genindex.py
+
 git add * 2>/dev/null
 echo "Comentario1:"
 read comentario1

@@ -1,6 +1,6 @@
 # MkDocs
 
-En este post veremos como crear páginas estáticas con MkDocs en un entorno Debian Stretch y luego desplegarlas con GitHubPages .
+En este post veremos como crear páginas estáticas con MkDocs en un entorno de Python3 y luego desplegarlas con GitHubPages .
 
 ## Instalación
 
@@ -48,7 +48,7 @@ mkdocs new sitio1
 cd sitio1
 ```
 
-La configuración se realiza en el fihero 
+La configuración se realiza en el fichero 
 
 
 
@@ -62,12 +62,12 @@ Para más documentación visita:
 
 
 De esta forma podrías insertar una imagen
+```
 ![nombre de la imagen][img1]
-
-O dos, sin ensuciar tu espacio de escritura.
 ![nombre de la imagen2][img2] 
-
+```
+O dos, sin ensuciar tu espacio de escritura.
+```
 [img1]: /ruta/a/la/imagen.jpg "Título alternativo"
 [img2]: /ruta/a/la/imagen2.jpg "Título alternativo"
-
-![](../../img/oracleinstall/captura27.png)
+```

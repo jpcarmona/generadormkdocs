@@ -1,6 +1,6 @@
 # Instalación y uso de herramienta de seguridad Fail2Ban en Debian Stretch 9.5  
 
-Vamos a ver esta vez una buena herramienta que funcionará como Sistema de Detección de Intrusos (IDS o HIDS).  
+Vamos a ver esta vez una buena herramienta que funcionará como Sistema de Detección de Intrusos (IDS o HIDS).
 
 Fail2ban nos permite ver los accesos o intentos de accesos en el sistema o en servicios del sistema y además podremos aplicar medidas. Funciona leyendo ficheros de logs y aplicando reglas de iptables generalmente.
 

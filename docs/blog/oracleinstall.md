@@ -72,6 +72,13 @@ ln -s /usr/bin/rpm /bin/rpm
 ln -s /usr/lib/x86_64-linux-gnu /usr/lib64
 ```
 
+* Calcular valores limites en el sistema:
+``` bash
+free -b | grep -Ei 'mem:' | awk '{print $2}' ## kernel.shmmax -1
+getconf PAGE_SIZE ## kernel.shmmni
+kernel.shmmax -1 / kernel.shmmni ## kernel.shmall
+```
+
 * Límites en el sistema (por seguridad):
 ``` bash
 echo """
@@ -83,8 +90,8 @@ fs.aio-max-nr = 1048576
 kernel.sem = 250 32000 100 128
 ## Valor de los tamaños de segmento de memoria compartida. ##
 ## (Oracle recomienda total de RAM -1 byte) 2GB ##
-kernel.shmmax = 2147483648
-kernel.shmall = 2097152
+kernel.shmmax = 2107670527
+kernel.shmall = 514567
 kernel.shmmni = 4096
 ## Valor del rango de números de puerto. ##
 net.ipv4.ip_local_port_range = 1024 65000
@@ -102,7 +109,7 @@ vm.nr_hugepages = 64
 
 Cargamos la configuración al sistema:
 ``` bash
-sysctl -p /etc/sysctl.d/local-oracle.conf  
+sysctl -p /etc/sysctl.d/local-oracle.conf
 ```  
 También creamos esta configuración por seguridad:
 ``` bash
@@ -131,13 +138,15 @@ export ORACLE_BASE=/opt/oracle
 ## Directorio que almacenará la base de datos Oracle. ##
 export ORACLE_HOME=/opt/oracle/product/12.1.0.2/dbhome_1
 ## Nombre único de la base de datos. ##
-export ORACLE_UNQNAME=orcl
+export ORACLE_UNQNAME=oraname
 ## Identificador de servicio de escucha. ##
-export ORACLE_SID=orcl
+export ORACLE_SID=orasid
 ## Ruta a archivos binarios. ##
 export PATH=$PATH:/opt/oracle/product/12.1.0.2/dbhome_1/bin
 ## Ruta a la biblioteca. ##
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/bin/lib:/lib/x86_64-linux-gnu/:/usr/lib64
+export LD_LIBRARY_PATH=/opt/oracle/product/12.1.0.2/dbhome_1/lib
+## Idioma
+export NLS_LANG='SPANISH_SPAIN.AL32UTF8'
 """ >> /etc/bash.bashrc
 ```
 
@@ -149,9 +158,16 @@ source /etc/bash.bashrc
 !!! attention "Atención"
 	Importante establecer correctamente las variables de entorno.
 
+* Configuración idioma sistema para instalación en español:
+``` bash
+dpkg-reconfigure locales
+```
+
+Elegimos `es_ES.UTF-8 UTF-8`.
+
 * Instalación de paquetes necesarios:
 ``` bash
-apt install build-essential binutils libcap-dev gcc g++ libc6-dev ksh libaio-dev make libxi-dev libxtst-dev libxau-dev libxcb1-dev sysstat rpm xauth xorg unzip
+apt -y install build-essential binutils libcap-dev gcc g++ libc6-dev ksh libaio-dev make libxi-dev libxtst-dev libxau-dev libxcb1-dev sysstat rpm xauth xorg unzip
 ```
 
 ## Descargas de Oracle Database Software
@@ -186,7 +202,7 @@ scp -r database/ oracle@192.168.1.25:
 * Ejecutaremos mediante `ssh` y `X11forward` el instalador de Oracle con entorno gráfico:
 ``` bash
 ssh -XC oracle@192.168.1.25
-database/runInstaller -IgnoreSysPreReqs
+database/runInstaller -IgnoreSysPreReqs -ignorePrereq
 ```
 !!! note ""
 	La opción `-IgnoreSysPreReqs` es para que ignorar los prerequisitos del sistema.  
