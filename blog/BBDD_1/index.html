@@ -475,6 +475,47 @@
     Interconexión entre dos BBDD Postgres
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#escenario-vagrant" title="Escenario vagrant" class="md-nav__link">
+    Escenario vagrant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalacion-y-configuracion-de-postgres-para-acceso-remoto" title="Instalación y configuración de Postgres para acceso remoto" class="md-nav__link">
+    Instalación y configuración de Postgres para acceso remoto
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#habilitamos-extension-dblink" title="Habilitamos extensión dblink" class="md-nav__link">
+    Habilitamos extensión dblink
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prueba-de-acceso-a-otra-base-de-datos-en-local" title="Prueba de acceso a otra base de datos en local" class="md-nav__link">
+    Prueba de acceso a otra base de datos en local
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prueba-de-acceso-a-otra-base-de-datos-en-remoto" title="Prueba de acceso a otra base de datos en remoto" class="md-nav__link">
+    Prueba de acceso a otra base de datos en remoto
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -577,6 +618,47 @@
   <a href="#interconexion-entre-dos-bbdd-postgres" title="Interconexión entre dos BBDD Postgres" class="md-nav__link">
     Interconexión entre dos BBDD Postgres
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#escenario-vagrant" title="Escenario vagrant" class="md-nav__link">
+    Escenario vagrant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalacion-y-configuracion-de-postgres-para-acceso-remoto" title="Instalación y configuración de Postgres para acceso remoto" class="md-nav__link">
+    Instalación y configuración de Postgres para acceso remoto
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#habilitamos-extension-dblink" title="Habilitamos extensión dblink" class="md-nav__link">
+    Habilitamos extensión dblink
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prueba-de-acceso-a-otra-base-de-datos-en-local" title="Prueba de acceso a otra base de datos en local" class="md-nav__link">
+    Prueba de acceso a otra base de datos en local
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prueba-de-acceso-a-otra-base-de-datos-en-remoto" title="Prueba de acceso a otra base de datos en remoto" class="md-nav__link">
+    Prueba de acceso a otra base de datos en remoto
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -765,17 +847,23 @@ cat <span class="s">&lt;&lt;EOF&gt;&gt;$ORACLE_HOME/sqlplus/admin/glogin.sql</sp
 </pre></div>
 </td></tr></table>
 
-<p>Lo que tenemos lo dividimos en 2 partes:</p>
+<div class="admonition note">
 <ul>
 <li>
-<p>LISTENER:
-Es dónde especificamos los protocolos,IPS o nombres(HOST), puertos y etc. desde los que se podrán conectar remotamente a este servidor.</p>
+<p>LISTENER:<br />
+Es dónde especificamos los protocolos,IPs o nombres(HOST), puertos y etc. desde los que se podrán conectar remotamente a este servidor.<br />
+Al especificar "localhost", se podrá conectar cualquiera que tenga acceso a la red de la máquina. Si por ejemplo usaramos en vez de "localhost" usaramos "192.168.1.31", sólo podrán acceder los que tengan acceso a la red "192.168.1.0/24".  </p>
 </li>
 <li>
-<p>SID_LIST_LISTENER:
-Son los nombres de los servicios de escucha dónde especificamos los nombres de las instancias y directorio de las bases de datos.</p>
+<p>SID_LIST_LISTENER:<br />
+Son los nombres de los servicios de escucha dónde especificamos los nombres de las instancias y directorio de las bases de datos. (SID_NAME,GLOBAL_DBNAME,ORACLE_HOME)</p>
+</li>
+<li>
+<p>DEFAULT_SERVICE_LISTENER:<br />
+Por defecto el servicio de escucha se llama "XE".</p>
 </li>
 </ul>
+</div>
 <p><img alt="" src="../../img/interconexionBBDD/captura1.png" /></p>
 <ul>
 <li>Ahora reiniciamos el servicio del listener:</li>
@@ -857,6 +945,14 @@ Son los nombres de los servicios de escucha dónde especificamos los nombres de 
 </pre></div>
 </td></tr></table>
 
+<div class="admonition note">
+<ul>
+<li>ADDRESS:<br />
+Especificamos el protocolo, IP o nombre y puerto de la máquina a la que queremos conectarnos.</li>
+<li>SERVICE_NAME:<br />
+Nombre del servicio de la base de datos a la que nos conectaremos.</li>
+</ul>
+</div>
 <p><img alt="" src="../../img/interconexionBBDD/captura6.png" /></p>
 <ul>
 <li>Volvemos a realizar una prueba con <code>tnsping</code> pero esta vez usando el nombre especificado:</li>
@@ -884,60 +980,421 @@ Son los nombres de los servicios de escucha dónde especificamos los nombres de 
 </pre></div>
 </td></tr></table>
 
-<p>SELECT *
-FROM scott.dept@link_ora1;</p>
-<hr class="h3">
+<div class="admonition note">
+<ul>
+<li>
+<p>LINK:<br />
+Nombre que llamaremos al enlace de base dedatos para luego utilizarlo en las consultas, etc..  </p>
+</li>
+<li>
+<p>CONNECT TO:<br />
+Usuario con el que nos conectaremos a la base de datos de "oracle1"</p>
+</li>
+<li>
+<p>USING:<br />
+Nombre del "mapeo" establecido en <code>tnsnames.ora</code>.</p>
+</li>
+</ul>
+</div>
+<ul>
+<li>Consulta a la base de datos de "oracle1" desde "oracle2":</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">scott</span><span class="p">.</span><span class="n">emp</span><span class="o">@</span><span class="n">link_ora1</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/interconexionBBDD/captura8.png" /></p>
+<hr class="h2">
 
 <h2 id="interconexion-entre-dos-bbdd-postgres">Interconexión entre dos BBDD Postgres<a class="headerlink" href="#interconexion-entre-dos-bbdd-postgres" title="Permanent link">&para;</a></h2>
+<h3 id="escenario-vagrant">Escenario vagrant<a class="headerlink" href="#escenario-vagrant" title="Permanent link">&para;</a></h3>
+<p>Ya que el escenario anterior eran de máquinas Centos 6 (2016), ahora utilizaremos otro escenario con máquinas Debian Stretch para la interconexión de 2 base de datos postgres.</p>
+<ul>
+<li>Fichero vagrant:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>Vagrant.configure<span class="o">(</span><span class="s2">&quot;2&quot;</span><span class="o">)</span> <span class="k">do</span> <span class="p">|</span>config<span class="p">|</span>
+
+  config.vm.define <span class="s2">&quot;nodo3&quot;</span> <span class="k">do</span> <span class="p">|</span>nodo3<span class="p">|</span>
+
+    config.vm.provider <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="p">|</span>vb<span class="p">|</span>
+      vb.name <span class="o">=</span> <span class="s2">&quot;postres1&quot;</span>
+      vb.cpus <span class="o">=</span> <span class="m">1</span>
+    end
+
+    nodo3.vm.box <span class="o">=</span> <span class="s2">&quot;debian/stretch64&quot;</span>
+    nodo3.vm.hostname <span class="o">=</span> <span class="s2">&quot;postgres1&quot;</span>
+    nodo3.vm.network <span class="s2">&quot;public_network&quot;</span>,
+      bridge: <span class="s2">&quot;wlan0&quot;</span>,
+      use_dhcp_assigned_default_route: <span class="nb">true</span>
+
+  end
+
+  config.vm.define <span class="s2">&quot;nodo4&quot;</span> <span class="k">do</span> <span class="p">|</span>nodo4<span class="p">|</span>
+
+    config.vm.provider <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="p">|</span>vb<span class="p">|</span>
+      vb.name <span class="o">=</span> <span class="s2">&quot;postres2&quot;</span>
+      vb.cpus <span class="o">=</span> <span class="m">1</span>
+    end
+
+    nodo4.vm.box <span class="o">=</span> <span class="s2">&quot;debian/stretch64&quot;</span>
+    nodo4.vm.hostname <span class="o">=</span> <span class="s2">&quot;postres2&quot;</span>
+    nodo4.vm.network <span class="s2">&quot;public_network&quot;</span>,
+      bridge: <span class="s2">&quot;wlan0&quot;</span>,
+      use_dhcp_assigned_default_route: <span class="nb">true</span>
+
+  end
+
+end
+</pre></div>
+</td></tr></table>
+
+<hr class="h3">
+
+<h3 id="instalacion-y-configuracion-de-postgres-para-acceso-remoto">Instalación y configuración de Postgres para acceso remoto<a class="headerlink" href="#instalacion-y-configuracion-de-postgres-para-acceso-remoto" title="Permanent link">&para;</a></h3>
+<p>Las siguientes acciones las realizaremos en el servidor de escucha "postgres1".</p>
+<ul>
+<li>Instalación postgres:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>apt update <span class="o">&amp;&amp;</span> apt -y upgrade <span class="o">&amp;&amp;</span> apt -y install postgresql-9.6
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Configuramos postgres para que accepte conexiones desde una ip(red):</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>sed -ri <span class="s2">&quot;s/.*listen_addresses.*/listen_addresses = \&#39;192.168.1.23, localhost\&#39;/g&quot;</span> /etc/postgresql/9.6/main/postgresql.conf
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note">
+<p>La ip especificada es la de la propia máquina que estamos configurando.</p>
+<p>Con esto podemos conectarnos a ese servidor en local y desde la red "192.168.1/24".</p>
+</div>
+<ul>
+<li>Reiniciamos Postgres para realizar los cambios:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>systemctl restart postgresql.service
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Configuramos la autenticación del cliente:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1"># TYPE  DATABASE        USER            ADDRESS                 METHOD</span>
+<span class="s1">local   all             postgres                                peer</span>
+
+<span class="s1"># &quot;local&quot; is for Unix domain socket connections only</span>
+<span class="s1">local   all             all                                     peer</span>
+
+<span class="s1"># IPv4 local connections:</span>
+<span class="s1">host    all             all             127.0.0.1/32            md5</span>
+<span class="hll"><span class="s1">host    all             all             192.168.1.31/24         md5 </span>
+</span>
+<span class="s1"># IPv6 local connections:</span>
+<span class="s1">host    all             all             ::1/128                 md5</span>
+
+<span class="s1">&#39;&#39;&#39;</span> &gt; /etc/postgresql/9.6/main/pg_hba.conf
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note">
+<p>La línea señalada es la que añadimos. Con esto permitimos autenticaciones para la máquina con IP "192.168.1.31" y con el método "md5" que es el de por defecto de los usuarios de la base de datos.<br />
+<code>peer</code> es la autenticación mediante usuarios del sistema con el que estemos logueados.</p>
+</div>
+<ul>
+<li>Reiniciamos Postgres para realizar los cambios:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>systemctl restart postgresql.service
+</pre></div>
+</td></tr></table>
+
+<hr class="h3">
+
+<h3 id="habilitamos-extension-dblink">Habilitamos extensión <code>dblink</code><a class="headerlink" href="#habilitamos-extension-dblink" title="Permanent link">&para;</a></h3>
+<p>Esto lo realizamos en el servidor desde el cual realizaremos las consultas.</p>
+<ul>
+<li>Creación de extensión:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>CREATE EXTENSION dblink<span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/interconexionBBDD/captura9.png" /></p>
+<div class="admonition note">
+<ul>
+<li>Desde Postgresql 9.1 en adelante algunas extensiones se pueden habilitar de forma simple con:<br />
+<code>CREATE EXTENSION</code></li>
+<li>Por defecto la extensión se crea en el "schema public", si queremos crearlo en otro schema:<br />
+<code>CREATE EXTENSION dblink SCHEMA schemaprueba</code><br />
+Teniendo que estar ya creado dicho "schema".</li>
+<li>Solo los superusuarios de postgres pueden crear extensiones.</li>
+</ul>
+</div>
+<hr class="h3">
+
+<h3 id="prueba-de-acceso-a-otra-base-de-datos-en-local">Prueba de acceso a otra base de datos en local<a class="headerlink" href="#prueba-de-acceso-a-otra-base-de-datos-en-local" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Creamos una base de datos para pruebas:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">su</span> <span class="o">-</span> <span class="n">postgres</span>
+<span class="k">createdb</span> <span class="n">proyecto</span>
+<span class="k">createuser</span> <span class="o">-</span><span class="n">l</span> <span class="n">proyecto</span>
+<span class="n">psql</span>
+
+<span class="k">ALTER</span> <span class="k">USER</span> <span class="n">proyecto</span> <span class="k">WITH</span> <span class="k">ENCRYPTED</span> <span class="n">PASSWORD</span> <span class="s1">&#39;proyecto&#39;</span><span class="p">;</span>
+
+<span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span> <span class="k">ON</span> <span class="k">DATABASE</span> <span class="n">proyecto</span> <span class="k">TO</span> <span class="n">proyecto</span><span class="p">;</span>
+
+<span class="c1">-- DBNAME   USER     HOST       PORT</span>
+<span class="err">\</span><span class="k">c</span> <span class="n">proyecto</span> <span class="n">proyecto</span> <span class="n">localhost</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">catadores</span>
+<span class="p">(</span>
+    <span class="n">nif</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+    <span class="n">nombre</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span>
+    <span class="n">apellidos</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">40</span><span class="p">),</span>
+    <span class="n">direccion</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">60</span><span class="p">),</span>
+    <span class="n">telefono</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+    <span class="k">CONSTRAINT</span> <span class="n">PK_catadores</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">nif</span><span class="p">),</span>
+    <span class="k">CONSTRAINT</span> <span class="n">CC_catadores_tel</span> <span class="k">UNIQUE</span><span class="p">(</span><span class="n">telefono</span><span class="p">),</span>
+    <span class="k">CONSTRAINT</span> <span class="n">CK_catadores_nif</span> <span class="k">CHECK</span> <span class="p">(</span> <span class="n">nif</span> <span class="o">~</span> <span class="s1">&#39;^((\d){8})[A-Z]$|^([KLMXYZ](\d){7})[A-Z]$&#39;</span> <span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">catadores</span><span class="p">(</span><span class="n">nif</span><span class="p">,</span><span class="n">nombre</span><span class="p">,</span><span class="n">apellidos</span><span class="p">,</span><span class="n">direccion</span><span class="p">,</span><span class="n">telefono</span><span class="p">)</span> <span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;20666978Y&#39;</span><span class="p">,</span><span class="s1">&#39;Arturo&#39;</span><span class="p">,</span><span class="s1">&#39;Valle Segura&#39;</span><span class="p">,</span><span class="s1">&#39;Rambla Mayor 34&#39;</span><span class="p">,</span><span class="s1">&#39;702942135&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;X0844055R&#39;</span><span class="p">,</span><span class="s1">&#39;Gonzalo&#39;</span><span class="p">,</span><span class="s1">&#39;Rubio Catalan&#39;</span><span class="p">,</span><span class="s1">&#39;Pasaje Real 21&#39;</span><span class="p">,</span><span class="s1">&#39;702701555&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;07773532S&#39;</span><span class="p">,</span><span class="s1">&#39;Jessica&#39;</span><span class="p">,</span><span class="s1">&#39;Martos Arranz&#39;</span><span class="p">,</span><span class="s1">&#39;Cuesta Iglesia, Portal 1, 2ºB&#39;</span><span class="p">,</span><span class="s1">&#39;602858378&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Y0353214V&#39;</span><span class="p">,</span><span class="s1">&#39;Laia&#39;</span><span class="p">,</span><span class="s1">&#39;Palomo Robles&#39;</span><span class="p">,</span><span class="s1">&#39;Cuesta Pedralbes 87&#39;</span><span class="p">,</span><span class="s1">&#39;703571606&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;79698934R&#39;</span><span class="p">,</span><span class="s1">&#39;Iker&#39;</span><span class="p">,</span><span class="s1">&#39;Gallardo Merino&#39;</span><span class="p">,</span><span class="s1">&#39;Vereda Real, Portal 3, Escalera 8&#39;</span><span class="p">,</span><span class="s1">&#39;708796631&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Z7932683B&#39;</span><span class="p">,</span><span class="s1">&#39;Esmeralda&#39;</span><span class="p">,</span><span class="s1">&#39;Benitez Alonso&#39;</span><span class="p">,</span><span class="s1">&#39;Ronda Iglesia 138&#39;</span><span class="p">,</span><span class="s1">&#39;601949104&#39;</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Consultamos a la base de datos de "proyecto" desde el usuario y base de datos "postgres":</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">dblink</span><span class="p">(</span><span class="s1">&#39;dbname=proyecto&#39;</span><span class="p">,</span><span class="s1">&#39;SELECT nif,nombre FROM catadores&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">P</span><span class="p">(</span><span class="n">nif</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span><span class="n">nombre</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">));</span>
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/interconexionBBDD/captura10.png" /></p>
+<div class="admonition note">
+<ul>
+<li>Especificamos nombre de base de datos.</li>
+<li>Especificamos "SELECT" a relizar.</li>
+<li>Es obligatorio definir el tipo de registro de las columnas a consultar (El tamaño no es obligatorio).</li>
+</ul>
+</div>
+<hr class="h3">
+
+<h3 id="prueba-de-acceso-a-otra-base-de-datos-en-remoto">Prueba de acceso a otra base de datos en remoto<a class="headerlink" href="#prueba-de-acceso-a-otra-base-de-datos-en-remoto" title="Permanent link">&para;</a></h3>
+<p>Teniendo configurado la primera máquina para escuche remotamente y habiendo ya creado la extension en la máquina segunda, procedemos con lo siguiente.</p>
+<ul>
+<li>Podemos crear una conexión persistente con la base de datos remota y así no tener que especificar los datos de conexión:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="n">dblink_connect</span><span class="p">(</span><span class="s1">&#39;dblink1&#39;</span><span class="p">,</span><span class="s1">&#39;dbname=proyecto host=192.168.1.23 user=proyecto password=proyecto&#39;</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Realizamos consulta remota:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">dblink</span><span class="p">(</span><span class="s1">&#39;dblink1&#39;</span><span class="p">,</span><span class="s1">&#39;SELECT nif,nombre FROM catadores&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">P</span><span class="p">(</span><span class="n">nif</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span><span class="n">nombre</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">));</span>
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note">
+<ul>
+<li>Al cerrar la sesión se finalizan las conexiones persistentes.</li>
+</ul>
+</div>
+<p><img alt="" src="../../img/interconexionBBDD/captura11.png" /></p>
+<p>Para conexiones con usuarios no privilegiados relizamos lo siguiente.</p>
+<ul>
+<li>Creación usuario nuevo:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">su</span> <span class="o">-</span> <span class="n">postgres</span>
+<span class="k">createuser</span> <span class="o">-</span><span class="n">l</span> <span class="n">remoto</span>
+<span class="n">psql</span>
+
+<span class="k">ALTER</span> <span class="k">USER</span> <span class="n">remoto</span> <span class="k">WITH</span> <span class="k">ENCRYPTED</span> <span class="n">PASSWORD</span> <span class="s1">&#39;remoto&#39;</span><span class="p">;</span>
+
+<span class="c1">-- ACTUAL DATABASE (-)</span>
+<span class="err">\</span><span class="k">c</span> <span class="o">-</span> <span class="n">remoto</span> <span class="n">localhost</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Consultamos a la base de datos de "proyecto" del servidor de escucha desde un usuario nuevo en el servidor 2:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="n">dblink_connect</span><span class="p">(</span><span class="s1">&#39;dblink1&#39;</span><span class="p">,</span><span class="s1">&#39;dbname=proyecto host=192.168.1.23 user=proyecto password=proyecto&#39;</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">dblink</span><span class="p">(</span><span class="s1">&#39;dblink1&#39;</span><span class="p">,</span><span class="s1">&#39;SELECT nif,nombre FROM catadores&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">P</span><span class="p">(</span><span class="n">nif</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span><span class="n">nombre</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">));</span>
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/interconexionBBDD/captura12.png" /></p>
+<p>En el caso de que queramos realizar consultas remotas desde las bases de datos de usuarios no privilegiados tendremos que crear la extensión "dblink" en su base de datos.</p>
+<ul>
+<li>Creación extensión en base de datos de usuario remoto:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">su</span> <span class="o">-</span> <span class="n">postgres</span>
+<span class="k">createdb</span> <span class="n">remoto_db</span>
+<span class="n">psql</span>
+
+<span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span> <span class="k">ON</span> <span class="k">DATABASE</span> <span class="n">remoto_db</span> <span class="k">TO</span> <span class="n">remoto</span><span class="p">;</span>
+
+<span class="err">\</span><span class="k">c</span> <span class="n">remoto_db</span>
+
+<span class="k">CREATE</span> <span class="n">EXTENSION</span> <span class="n">dblink</span><span class="p">;</span>
+
+<span class="err">\</span><span class="k">c</span> <span class="n">remoto_db</span> <span class="n">remoto</span> <span class="n">localhost</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Realizamos consulta:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="n">dblink_connect</span><span class="p">(</span><span class="s1">&#39;dblink1&#39;</span><span class="p">,</span><span class="s1">&#39;dbname=proyecto host=192.168.1.23 user=proyecto password=proyecto&#39;</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">dblink</span><span class="p">(</span><span class="s1">&#39;dblink1&#39;</span><span class="p">,</span><span class="s1">&#39;SELECT nif,nombre FROM catadores&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="n">P</span><span class="p">(</span><span class="n">nif</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span><span class="n">nombre</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">));</span>
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/interconexionBBDD/captura13.png" /></p>
+<ul>
+<li>Podemos ver un ejemplo de que si no tenemos creada la extensión en la base de datos de remoto no funciona:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">su</span> <span class="o">-</span> <span class="n">postgres</span>
+<span class="n">psql</span>
+<span class="err">\</span><span class="k">c</span> <span class="n">remoto_db</span>
+
+<span class="k">DROP</span> <span class="n">EXTENSION</span> <span class="n">dblink</span><span class="p">;</span>
+
+<span class="err">\</span><span class="k">c</span> <span class="n">remoto_db</span> <span class="n">remoto</span> <span class="n">localhost</span>
+
+<span class="k">SELECT</span> <span class="n">dblink_connect</span><span class="p">(</span><span class="s1">&#39;dblink1&#39;</span><span class="p">,</span><span class="s1">&#39;dbname=proyecto host=192.168.1.23 user=proyecto password=proyecto&#39;</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p><img alt="" src="../../img/interconexionBBDD/captura14.png" /></p>
+<p>Nos dice que no encuentra la función "dblink".</p>
+<div class="admonition info">
+<p class="admonition-title">info</p>
+<p>Mas información acerca de la extensión "dblink":
+<a href="https://www.postgresql.org/docs/9.6/dblink.html">Postgres dblink</a></p>
+</div>
+<hr class="h2">
+
 <h2 id="interconexion-entre-bbdd-oracle-y-postgreso-mariadb-con-heterogeneus-services">Interconexión entre BBDD Oracle y Postgres(o MariaDB) con Heterogeneus Services<a class="headerlink" href="#interconexion-entre-bbdd-oracle-y-postgreso-mariadb-con-heterogeneus-services" title="Permanent link">&para;</a></h2>
-<p>Creación squema scott:</p>
-<p>CREATE USER SCOTT IDENTIFIED BY tiger DEFAULT TABLESPACE USERS TEMPORARY TABLESPACE TEMP PROFILE DEFAULT;</p>
-<p>GRANT CONNECT, RESOURCE TO SCOTT;</p>
-<p>ALTER USER SCOTT ACCOUNT UNLOCK;</p>
-<p>CREATE TABLE SCOTT.DEPT
-(
- DEPTNO NUMBER(2),
- DNAME VARCHAR2(14),
- LOC VARCHAR2(13),
- CONSTRAINT PK_DEPT PRIMARY KEY (DEPTNO)
-);</p>
-<p>INSERT INTO SCOTT.DEPT VALUES (10, 'ACCOUNTING', 'NEW YORK');
-INSERT INTO SCOTT.DEPT VALUES (20, 'RESEARCH', 'DALLAS');
-INSERT INTO SCOTT.DEPT VALUES (30, 'SALES', 'CHICAGO');
-INSERT INTO SCOTT.DEPT VALUES (40, 'OPERATIONS', 'BOSTON');</p>
-<p>COMMIT;</p>
-<p>conn scott/tiger</p>
-<p>CREATE USER SCOTT IDENTIFIED BY tiger DEFAULT TABLESPACE USERS TEMPORARY TABLESPACE TEMP PROFILE DEFAULT;</p>
-<p>GRANT CONNECT, RESOURCE TO SCOTT;</p>
-<p>ALTER USER SCOTT ACCOUNT UNLOCK;</p>
-<p>CREATE TABLE SCOTT.EMP
-(
- EMPNO NUMBER(4),
- ENAME VARCHAR2(10),
- JOB VARCHAR2(9),
- MGR NUMBER(4),
- HIREDATE DATE,
- SAL NUMBER(7, 2),
- COMM NUMBER(7, 2),
- DEPTNO NUMBER(2),
- CONSTRAINT FK_DEPTNO FOREIGN KEY (DEPTNO) REFERENCES SCOTT.DEPT (DEPTNO),
- CONSTRAINT PK_EMP PRIMARY KEY (EMPNO)
-);</p>
-<p>INSERT INTO SCOTT.EMP VALUES(7369,'SMITH','CLERK',7902,TO_DATE('17-DIC-1980','DD-MON-YYYY'),800,NULL,20);
-INSERT INTO SCOTT.EMP VALUES(7499,'ALLEN','SALESMAN',7698,TO_DATE('20-FEB-1981','DD-MON-YYYY'),1600,300,30);
-INSERT INTO SCOTT.EMP VALUES(7521,'WARD','SALESMAN',7698,TO_DATE('22-FEB-1981','DD-MON-YYYY'),1250,500,30);
-INSERT INTO SCOTT.EMP VALUES(7566,'JONES','MANAGER',7839,TO_DATE('2-ABR-1981','DD-MON-YYYY'),2975,NULL,20);
-INSERT INTO SCOTT.EMP VALUES(7654,'MARTIN','SALESMAN',7698,TO_DATE('28-SEP-1981','DD-MON-YYYY'),1250,1400,30);
-INSERT INTO SCOTT.EMP VALUES(7698,'BLAKE','MANAGER',7839,TO_DATE('1-MAY-1981','DD-MON-YYYY'),2850,NULL,30);
-INSERT INTO SCOTT.EMP VALUES(7782,'CLARK','MANAGER',7839,TO_DATE('9-JUN-1981','DD-MON-YYYY'),2450,NULL,10);
-INSERT INTO SCOTT.EMP VALUES(7788,'SCOTT','ANALYST',7566,TO_DATE('09-DIC-1982','DD-MON-YYYY'),3000,NULL,20);
-INSERT INTO SCOTT.EMP VALUES(7839,'KING','PRESIDENT',NULL,TO_DATE('17-NOV-1981','DD-MON-YYYY'),5000,NULL,10);
-INSERT INTO SCOTT.EMP VALUES(7844,'TURNER','SALESMAN',7698,TO_DATE('8-SEP-1981','DD-MON-YYYY'),1500,0,30);
-INSERT INTO SCOTT.EMP VALUES(7876,'ADAMS','CLERK',7788,TO_DATE('12-ENE-1983','DD-MON-YYYY'),1100,NULL,20);
-INSERT INTO SCOTT.EMP VALUES(7900,'JAMES','CLERK',7698,TO_DATE('3-DIC-1981','DD-MON-YYYY'),950,NULL,30);
-INSERT INTO SCOTT.EMP VALUES(7902,'FORD','ANALYST',7566,TO_DATE('3-DIC-1981','DD-MON-YYYY'),3000,NULL,20);
-INSERT INTO SCOTT.EMP VALUES(7934,'MILLER','CLERK',7782,TO_DATE('23-ENE-1982','DD-MON-YYYY'),1300,NULL,10);</p>
-<p>COMMIT;</p>
                 
                   
                 
