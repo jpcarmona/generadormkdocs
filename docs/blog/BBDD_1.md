@@ -18,37 +18,37 @@ Tenemos 2 máquinas Centos con Oracle 11g XE levantadas mediante Vagrant y Virtu
 ``` bash
 Vagrant.configure("2") do |config|
 
-	config.vm.define "nodo1" do |nodo1|
+    config.vm.define "nodo1" do |nodo1|
 
-		config.vm.provider "virtualbox" do |vb|
-			vb.name = "oracle1"
-			vb.memory = 2048
-			vb.cpus = 1
-		end
+        config.vm.provider "virtualbox" do |vb|
+            vb.name = "oracle1"
+            vb.memory = 2048
+            vb.cpus = 1
+        end
 
-		nodo1.vm.box = "neko-neko/centos6-oracle-11g-XE"
-		nodo1.vm.hostname = "oracle1"
-		nodo1.vm.network "public_network",
-			bridge: "wlan0", 
-			use_dhcp_assigned_default_route: true
+        nodo1.vm.box = "neko-neko/centos6-oracle-11g-XE"
+        nodo1.vm.hostname = "oracle1"
+        nodo1.vm.network "public_network",
+            bridge: "wlan0", 
+            use_dhcp_assigned_default_route: true
 
-	end
+    end
 
-	config.vm.define "nodo2" do |nodo2|
+    config.vm.define "nodo2" do |nodo2|
 
-		config.vm.provider "virtualbox" do |vb|
-			vb.name = "oracle2"
-			vb.memory = 2048
-			vb.cpus = 1
-		end
+        config.vm.provider "virtualbox" do |vb|
+            vb.name = "oracle2"
+            vb.memory = 2048
+            vb.cpus = 1
+        end
 
-		nodo2.vm.box = "neko-neko/centos6-oracle-11g-XE"
-		nodo2.vm.hostname = "oracle2"
-		nodo2.vm.network "public_network",
-			bridge: "wlan0",
-			use_dhcp_assigned_default_route: true
+        nodo2.vm.box = "neko-neko/centos6-oracle-11g-XE"
+        nodo2.vm.hostname = "oracle2"
+        nodo2.vm.network "public_network",
+            bridge: "wlan0",
+            use_dhcp_assigned_default_route: true
 
-	end
+    end
 
 end
 ```
@@ -81,11 +81,11 @@ Lo primero será modificar el fichero de configuración `listener.ora`. En este 
 * Quedaría algo así:
 ``` sql
 LISTENER =
-	(DESCRIPTION_LIST =
-		(DESCRIPTION =
-			(ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
-		)
-	)
+    (DESCRIPTION_LIST =
+        (DESCRIPTION =
+            (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
+        )
+    )
 
 SID_LIST_LISTENER =
   (SID_LIST =
@@ -98,14 +98,16 @@ SID_LIST_LISTENER =
 
 DEFAULT_SERVICE_LISTENER = (XE)
 ```
+!!! note ""
+    * LISTENER:  
+    Es dónde especificamos los protocolos,IPs o nombres(HOST), puertos y etc. desde los que se podrán conectar remotamente a este servidor.  
+    Al especificar "localhost", se podrá conectar cualquiera que tenga acceso a la red de la máquina. Si por ejemplo usaramos en vez de "localhost" usaramos "192.168.1.31", sólo podrán acceder los que tengan acceso a la red "192.168.1.0/24".  
 
-Lo que tenemos lo dividimos en 2 partes:
+    * SID_LIST_LISTENER:  
+    Son los nombres de los servicios de escucha dónde especificamos los nombres de las instancias y directorio de las bases de datos. (SID_NAME,GLOBAL_DBNAME,ORACLE_HOME)
 
-* LISTENER:
-Es dónde especificamos los protocolos,IPS o nombres(HOST), puertos y etc. desde los que se podrán conectar remotamente a este servidor.
-
-* SID_LIST_LISTENER:
-Son los nombres de los servicios de escucha dónde especificamos los nombres de las instancias y directorio de las bases de datos.
+    * DEFAULT_SERVICE_LISTENER:  
+    Por defecto el servicio de escucha se llama "XE".
 
 ![](../../img/interconexionBBDD/captura1.png)
 
@@ -133,7 +135,7 @@ SELECT SYS_CONTEXT('USERENV', 'SERVER_HOST') FROM dual;
 ![](../../img/interconexionBBDD/captura3.png)
 
 !!! note "¿ Qué es el `SID_NAME` ?"
-	Identificador del Sistema Oracle: Es un nombre único para una instancia de Oracle Database en un host concreto. El identificador del sistema Oracle (SID) ayuda a identificar el archivo de control así como a ubicar los archivos necesarios para abrir la base de datos. Suele ser el mismo que el del `GLOBAL_DBNAME`.
+    Identificador del Sistema Oracle: Es un nombre único para una instancia de Oracle Database en un host concreto. El identificador del sistema Oracle (SID) ayuda a identificar el archivo de control así como a ubicar los archivos necesarios para abrir la base de datos. Suele ser el mismo que el del `GLOBAL_DBNAME`.
 
 <hr class="h3">
 
@@ -176,6 +178,12 @@ tns_ora1 =
 
 ```
 
+!!! note ""
+    * ADDRESS:  
+    Especificamos el protocolo, IP o nombre y puerto de la máquina a la que queremos conectarnos.
+    * SERVICE_NAME:  
+    Nombre del servicio de la base de datos a la que nos conectaremos.
+
 ![](../../img/interconexionBBDD/captura6.png)
 
 * Volvemos a realizar una prueba con `tnsping` pero esta vez usando el nombre especificado:
@@ -201,87 +209,295 @@ IDENTIFIED BY tiger
 USING 'tns_ora1';
 ```
 
+!!! note ""
+    * LINK:  
+    Nombre que llamaremos al enlace de base dedatos para luego utilizarlo en las consultas, etc..  
+
+    * CONNECT TO:  
+    Usuario con el que nos conectaremos a la base de datos de "oracle1"
+
+    * USING:  
+    Nombre del "mapeo" establecido en `tnsnames.ora`.
+
+* Consulta a la base de datos de "oracle1" desde "oracle2":
+``` sql
 SELECT *
-FROM scott.dept@link_ora1;
+FROM scott.emp@link_ora1;
+```
+
+![](../../img/interconexionBBDD/captura8.png)
 
 
-
-<hr class="h3">
-
-
+<hr class="h2">
 
 
 ## Interconexión entre dos BBDD Postgres
 
+### Escenario vagrant
+
+Ya que el escenario anterior eran de máquinas Centos 6 (2016), ahora utilizaremos otro escenario con máquinas Debian Stretch para la interconexión de 2 base de datos postgres.
+
+* Fichero vagrant:
+``` bash
+Vagrant.configure("2") do |config|
+
+  config.vm.define "nodo3" do |nodo3|
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.name = "postres1"
+      vb.cpus = 1
+    end
+
+    nodo3.vm.box = "debian/stretch64"
+    nodo3.vm.hostname = "postgres1"
+    nodo3.vm.network "public_network",
+      bridge: "wlan0",
+      use_dhcp_assigned_default_route: true
+
+  end
+
+  config.vm.define "nodo4" do |nodo4|
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.name = "postres2"
+      vb.cpus = 1
+    end
+
+    nodo4.vm.box = "debian/stretch64"
+    nodo4.vm.hostname = "postres2"
+    nodo4.vm.network "public_network",
+      bridge: "wlan0",
+      use_dhcp_assigned_default_route: true
+
+  end
+
+end
+```
+
+<hr class="h3">
+
+### Instalación y configuración de Postgres para acceso remoto
+
+Las siguientes acciones las realizaremos en el servidor de escucha "postgres1".
+
+* Instalación postgres:
+``` bash
+apt update && apt -y upgrade && apt -y install postgresql-9.6
+```
+
+
+* Configuramos postgres para que accepte conexiones desde una ip(red):
+``` bash
+sed -ri "s/.*listen_addresses.*/listen_addresses = \'192.168.1.23, localhost\'/g" /etc/postgresql/9.6/main/postgresql.conf
+```
+
+!!! note ""
+    La ip especificada es la de la propia máquina que estamos configurando.
+
+    Con esto podemos conectarnos a ese servidor en local y desde la red "192.168.1/24".
+
+* Reiniciamos Postgres para realizar los cambios:
+``` bash
+systemctl restart postgresql.service
+```
+
+
+* Configuramos la autenticación del cliente:
+``` bash hl_lines="10"
+echo '''
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+local   all             postgres                                peer
+
+# "local" is for Unix domain socket connections only
+local   all             all                                     peer
+
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+host    all             all             192.168.1.31/24         md5 
+
+# IPv6 local connections:
+host    all             all             ::1/128                 md5
+
+''' > /etc/postgresql/9.6/main/pg_hba.conf
+```
+
+!!! note ""
+    La línea señalada es la que añadimos. Con esto permitimos autenticaciones para la máquina con IP "192.168.1.31" y con el método "md5" que es el de por defecto de los usuarios de la base de datos.  
+    `peer` es la autenticación mediante usuarios del sistema con el que estemos logueados.
+
+
+* Reiniciamos Postgres para realizar los cambios:
+``` bash
+systemctl restart postgresql.service
+```
+
+<hr class="h3">
+
+### Habilitamos extensión `dblink`
+
+Esto lo realizamos en el servidor desde el cual realizaremos las consultas.
+
+* Creación de extensión:
+``` bash
+CREATE EXTENSION dblink;
+```
+
+![](../../img/interconexionBBDD/captura9.png)
+
+!!! note ""
+    * Desde Postgresql 9.1 en adelante algunas extensiones se pueden habilitar de forma simple con:  
+    `CREATE EXTENSION`
+    * Por defecto la extensión se crea en el "schema public", si queremos crearlo en otro schema:  
+    `CREATE EXTENSION dblink SCHEMA schemaprueba`  
+    Teniendo que estar ya creado dicho "schema".
+    * Solo los superusuarios de postgres pueden crear extensiones.
+
+<hr class="h3">
+
+### Prueba de acceso a otra base de datos en local
+
+* Creamos una base de datos para pruebas:
+``` sql
+su - postgres
+createdb proyecto
+createuser -l proyecto
+psql
+
+ALTER USER proyecto WITH ENCRYPTED PASSWORD 'proyecto';
+
+GRANT ALL PRIVILEGES ON DATABASE proyecto TO proyecto;
+
+-- DBNAME   USER     HOST       PORT
+\c proyecto proyecto localhost
+
+CREATE TABLE catadores
+(
+    nif VARCHAR(9),
+    nombre VARCHAR(30),
+    apellidos VARCHAR(40),
+    direccion VARCHAR(60),
+    telefono VARCHAR(9),
+    CONSTRAINT PK_catadores PRIMARY KEY (nif),
+    CONSTRAINT CC_catadores_tel UNIQUE(telefono),
+    CONSTRAINT CK_catadores_nif CHECK ( nif ~ '^((\d){8})[A-Z]$|^([KLMXYZ](\d){7})[A-Z]$' )
+);
+
+INSERT INTO catadores(nif,nombre,apellidos,direccion,telefono) VALUES
+('20666978Y','Arturo','Valle Segura','Rambla Mayor 34','702942135'),
+('X0844055R','Gonzalo','Rubio Catalan','Pasaje Real 21','702701555'),
+('07773532S','Jessica','Martos Arranz','Cuesta Iglesia, Portal 1, 2ºB','602858378'),
+('Y0353214V','Laia','Palomo Robles','Cuesta Pedralbes 87','703571606'),
+('79698934R','Iker','Gallardo Merino','Vereda Real, Portal 3, Escalera 8','708796631'),
+('Z7932683B','Esmeralda','Benitez Alonso','Ronda Iglesia 138','601949104');
+```
+
+* Consultamos a la base de datos de "proyecto" desde el usuario y base de datos "postgres":
+``` sql
+SELECT * FROM dblink('dbname=proyecto','SELECT nif,nombre FROM catadores') AS P(nif VARCHAR(9),nombre VARCHAR(30));
+```
+
+![](../../img/interconexionBBDD/captura10.png)
+
+!!! note ""
+    * Especificamos nombre de base de datos.
+    * Especificamos "SELECT" a relizar.
+    * Es obligatorio definir el tipo de registro de las columnas a consultar (El tamaño no es obligatorio).
+
+<hr class="h3">
+
+### Prueba de acceso a otra base de datos en remoto
+
+Teniendo configurado la primera máquina para escuche remotamente y habiendo ya creado la extension en la máquina segunda, procedemos con lo siguiente.
+
+* Podemos crear una conexión persistente con la base de datos remota y así no tener que especificar los datos de conexión:
+``` sql
+SELECT dblink_connect('dblink1','dbname=proyecto host=192.168.1.23 user=proyecto password=proyecto');
+```
+
+* Realizamos consulta remota:
+``` sql
+SELECT * FROM dblink('dblink1','SELECT nif,nombre FROM catadores') AS P(nif VARCHAR(9),nombre VARCHAR(30));
+```
+
+!!! note ""
+    * Al cerrar la sesión se finalizan las conexiones persistentes.
+
+![](../../img/interconexionBBDD/captura11.png)
+
+Para conexiones con usuarios no privilegiados relizamos lo siguiente.
+
+* Creación usuario nuevo:
+``` sql
+su - postgres
+createuser -l remoto
+psql
+
+ALTER USER remoto WITH ENCRYPTED PASSWORD 'remoto';
+
+-- ACTUAL DATABASE (-)
+\c - remoto localhost
+```
+
+* Consultamos a la base de datos de "proyecto" del servidor de escucha desde un usuario nuevo en el servidor 2:
+``` sql
+SELECT dblink_connect('dblink1','dbname=proyecto host=192.168.1.23 user=proyecto password=proyecto');
+
+SELECT * FROM dblink('dblink1','SELECT nif,nombre FROM catadores') AS P(nif VARCHAR(9),nombre VARCHAR(30));
+```
+
+![](../../img/interconexionBBDD/captura12.png)
+
+
+En el caso de que queramos realizar consultas remotas desde las bases de datos de usuarios no privilegiados tendremos que crear la extensión "dblink" en su base de datos.
+
+* Creación extensión en base de datos de usuario remoto:
+``` sql
+su - postgres
+createdb remoto_db
+psql
+
+GRANT ALL PRIVILEGES ON DATABASE remoto_db TO remoto;
+
+\c remoto_db
+
+CREATE EXTENSION dblink;
+
+\c remoto_db remoto localhost
+```
+
+* Realizamos consulta:
+``` sql
+SELECT dblink_connect('dblink1','dbname=proyecto host=192.168.1.23 user=proyecto password=proyecto');
+
+SELECT * FROM dblink('dblink1','SELECT nif,nombre FROM catadores') AS P(nif VARCHAR(9),nombre VARCHAR(30));
+```
+
+![](../../img/interconexionBBDD/captura13.png)
+
+
+* Podemos ver un ejemplo de que si no tenemos creada la extensión en la base de datos de remoto no funciona:
+``` sql
+su - postgres
+psql
+\c remoto_db
+
+DROP EXTENSION dblink;
+
+\c remoto_db remoto localhost
+
+SELECT dblink_connect('dblink1','dbname=proyecto host=192.168.1.23 user=proyecto password=proyecto');
+```
+
+![](../../img/interconexionBBDD/captura14.png)
+
+Nos dice que no encuentra la función "dblink".
+
+
+!!! info "info"
+    Mas información acerca de la extensión "dblink":
+    [Postgres dblink](https://www.postgresql.org/docs/9.6/dblink.html)
+
+<hr class="h2">
+
 ## Interconexión entre BBDD Oracle y Postgres(o MariaDB) con Heterogeneus Services
-
-
-
-Creación squema scott:
-
-CREATE USER SCOTT IDENTIFIED BY tiger DEFAULT TABLESPACE USERS TEMPORARY TABLESPACE TEMP PROFILE DEFAULT;
-
-GRANT CONNECT, RESOURCE TO SCOTT;
-
-ALTER USER SCOTT ACCOUNT UNLOCK;
-
-CREATE TABLE SCOTT.DEPT
-(
- DEPTNO NUMBER(2),
- DNAME VARCHAR2(14),
- LOC VARCHAR2(13),
- CONSTRAINT PK_DEPT PRIMARY KEY (DEPTNO)
-);
-
-
-INSERT INTO SCOTT.DEPT VALUES (10, 'ACCOUNTING', 'NEW YORK');
-INSERT INTO SCOTT.DEPT VALUES (20, 'RESEARCH', 'DALLAS');
-INSERT INTO SCOTT.DEPT VALUES (30, 'SALES', 'CHICAGO');
-INSERT INTO SCOTT.DEPT VALUES (40, 'OPERATIONS', 'BOSTON');
-
-
-COMMIT;
-
-
-
-conn scott/tiger
-
-
-
-CREATE USER SCOTT IDENTIFIED BY tiger DEFAULT TABLESPACE USERS TEMPORARY TABLESPACE TEMP PROFILE DEFAULT;
-
-GRANT CONNECT, RESOURCE TO SCOTT;
-
-ALTER USER SCOTT ACCOUNT UNLOCK;
-
-CREATE TABLE SCOTT.EMP
-(
- EMPNO NUMBER(4),
- ENAME VARCHAR2(10),
- JOB VARCHAR2(9),
- MGR NUMBER(4),
- HIREDATE DATE,
- SAL NUMBER(7, 2),
- COMM NUMBER(7, 2),
- DEPTNO NUMBER(2),
- CONSTRAINT FK_DEPTNO FOREIGN KEY (DEPTNO) REFERENCES SCOTT.DEPT (DEPTNO),
- CONSTRAINT PK_EMP PRIMARY KEY (EMPNO)
-);
-
-INSERT INTO SCOTT.EMP VALUES(7369,'SMITH','CLERK',7902,TO_DATE('17-DIC-1980','DD-MON-YYYY'),800,NULL,20);
-INSERT INTO SCOTT.EMP VALUES(7499,'ALLEN','SALESMAN',7698,TO_DATE('20-FEB-1981','DD-MON-YYYY'),1600,300,30);
-INSERT INTO SCOTT.EMP VALUES(7521,'WARD','SALESMAN',7698,TO_DATE('22-FEB-1981','DD-MON-YYYY'),1250,500,30);
-INSERT INTO SCOTT.EMP VALUES(7566,'JONES','MANAGER',7839,TO_DATE('2-ABR-1981','DD-MON-YYYY'),2975,NULL,20);
-INSERT INTO SCOTT.EMP VALUES(7654,'MARTIN','SALESMAN',7698,TO_DATE('28-SEP-1981','DD-MON-YYYY'),1250,1400,30);
-INSERT INTO SCOTT.EMP VALUES(7698,'BLAKE','MANAGER',7839,TO_DATE('1-MAY-1981','DD-MON-YYYY'),2850,NULL,30);
-INSERT INTO SCOTT.EMP VALUES(7782,'CLARK','MANAGER',7839,TO_DATE('9-JUN-1981','DD-MON-YYYY'),2450,NULL,10);
-INSERT INTO SCOTT.EMP VALUES(7788,'SCOTT','ANALYST',7566,TO_DATE('09-DIC-1982','DD-MON-YYYY'),3000,NULL,20);
-INSERT INTO SCOTT.EMP VALUES(7839,'KING','PRESIDENT',NULL,TO_DATE('17-NOV-1981','DD-MON-YYYY'),5000,NULL,10);
-INSERT INTO SCOTT.EMP VALUES(7844,'TURNER','SALESMAN',7698,TO_DATE('8-SEP-1981','DD-MON-YYYY'),1500,0,30);
-INSERT INTO SCOTT.EMP VALUES(7876,'ADAMS','CLERK',7788,TO_DATE('12-ENE-1983','DD-MON-YYYY'),1100,NULL,20);
-INSERT INTO SCOTT.EMP VALUES(7900,'JAMES','CLERK',7698,TO_DATE('3-DIC-1981','DD-MON-YYYY'),950,NULL,30);
-INSERT INTO SCOTT.EMP VALUES(7902,'FORD','ANALYST',7566,TO_DATE('3-DIC-1981','DD-MON-YYYY'),3000,NULL,20);
-INSERT INTO SCOTT.EMP VALUES(7934,'MILLER','CLERK',7782,TO_DATE('23-ENE-1982','DD-MON-YYYY'),1300,NULL,10);
-
-COMMIT;
 
