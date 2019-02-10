@@ -501,3 +501,330 @@ Nos dice que no encuentra la función "dblink".
 
 ## Interconexión entre BBDD Oracle y Postgres(o MariaDB) con Heterogeneus Services
 
+### Escenario vagrant
+
+En este apartado utilizaremos un servidor con Oracle y otro con postgres.
+
+* Fichero vagrant:
+``` bash
+Vagrant.configure("2") do |config|
+
+    config.vm.define "nodo1" do |nodo1|
+
+        config.vm.provider "virtualbox" do |vb|
+            vb.name = "oracle1"
+            vb.memory = 2048
+            vb.cpus = 1
+        end
+
+        nodo1.vm.box = "neko-neko/centos6-oracle-11g-XE"
+        nodo1.vm.hostname = "oracle1"
+        nodo1.vm.network "public_network",
+            bridge: "wlan0", 
+            use_dhcp_assigned_default_route: true
+
+    end
+
+  config.vm.define "nodo2" do |nodo2|
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.name = "postres1"
+      vb.cpus = 1
+    end
+
+    nodo2.vm.box = "debian/stretch64"
+    nodo2.vm.hostname = "postgres1"
+    nodo2.vm.network "public_network",
+      bridge: "wlan0",
+      use_dhcp_assigned_default_route: true
+
+  end
+
+end
+```
+
+<hr class="h3">
+
+### Configuración de Postgres para acceso remoto
+
+Las siguientes acciones las realizaremos en el servidor de escucha "postgres1".
+
+* Configuramos postgres para que accepte conexiones desde una ip(red):
+``` bash
+sed -ri "s/.*listen_addresses.*/listen_addresses = \'192.168.1.27, localhost\'/g" /etc/postgresql/9.6/main/postgresql.conf
+```
+
+* Configuramos la autenticación del cliente:
+``` bash hl_lines="10"
+echo '''
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+local   all             postgres                                peer
+
+# "local" is for Unix domain socket connections only
+local   all             all                                     peer
+
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+host    all             all             192.168.1.23/24         md5 
+
+# IPv6 local connections:
+host    all             all             ::1/128                 md5
+
+''' > /etc/postgresql/9.6/main/pg_hba.conf
+```
+
+* Reiniciamos Postgres para realizar los cambios:
+``` bash
+systemctl restart postgresql.service
+```
+
+* Creamos una base de datos para pruebas:
+``` sql
+su - postgres
+createdb proyecto
+createuser -l proyecto
+psql
+
+ALTER USER proyecto WITH ENCRYPTED PASSWORD 'proyecto';
+
+GRANT ALL PRIVILEGES ON DATABASE proyecto TO proyecto;
+
+-- DBNAME   USER     HOST       PORT
+\c proyecto proyecto localhost
+
+CREATE TABLE catadores
+(
+    nif VARCHAR(9),
+    nombre VARCHAR(30),
+    apellidos VARCHAR(40),
+    direccion VARCHAR(60),
+    telefono VARCHAR(9),
+    CONSTRAINT PK_catadores PRIMARY KEY (nif),
+    CONSTRAINT CC_catadores_tel UNIQUE(telefono),
+    CONSTRAINT CK_catadores_nif CHECK ( nif ~ '^((\d){8})[A-Z]$|^([KLMXYZ](\d){7})[A-Z]$' )
+);
+
+INSERT INTO catadores(nif,nombre,apellidos,direccion,telefono) VALUES
+('20666978Y','Arturo','Valle Segura','Rambla Mayor 34','702942135'),
+('X0844055R','Gonzalo','Rubio Catalan','Pasaje Real 21','702701555'),
+('07773532S','Jessica','Martos Arranz','Cuesta Iglesia, Portal 1, 2ºB','602858378'),
+('Y0353214V','Laia','Palomo Robles','Cuesta Pedralbes 87','703571606'),
+('79698934R','Iker','Gallardo Merino','Vereda Real, Portal 3, Escalera 8','708796631'),
+('Z7932683B','Esmeralda','Benitez Alonso','Ronda Iglesia 138','601949104');
+```
+
+<hr class="h3">
+
+### Instalación y configuración Driver ODBC
+
+Las siguientes acciones las realizaremos en el servidor donde tenemos Oracle para conectarnos a la de Postgres.
+
+ODBC (Open DATABASE Connector) es un estándar de acceso a las bases de datos con la que es posible acceder a los datos desde una aplicación a un gestor de base de datos cualquiera. Se puede decir que es un intermediario entre aplicación y base de datos.
+
+* Instalación:
+``` bash
+yum -y install postgresql-odbc unixODBC
+```
+
+!!! note ""
+    * `unixODBC` son utilidades para este driver.
+    * En Debian los paquetes serían `odbc-postgresql` y `unixodbc`.
+
+Por defecto se nos crea la configuración del driver para conexiones con postgresql y mysql en el fichero `/etc/odbcinst.ini`.
+
+![](../../img/interconexionBBDD/captura15.png)
+
+* Cambiamos la configuración:
+``` bash
+echo '''
+[PostgreSQL]
+Description     = ODBC for PostgreSQL
+Driver          = /usr/lib64/psqlodbc.so
+Setup           = /usr/lib64/libodbcpsqlS.so
+FileUsage   = 1
+''' > /etc/odbcinst.ini
+```
+
+!!! attention ""
+    * El problema que he encontrado es que la configuración por defecto no funciona ya que los "drivers" se encuentran en `/usr/lib64/` y no en `/usr/lib/` que es como está por defecto.
+
+* Comprobar la configuración de drivers:
+``` bash
+odbcinst -q -d
+```
+
+![](../../img/interconexionBBDD/captura16.png)
+
+* Configuramos la conexión que realizaremos con el driver:
+
+``` bash
+echo '''
+[PSQL]
+Debug           = 0
+CommLog         = 0
+ReadOnly        = 1
+Driver          = PostgreSQL
+Servername      = 192.168.1.27
+Username        = proyecto
+Password        = proyecto
+Port            = 5432
+Database        = proyecto
+Trace           = 0
+TraceFile       = /tmp/sql.log
+''' > /etc/odbc.ini
+```
+
+!!! note ""
+    Los datos especificados en este fichero son los datos de conexión hacia la base de datos de postgres.
+
+* Comprobar la configuración de la conexión del driver:
+``` bash
+odbcinst -q -s
+```
+
+![](../../img/interconexionBBDD/captura17.png)
+
+* Realizamos una comprobación de la conexión:
+``` bash
+isql -v PSQL
+```
+
+![](../../img/interconexionBBDD/captura18.png)
+
+!!! note ""
+    Vemos que ya podemos realizar consultas.
+
+* Si por ejemplo paramos el servidor de postgres nos dará error:
+
+![](../../img/interconexionBBDD/captura19.png)
+
+<hr class="h3">
+
+### Configuración de HS(Heterogeneus Services) en Oracle
+
+* Creamos el fichero de inicio para HS:
+``` bash
+echo '''
+HS_FDS_CONNECT_INFO = PSQL
+HS_FDS_TRACE_LEVEL = ON
+HS_FDS_SHAREABLE_NAME = /usr/lib64/psqlodbc.so
+HS_LANGUAGE = AMERICAN_AMERICA.WE8ISO8859P1
+set ODBCINI=/etc/odbc.ini
+''' > $ORACLE_HOME/hs/admin/initPSQL.ora
+```
+
+!!! note ""
+    * `HS_FDS_SHAREABLE_NAME` es el driver especificado en `/etc/odbcinst.ini`.
+    * `set ODBCINI` es el fichero de configuración de los drivers ODBC.
+    * Importante utilizar el idioma especificado y no otro ya que propicia a errores.
+
+
+<hr class="h3">
+
+### Configuración del Listener en Oracle
+
+* Definiremos una especie de entrada en el Listener que habilitará la escucha de Oracle hacia el driver ODBC:
+``` sql hl_lines="16 17 18 19 20"
+echo '''
+LISTENER =
+    (DESCRIPTION_LIST =
+        (DESCRIPTION =
+            (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
+        )
+    )
+
+SID_LIST_LISTENER =
+  (SID_LIST =
+    (SID_DESC =
+      (SID_NAME = XE)
+      (GLOBAL_DBNAME = XE)
+      (ORACLE_HOME = /u01/app/oracle/product/11.2.0/xe)
+    )
+    (SID_DESC =
+      (SID_NAME = PSQL) # Nombre especificado en HS y en conexión del driver
+      (PROGRAM = dg4odbc)
+      (ORACLE_HOME = /u01/app/oracle/product/11.2.0/xe)
+    )
+  )
+
+DEFAULT_SERVICE_LISTENER = (XE)
+''' > $ORACLE_HOME/network/admin/listener.ora
+```
+
+* Reiniciamos el servicio del listener:
+``` bash
+lsnrctl stop && lsnrctl start
+```
+
+* Vemos el estado del listener:
+``` bash
+lsnrctl status
+```
+
+![](../../img/interconexionBBDD/captura20.png)
+
+### Configuración del TNSnames en Oracle
+
+* Creamos una entrada para "mapear" la conexión hacia el driver ODBC:
+``` sql 
+echo '''
+PSQL  =
+  (DESCRIPTION=
+    (ADDRESS=(PROTOCOL=tcp)(HOST = localhost)(PORT=1521))
+    (CONNECT_DATA=(SID=PSQL))
+    (HS=OK)
+  )
+
+''' >> $ORACLE_HOME/network/admin/tnsnames.ora
+```
+
+* Realizamos una prueba con tnsping:
+``` bash
+tnsping PSQL
+```
+
+![](../../img/interconexionBBDD/captura21.png)
+
+### Configuración de interconexión mediante enlace de base de datos
+
+Ahora necesitamos configurar dicho enlace en el cliente desde "sqlplus".
+
+* Creamos enlace:
+``` sql
+CREATE DATABASE LINK LINK_POSTGRES1
+CONNECT TO "proyecto"
+IDENTIFIED BY "proyecto"
+USING 'PSQL';
+```
+
+* Consulta a la base de datos de "postgres1" desde "oracle1":
+``` sql
+SELECT *
+FROM "catadores"@LINK_POSTGRES1;
+```
+
+![](../../img/interconexionBBDD/captura22.png)
+
+
+<hr class="h2">
+
+## Interconexión entre BBDD Postgres --> Oracle
+
+### PROXIMAMENTE...
+
+<!--
+
+[Postgres oracle_fdw](https://www.postgresql.org/ftp/projects/pgFoundry/oracle-fdw/oracle_fdw/oracle_fdw0.9.9/)
+
+[Oracle - Postresql](http://agapoff.name/oracle-postgresql-links.html)
+
+[manual oracle_fdw](https://blog.dbi-services.com/connecting-your-postgresql-instance-to-an-oracle-database/)
+
+[manual oracle_fdw](https://github.com/laurenz/oracle_fdw)
+
+* Prerequisitos:
+``` bash
+yum -y install postgresql-devel
+```
+
+-->
