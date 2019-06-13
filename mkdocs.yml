@@ -79,5 +79,6 @@ nav:
     - 'Cifrado y firmas con GPG': 'blog/gpg.md'
     - 'Interconexión de BBDD': 'blog/BBDD_1.md'
     - 'Auditorías de BBDD': 'blog/auditoriasBBDD.md'
+    - 'Proyecto': 'blog/proyecto.md'
   - Sobre mí: 'about.md'
 

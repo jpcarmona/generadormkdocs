@@ -1,5 +1,9 @@
 # Bienvenido al Rincón Vacío
 
+[Proyecto fin de curso 2º de ASIR - Gestión de creación de infraestrucutra, configuración y administración de software con AWX](blog/proyecto.md#header1)
+
+***
+
 [AUDITORÍAS EN BASE DE DATOS](blog/auditoriasBBDD.md#header1)
 
 Las interconexiones de servidores de bases de datos son operaciones que pueden ser muy útiles en diferentes contextos. Básicamente, se trata de acceder a datos que no están almacenados en nuestra base de datos, pudiendo combinarlos con los que ya tenemos.
