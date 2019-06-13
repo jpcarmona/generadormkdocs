@@ -18,11 +18,13 @@ echo "Comentario1:"
 read comentario1
 git commit -am "$comentario1"
 git push
+# CLONE GIT REPO GITHUBPAGE WEB
+rm web
+git clone git@github.com:jpcarmona/web.git
 # BUILD WEB PAGE
 mkdocs build -d web
-# PUSH GIT REPO GITHUBPAGE WEB
-git clone git@github.com:jpcarmona/web.git
 cd web
+# PUSH GIT REPO GITHUBPAGE WEB
 git add . 2>/dev/null
 git commit -am "$comentario1"
 git push
