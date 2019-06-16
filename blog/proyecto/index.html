@@ -106,7 +106,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../../#proyecto-fin-de-curso-2o-de-asir-gestion-de-creacion-de-infraestrucutra-configuracion-y-administracion-de-software-con-awx" tabindex="1" class="md-skip">
+      <a href="../../#proyecto-fin-de-curso-2o-de-asir-despliegue-automatico-de-una-infraestructura-para-hosting-con-ansible-y-awx" tabindex="1" class="md-skip">
         Saltar a contenido
       </a>
     
@@ -529,15 +529,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#inventarios" title="Inventarios" class="md-nav__link">
-    Inventarios
+  <a href="#extensiones-de-ficheros" title="Extensiones de ficheros" class="md-nav__link">
+    Extensiones de ficheros
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#playbooks" title="Playbooks" class="md-nav__link">
-    Playbooks
+  <a href="#estructura-de-ficheros-y-directorios-para-ansible" title="Estructura de ficheros y directorios para ansible" class="md-nav__link">
+    Estructura de ficheros y directorios para ansible
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inventarios" title="Inventarios" class="md-nav__link">
+    Inventarios
   </a>
   
 </li>
@@ -550,16 +557,36 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#variables-de-grupo" title="Variables de grupo" class="md-nav__link">
-    Variables de grupo
+  <a href="#playbooks" title="Playbooks" class="md-nav__link">
+    Playbooks
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#creacion-de-un-rol" title="Creación de un rol" class="md-nav__link">
-    Creación de un rol
+  <a href="#roles" title="Roles" class="md-nav__link">
+    Roles
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-rol-a-partir-de-role-skeleton" title="Creación de rol a partir de role-skeleton" class="md-nav__link">
+    Creación de rol a partir de role-skeleton
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilizacion-de-rol-de-ansible-galaxy" title="Utilización de rol de Ansible Galaxy" class="md-nav__link">
+    Utilización de rol de Ansible Galaxy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -602,10 +629,71 @@
     Creando un proyecto en AWX
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-proyecto-mediante-lineas-de-comandos" title="Creación de proyecto mediante líneas de comandos" class="md-nav__link">
+    Creación de proyecto mediante líneas de comandos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-proyecto-mediante-interfaz-web-de-awx" title="Creación de proyecto mediante interfaz web de AWX" class="md-nav__link">
+    Creación de proyecto mediante interfaz web de AWX
+  </a>
+  
 </li>
         
       </ul>
     </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proceso-de-automatizacion" title="Proceso de automatización" class="md-nav__link">
+    Proceso de automatización
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-maquinas-en-openstack" title="Creación de máquinas en openstack" class="md-nav__link">
+    Creación de máquinas en openstack
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalacion-y-configuracion-de-los-servidores" title="Instalación y configuracion de los servidores" class="md-nav__link">
+    Instalación y configuracion de los servidores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#despliegue-de-aplicacion-webcms-en-el-hosting" title="Despliegue de aplicación Web(CMS) en el hosting" class="md-nav__link">
+    Despliegue de aplicación Web(CMS) en el hosting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cosas-para-hacer-en-un-futuro" title="Cosas para hacer en un futuro" class="md-nav__link">
+    Cosas para hacer en un futuro
+  </a>
   
 </li>
       
@@ -639,8 +727,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#creacion-de-contrasena-cifradas" title="Creación de contraseña cifradas" class="md-nav__link">
-    Creación de contraseña cifradas
+  <a href="#creacion-de-contrasenas-cifradas" title="Creación de contraseñas cifradas" class="md-nav__link">
+    Creación de contraseñas cifradas
   </a>
   
 </li>
@@ -648,6 +736,13 @@
           <li class="md-nav__item">
   <a href="#anexo-3" title="Anexo 3" class="md-nav__link">
     Anexo 3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anexo-4" title="Anexo 4" class="md-nav__link">
+    Anexo 4
   </a>
   
 </li>
@@ -781,15 +876,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#inventarios" title="Inventarios" class="md-nav__link">
-    Inventarios
+  <a href="#extensiones-de-ficheros" title="Extensiones de ficheros" class="md-nav__link">
+    Extensiones de ficheros
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#playbooks" title="Playbooks" class="md-nav__link">
-    Playbooks
+  <a href="#estructura-de-ficheros-y-directorios-para-ansible" title="Estructura de ficheros y directorios para ansible" class="md-nav__link">
+    Estructura de ficheros y directorios para ansible
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inventarios" title="Inventarios" class="md-nav__link">
+    Inventarios
   </a>
   
 </li>
@@ -802,16 +904,36 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#variables-de-grupo" title="Variables de grupo" class="md-nav__link">
-    Variables de grupo
+  <a href="#playbooks" title="Playbooks" class="md-nav__link">
+    Playbooks
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#creacion-de-un-rol" title="Creación de un rol" class="md-nav__link">
-    Creación de un rol
+  <a href="#roles" title="Roles" class="md-nav__link">
+    Roles
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-rol-a-partir-de-role-skeleton" title="Creación de rol a partir de role-skeleton" class="md-nav__link">
+    Creación de rol a partir de role-skeleton
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilizacion-de-rol-de-ansible-galaxy" title="Utilización de rol de Ansible Galaxy" class="md-nav__link">
+    Utilización de rol de Ansible Galaxy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -854,10 +976,71 @@
     Creando un proyecto en AWX
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-proyecto-mediante-lineas-de-comandos" title="Creación de proyecto mediante líneas de comandos" class="md-nav__link">
+    Creación de proyecto mediante líneas de comandos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-proyecto-mediante-interfaz-web-de-awx" title="Creación de proyecto mediante interfaz web de AWX" class="md-nav__link">
+    Creación de proyecto mediante interfaz web de AWX
+  </a>
+  
 </li>
         
       </ul>
     </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proceso-de-automatizacion" title="Proceso de automatización" class="md-nav__link">
+    Proceso de automatización
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-maquinas-en-openstack" title="Creación de máquinas en openstack" class="md-nav__link">
+    Creación de máquinas en openstack
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalacion-y-configuracion-de-los-servidores" title="Instalación y configuracion de los servidores" class="md-nav__link">
+    Instalación y configuracion de los servidores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#despliegue-de-aplicacion-webcms-en-el-hosting" title="Despliegue de aplicación Web(CMS) en el hosting" class="md-nav__link">
+    Despliegue de aplicación Web(CMS) en el hosting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cosas-para-hacer-en-un-futuro" title="Cosas para hacer en un futuro" class="md-nav__link">
+    Cosas para hacer en un futuro
+  </a>
   
 </li>
       
@@ -891,8 +1074,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#creacion-de-contrasena-cifradas" title="Creación de contraseña cifradas" class="md-nav__link">
-    Creación de contraseña cifradas
+  <a href="#creacion-de-contrasenas-cifradas" title="Creación de contraseñas cifradas" class="md-nav__link">
+    Creación de contraseñas cifradas
   </a>
   
 </li>
@@ -900,6 +1083,13 @@
           <li class="md-nav__item">
   <a href="#anexo-3" title="Anexo 3" class="md-nav__link">
     Anexo 3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anexo-4" title="Anexo 4" class="md-nav__link">
+    Anexo 4
   </a>
   
 </li>
@@ -928,12 +1118,15 @@
                   <a href="https://github.com/jpcarmona/generadormkdocs/edit/master/docs/blog/proyecto.md" title="Editar esta página" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="proyecto-fin-de-curso-2o-de-asir-gestion-de-creacion-de-infraestrucutra-configuracion-y-administracion-de-software-con-awx">Proyecto fin de curso 2º de ASIR - Gestión de creación de infraestrucutra, configuración y administración de software con AWX<a class="headerlink" href="#proyecto-fin-de-curso-2o-de-asir-gestion-de-creacion-de-infraestrucutra-configuracion-y-administracion-de-software-con-awx" title="Permanent link">&para;</a></h1>
+                <h1 id="proyecto-fin-de-curso-2o-de-asir-despliegue-automatico-de-una-infraestructura-para-hosting-con-ansible-y-awx">Proyecto fin de curso 2º de ASIR - Despliegue automático de una infraestructura para hosting con Ansible y AWX<a class="headerlink" href="#proyecto-fin-de-curso-2o-de-asir-despliegue-automatico-de-una-infraestructura-para-hosting-con-ansible-y-awx" title="Permanent link">&para;</a></h1>
 <hr class="h3">
 
 <h2 id="introduccion">Introducción<a class="headerlink" href="#introduccion" title="Permanent link">&para;</a></h2>
-<p>Hablar sobre AWX, Ansible, la automatización de tareas, etc...</p>
+<p>Hoy en día el número de servidores, virtuales o físicos, sigue creciendo. Este hecho nos obliga a buscar nuevos métodos para desplegar, configurar y actualizar máquinas de forma que estas tareas repetitivas nos hagan perder el menor tiempo posible.</p>
+<p>Ansible es una herramienta open-source desarrollada en python. Se define como un motor de orquestación muy simple que automatiza las tareas necesarias en el campo de los servidores. Ansible posee unas características que junto a su buena documentación hacen esta herramienta realmente atractiva para aquellos que aún no automatizan sus tareas de administración ya que su curva de aprendizaje crece muy rápido.</p>
 <h3 id="objetivos-de-este-proyecto">Objetivos de este proyecto<a class="headerlink" href="#objetivos-de-este-proyecto" title="Permanent link">&para;</a></h3>
+<p>Los objetivos de este proyecto son en gran parte aprender a utilizar Ansible definiendo roles, playbooks y tareas y su herramienta Web AWX que nos permite gestionar nuestros proyectos.</p>
+<p>El objetivo final será el despliegue automático de una infraestructura en Openstack que nos sirva de hosting de aplicaciones "contenedorizadas" con Docker.</p>
 <hr class="h3">
 
 <h2 id="requisitos">Requisitos<a class="headerlink" href="#requisitos" title="Permanent link">&para;</a></h2>
@@ -994,12 +1187,12 @@ Esta herramienta de cloud-computing me la proporcionará mi instituto y en él d
 <li>Servidor DNS.</li>
 <li>Servidor Apache.</li>
 <li>Servidor MySQL.</li>
-<li>Servidor DOcker.</li>
+<li>Servidor Docker.</li>
 </ul>
 <hr class="h3">
 
 <h2 id="forma-de-trabajo">Forma de trabajo<a class="headerlink" href="#forma-de-trabajo" title="Permanent link">&para;</a></h2>
-<p>En esta ocasión se trabajará con la herramienta <code>git</code> con un repositorio remoto alojado en <a href="https://github.com/jpcarmona/proyectoawx">github</a> (este mismo repositorio).</p>
+<p>En esta ocasión se trabajará con la herramienta <code>git</code> con un repositorio remoto alojado en <a href="https://github.com/jpcarmona/proyectoawx">github</a>.</p>
 <p>Trabajaremos en local con un directorio definido de la siguiente manera:</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1018,14 +1211,20 @@ git clone <span class="nv">$PROJECT_REPO_URL</span> <span class="si">${</span><s
 </pre></div>
 </td></tr></table>
 
-<p>Para cada apartado se explicará el trabajo previo realizado para su posterior uso.</p>
+<div class="admonition note">
+<p class="admonition-title">attention</p>
+<p>Importante tener en cuenta estas variables en futuros usos en la línea de comandos.</p>
+</div>
 <hr class="h3">
 
 <h2 id="ansible">Ansible<a class="headerlink" href="#ansible" title="Permanent link">&para;</a></h2>
-<h3 id="inventarios">Inventarios<a class="headerlink" href="#inventarios" title="Permanent link">&para;</a></h3>
-<p>Los inventarios son los ficheros donde se definen los equipos a los cuales se le van a realizar las tareas indicadas en los playbooks.</p>
+<p>A continuación se explicará los métodos y las buenas prácticas utilizadas con Ansible.</p>
+<h3 id="extensiones-de-ficheros">Extensiones de ficheros<a class="headerlink" href="#extensiones-de-ficheros" title="Permanent link">&para;</a></h3>
+<p>Ansible utiliza en la mayoría de sus definiciones de ficheros YAML aunque también se podría utilizar JSON o INI en algunas ocasiones.
+También se utiliza JINJA2 para el uso en variables o condicionales, además del uso en ficheros plantilla.</p>
+<h3 id="estructura-de-ficheros-y-directorios-para-ansible">Estructura de ficheros y directorios para ansible<a class="headerlink" href="#estructura-de-ficheros-y-directorios-para-ansible" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Ejemplo fichero inventario:</li>
+<li>Las buenas prácticas definen la siguiente estructura:</li>
 </ul>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -1050,88 +1249,219 @@ git clone <span class="nv">$PROJECT_REPO_URL</span> <span class="si">${</span><s
 21
 22
 23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="c1"># inventories/inventory.yml</span>
+24</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>.
+├── host_vars
+│   └── <span class="nb">local</span>
+│       ├── main.yml
+├── inventories
+│   ├── inventory.yml
+│   └── local.yml
+├── playbooks
+│   ├── playbook.yml
+│   ├── host_vars -&gt; ../host_vars
+│   ├── roles -&gt; ../roles
+├── roles
+    ├── role1
+    ├── role2
+        ├── defaults
+        │   └── main.yml
+        ├── handlers
+        │   └── main.yml
+        ├── meta
+        │   └── main.yml
+        ├── tasks
+        │   ├── main.yml
+        └── templates
+            └── main.conf.j2
+</pre></div>
+</td></tr></table>
+
+<p>Dichos directorios y ficheros se explicarán a continuación.</p>
+<h3 id="inventarios">Inventarios<a class="headerlink" href="#inventarios" title="Permanent link">&para;</a></h3>
+<p>Los inventarios son los ficheros donde se definen los equipos a los cuales se le van a realizar las tareas indicadas en los playbooks.</p>
+<ul>
+<li>Ejemplo fichero inventario:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="c1"># inventories/inventory.yml</span>
 ---
 all:
   vars:
     <span class="c1"># Ansible commons all</span>
     ansible_ssh_common_args: <span class="s1">&#39;-o StrictHostKeyChecking=no&#39;</span>
-    ansible_python_interpreter: <span class="s2">&quot;{{ ansible_playbook_python }}&quot;</span>
+    ansible_python_interpreter: <span class="s2">&quot;/usr/bin/python3&quot;</span>
     ansible_ssh_private_key_file: ~/.ssh/id_rsa
     ansible_ssh_transfer_method: scp
-  children:
-    servers:
-      vars:
-        ansible_user: ubuntu
-        ansible_port: <span class="m">22</span>
-      children:
-        mainservers:
-          hosts:
-            server1:
-              ansible_host: <span class="m">172</span>.22.0.1
-            server2:
-              ansible_host: <span class="m">172</span>.22.0.2
-        secondaryservers:
-          hosts:
-            server3:
-              ansible_host: <span class="m">172</span>.22.0.3
-            server4:
-              ansible_host: <span class="m">172</span>.22.0.4
-    containers:
-      vars:
-        ansible_user: root
-        ansible_port: <span class="m">22122</span>
-      children:
-        maincontainers:
-          hosts:
-            container1:
-              ansible_host: <span class="m">172</span>.22.0.1
-            container2:
-              ansible_host: <span class="m">172</span>.22.0.2
-        secondarycontainers:
-          hosts:
-            container3:
-              ansible_host: <span class="m">172</span>.22.0.3
-            container4:
-              ansible_host: <span class="m">172</span>.22.0.4
+    ansible_user: ubuntu
+    hosts:
+      server1:
+        ansible_host: <span class="m">172</span>.22.0.1
+      server2:
+        ansible_host: <span class="m">172</span>.22.0.2
+      server3:
+        ansible_host: <span class="m">172</span>.22.0.3
+      server4:
+        ansible_host: <span class="m">172</span>.22.0.4
 </pre></div>
 </td></tr></table>
 
-<p>En la definición del ejemplo hemos agrupados los equipos en grupos y a su vez dichos grupos mantienen difrentes variables comúnes de ansible.</p>
-<p>Variables comúnes:
-<em> ansible_host:
-</em> ansible_user:
-* ansible_port:</p>
-<h3 id="playbooks">Playbooks<a class="headerlink" href="#playbooks" title="Permanent link">&para;</a></h3>
+<p>En la definición de este ejemplo utilizo algunas variables comúnes de ansible:</p>
+<ul>
+<li>ansible_host: Es la ip de la máquina donde se ejecutarán las tareas</li>
+<li>ansible_user: Usuario con que se conectará por ssh</li>
+<li>ansible_ssh_private_key_file: Fichero de clave privada para conectarse por ssh.</li>
+<li>ansible_ssh_transfer_method: Modo de transferencia de los ficheros hacia el equipo remoto.</li>
+<li>ansible_ssh_common_args: Opcion de ssh para que no compruebe estrictamente la vericidad de la máquina a la que nos conectaremos. Útil para cuando nos pregunta en medio del lanzamiento de un playbook de ansible si aceptamos la veracidad del servidor. Poco seguro pero más cómodo. Podríamos antes realizar las conexiones para así añadir los servidor al fichero <code>known_hosts</code>.</li>
+<li>ansible_python_interpreter: Intérprete de python a utilizar en la ejecución del playbook.</li>
+</ul>
 <h3 id="variables-de-host">Variables de host<a class="headerlink" href="#variables-de-host" title="Permanent link">&para;</a></h3>
-<h3 id="variables-de-grupo">Variables de grupo<a class="headerlink" href="#variables-de-grupo" title="Permanent link">&para;</a></h3>
-<h3 id="creacion-de-un-rol">Creación de un rol<a class="headerlink" href="#creacion-de-un-rol" title="Permanent link">&para;</a></h3>
-<p>Para la creación de nuevos roles una buena práctica es utilizar un <code>role-skeleton</code>
-ROL DE ANSIBLE PARA INSTALAR DOCKER</p>
-<p>https://github.com/geerlingguy/ansible-role-docker.git</p>
+<p>Son variables definidas para los hosts del inventario.
+Estas variables deben encontrarse en directorios o ficheros llamados igual que al host del que se definen dentro del directorio <code>host_vars</code>. Se podrán llamar dichas variables de hosts desde un host distinto utilizando <code>include_vars</code> en las tareas o creando ficheros de variables de grupos <code>group_vars</code> para que un grupo de host pueda utilizar las mismas variables.</p>
+<h3 id="playbooks">Playbooks<a class="headerlink" href="#playbooks" title="Permanent link">&para;</a></h3>
+<p>Son los fichero principales que ejecuta ansible donde se especifican las tareas a ajecutar y en que hosts debe ejecutarse, ya sean especificadas en el propio playbook o llamando por ejemplo a roles.</p>
+<ul>
+<li>Ejemplo de Playbook:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="c1"># inventories/inventory.yml</span>
+---
+<span class="c1">## Create rule for new http port in groups security of Openstack</span>
+- hosts: localhost
+  gather_facts: False
+  tasks:
+    - name: Give a msg
+      debug:
+        msg: <span class="s2">&quot;Hello world&quot;</span>
+
+<span class="c1"># Create hosting</span>
+- hosts: all
+  gather_facts: True
+  become: True
+  tasks:
+    - name: Include role
+      include_role:
+        name: role
+  vars:
+    var1: <span class="s2">&quot;value1&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<p>En este playbook se lanzara la tarea de mostrar un mensaje en local y luego para todos los hosts del inventario se ejecutara un rol que esta incluido en la tarea.</p>
+<h3 id="roles">Roles<a class="headerlink" href="#roles" title="Permanent link">&para;</a></h3>
+<h4 id="creacion-de-rol-a-partir-de-role-skeleton">Creación de rol a partir de role-skeleton<a class="headerlink" href="#creacion-de-rol-a-partir-de-role-skeleton" title="Permanent link">&para;</a></h4>
+<p>Para la creación de nuevos roles una buena práctica es utilizar un <code>role-skeleton</code>. Es una estructura de directorios y ficheros predefinidos en modo plantillas <code>Jinja2</code>. Un ejemplo en el <a href="https://github.com/jpcarmona/proyectoawx/tree/master/roles/role-skeleton">repositorio del proyecto</a>.</p>
+<ul>
+<li>Creación de rol a partir de un <code>role-skeleton</code>:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">PROJECT_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">PROJECT_REPO_NAME</span><span class="si">}</span>/roles
+ansible-galaxy init --role-skeleton<span class="o">=</span>role-skeleton rol-nuevo
+</pre></div>
+</td></tr></table>
+
+<p>Se nos creará una nueva estructura de directorios y ficheros con el nuevo nombre de rol <code>rol-nuevo</code> en el directorio roles.</p>
+<ul>
+<li>Estructura de directorios y ficheros:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>roles/role-skeleton/
+├── defaults
+│   └── main.yml.j2
+├── docs
+│   └── README.md.j2
+├── files
+├── handlers
+│   └── main.yml.j2
+├── meta
+│   └── main.yml.j2
+├── README.md.j2
+├── tasks
+│   └── main.yml.j2
+├── templates
+└── vars
+    └── main.yml.j2
+</pre></div>
+</td></tr></table>
+
+<h4 id="utilizacion-de-rol-de-ansible-galaxy">Utilización de rol de Ansible Galaxy<a class="headerlink" href="#utilizacion-de-rol-de-ansible-galaxy" title="Permanent link">&para;</a></h4>
+<p>En la comunidad de Ansible existen usuarios que aportan continuamente la creación de nuevos roles que facilitan el desempeño de algunas necesidades, como por ejemplo la instalación de Docker.</p>
+<ul>
+<li>Descarga de rol de Ansible Galaxy en nuestro directorio de roles:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>ansible-galaxy install -p <span class="si">${</span><span class="nv">PROJECT_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">PROJECT_REPO_NAME</span><span class="si">}</span>/roles/ geerlingguy.docker
+</pre></div>
+</td></tr></table>
+
+<hr class="h3">
+
 <h2 id="awx">AWX<a class="headerlink" href="#awx" title="Permanent link">&para;</a></h2>
 <h3 id="que-es-awx">¿ Qué es AWX ?<a class="headerlink" href="#que-es-awx" title="Permanent link">&para;</a></h3>
-<p>Explicación AWX... , contenedores que lo forman...</p>
+<p>AWX es una herramienta para la coordinación de entornos empresariales. AWX administra 
+la tecnología Ansible para automatizar tareas de TI, como la gestión de las configuraciones, el 
+aprovisionamiento, la coordinación de los flujos de trabajo, la implementación de las aplicaciones 
+y la gestión del ciclo de vida.</p>
+<p>AWX es una herramienta compuesta por 5 servicios, en nuestro son 5 contenedores:</p>
+<ul>
+<li>awx_web:
+  Servidor Web Nginx con aplicación en Python(Django)</li>
+<li>awx_task:
+  Servidor que ejecuta las tareas con Ansible</li>
+<li>awx_rabbitmq:
+  Servidor de cola de mensajes.</li>
+<li>awx_memcached:
+  Servidor caché de la base de datos.</li>
+<li>awx_postgres:
+  Servidor de base de datos.</li>
+</ul>
 <h3 id="preparacion-previa-a-la-instalacion">Preparación previa a la instalación<a class="headerlink" href="#preparacion-previa-a-la-instalacion" title="Permanent link">&para;</a></h3>
 <p>En este apartado se explicará los pasos previos llevados a cabo para la posterior instalación de AWX.</p>
 <p>Comentar que la instalación de esta herramienta puede ser realizada de 3 formas:</p>
@@ -1198,11 +1528,17 @@ cat inventory.backup <span class="p">|</span> grep -Ev <span class="s2">&quot;^#
 28
 29
 30
-31</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="o">---</span>
+31
+32
+33
+34
+35</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">cat</span> <span class="o">&lt;&lt;</span><span class="n">EOF</span><span class="o">&gt;</span> <span class="err">$</span><span class="p">{</span><span class="n">PROJECT_DIR</span><span class="p">}</span><span class="o">/</span><span class="err">$</span><span class="p">{</span><span class="n">AWX_REPO_NAME</span><span class="p">}</span><span class="o">/</span><span class="n">installer</span><span class="o">/</span><span class="n">inventory</span>
+<span class="o">---</span>
 <span class="nb">all</span><span class="p">:</span>
   <span class="nb">vars</span><span class="p">:</span>
     <span class="n">dockerhub_base</span><span class="p">:</span> <span class="n">ansible</span>
-    <span class="n">awx_task_hostname</span><span class="p">:</span> <span class="n">awxtask</span>
+    <span class="c1"># IMPORTANTE deben tener estos nombres si no dará error en la ejecución de jobs</span>
+    <span class="n">awx_task_hostname</span><span class="p">:</span> <span class="n">awx</span>
     <span class="n">awx_web_hostname</span><span class="p">:</span> <span class="n">awxweb</span>
     <span class="c1"># Para que no nos cree las imagenes de Docker</span>
     <span class="n">use_container_for_build</span><span class="p">:</span> <span class="n">false</span>
@@ -1213,7 +1549,7 @@ cat inventory.backup <span class="p">|</span> grep -Ev <span class="s2">&quot;^#
     <span class="n">host_port</span><span class="p">:</span> <span class="mi">80</span>
     <span class="n">host_port_ssl</span><span class="p">:</span> <span class="mi">443</span>
     <span class="c1"># Directorio que nos interesa para su posterior uso</span>
-    <span class="n">docker_compose_dir</span><span class="p">:</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">awxcompose</span>
+    <span class="n">docker_compose_dir</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">PROJECT_DIR</span><span class="p">}</span><span class="o">/</span><span class="err">$</span><span class="p">{</span><span class="n">PROJECT_REPO_NAME</span><span class="p">}</span><span class="o">/</span><span class="n">awxcompose</span>
     <span class="c1"># Configuraciones de los distintos servicios de AWX</span>
     <span class="n">pg_port</span><span class="p">:</span> <span class="mi">5432</span>
     <span class="n">pg_database</span><span class="p">:</span> <span class="n">pgname</span> 
@@ -1229,6 +1565,8 @@ cat inventory.backup <span class="p">|</span> grep -Ev <span class="s2">&quot;^#
       <span class="n">ansible_connection</span><span class="p">:</span> <span class="n">local</span>
       <span class="c1"># Establecemos ansible_python_interpreter con el del entorno virtual utilizado. Podemos utilizar la variable &quot;{{ ansible_playbook_python }}&quot; que es el entorno actual utilizado.</span>
       <span class="n">ansible_python_interpreter</span><span class="p">:</span> <span class="s2">&quot;{{ ansible_playbook_python }}&quot;</span>
+
+<span class="n">EOF</span>
 </pre></div>
 </td></tr></table>
 
@@ -1240,7 +1578,6 @@ cat inventory.backup <span class="p">|</span> grep -Ev <span class="s2">&quot;^#
 </div>
 <p>Con esto ya podríamos ejecutar el playbook pero antes realizaremos una modificación en una tarea de un rol. Esta modificación consistirá en comentar la tarea que nos crea los contenedores en local al lanzar el playbook, ya que esta tarea no tiene la acción parametrizada y queremos realizar algunas acciones antes del depspliegue de AWX.</p>
 <p>La tarea es <code>Start the containers</code> situada en <code>${PROJECT_DIR}/${AWX_REPO_NAME}/installer/roles/local_docker/tasks/compose.yml</code>. Además también comentaremos las dos últimas tareas de este fichero que para nuestro caso no nos sirve para nada y se nos mostrará un error debido a que no se van a crear los contenedores.</p>
-<p>Este playbook nos generará varios ficheros en el directorio en la variable <code>docker_compose_dir</code> que constará de ficheros de configuración y de un fichero para levantar los contenedores con <code>docker-compose</code>.</p>
 <ul>
 <li>Antes que nada debemos tener permisos en el directorio de los volumenes:</li>
 </ul>
@@ -1257,19 +1594,310 @@ sudo chown -R <span class="nv">$USER</span>. /var/lib/awx/
 </pre></div>
 </td></tr></table>
 
-<p>Los fichero generados en el directorio <code>docker_compose_dir</code> (<code>/tmp/awxcompose</code>) podemos cifrarlos con Ansible Vault<a href="#anexo-2">(Ver Anexo 2)</a> ya que contienen contraseñas y así poderlos subirlos a nuestro repositorio de github.</p>
+<p>Este playbook nos generará varios ficheros en el directorio en la variable <code>docker_compose_dir</code> que constará de ficheros de configuración y de un fichero para levantar los contenedores con <code>docker-compose</code>.</p>
+<p>Los fichero generados en el directorio <code>docker_compose_dir</code> (<code>${PROJECT_DIR}/${PROJECT_REPO_NAME}/awxcompose</code>) podemos cifrarlos con Ansible Vault<a href="#anexo-2">(Ver Anexo 2)</a> ya que contienen contraseñas y así poderlos subirlos a nuestro repositorio de github.</p>
 <h3 id="instalacion">Instalación<a class="headerlink" href="#instalacion" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Nos situamos en el directorio <code>docker_compose_dir</code> y ejecutamos <code>docker-compose</code>:</li>
+<li>Nos situamos en el directorio <code>docker_compose_dir</code> y levantamos contenedores con <code>docker-compose</code>:</li>
 </ul>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">cd</span> /tmp/awxcompose
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">PROJECT_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">PROJECT_REPO_NAME</span><span class="si">}</span>/awxcompose
 docker-compose up -d
 </pre></div>
 </td></tr></table>
 
 <p><img alt="" src="../../img/proyecto/captura1.png" /></p>
 <h3 id="creando-un-proyecto-en-awx">Creando un proyecto en AWX<a class="headerlink" href="#creando-un-proyecto-en-awx" title="Permanent link">&para;</a></h3>
+<h4 id="creacion-de-proyecto-mediante-lineas-de-comandos">Creación de proyecto mediante líneas de comandos<a class="headerlink" href="#creacion-de-proyecto-mediante-lineas-de-comandos" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Antes que nada estableceremos algunas variables necesarias para la ejecución de dichos comandos:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="c1">## For all connections:</span>
+<span class="nv">AWXUSER</span><span class="o">=</span><span class="s2">&quot;awxuser&quot;</span>
+<span class="nv">AWXPASS</span><span class="o">=</span><span class="s2">&quot;awxpass&quot;</span>
+<span class="nv">AWXHOST</span><span class="o">=</span><span class="s2">&quot;http://localhost&quot;</span>
+<span class="c1">## For naming resources:</span>
+<span class="nv">PROJECT_NAME</span><span class="o">=</span><span class="s2">&quot;proyecto&quot;</span>
+<span class="nv">PROJECT_ORG</span><span class="o">=</span><span class="s2">&quot;Default&quot;</span>
+<span class="c1">## For projects:</span>
+<span class="nv">PROJECT_URL</span><span class="o">=</span><span class="s2">&quot;git@github.com:jpcarmona/proyectoawx.git&quot;</span>
+<span class="nv">PROJECT_BRANCH</span><span class="o">=</span><span class="s2">&quot;master&quot;</span>
+<span class="c1">##For credentials:</span>
+<span class="nv">SSH_KEY_FILE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/.ssh/id_rsa&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Las siguientes variables cambiaran dependiendo de la plantillad e trabajo que queramos añadir:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="c1">## Playbook:</span>
+<span class="nv">PLAYBOOK_FILE</span><span class="o">=</span><span class="s2">&quot;playbooks/create_servers.yml&quot;</span>
+<span class="c1">## Inventory:</span>
+<span class="nv">INVENTORY_FILE</span><span class="o">=</span><span class="s2">&quot;inventories/local.yml&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Lo primero es configurar <code>tower-cli</code>:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>tower-cli config host <span class="nv">$AWXHOST</span>
+tower-cli config username <span class="nv">$AWXUSER</span>
+tower-cli config password <span class="nv">$AWXPASS</span>
+tower-cli config verify_ssl <span class="nb">false</span>
+</pre></div>
+</td></tr></table>
+
+<p>Ahora lo primero que necesitamos para crear un proyecto en AWX son las credenciales del repositorio(SCM) de donde descargaremos el código(playbooks de ansible). Por ende crearemos en AWX una credencial que tenga acceso a dicho repositorio.</p>
+<ul>
+<li>Creación de credencial para git mediante línea de comandos</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nv">CRED_INPUTS</span><span class="o">=</span><span class="s2">&quot;ssh_key_data: |&quot;</span><span class="s1">$&#39;\n&#39;</span><span class="s2">&quot;</span><span class="k">$(</span>awk <span class="s1">&#39;{printf &quot; %s\n&quot;, $0}&#39;</span> &lt; <span class="si">${</span><span class="nv">SSH_KEY_FILE</span><span class="si">}</span><span class="k">)</span><span class="s2">&quot;</span>
+
+tower-cli credential create <span class="se">\</span>
+  --organization<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PROJECT_ORG</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --description<span class="o">=</span><span class="s2">&quot;Credential-git for project </span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --name<span class="o">=</span><span class="s2">&quot;credential-git_</span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --credential-type<span class="o">=</span><span class="s2">&quot;Source Control&quot;</span> <span class="se">\</span>
+  --inputs<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CRED_INPUTS</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --force-on-exists
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Creamos el proyecto:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>tower-cli project create <span class="se">\</span>
+  --organization<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PROJECT_ORG</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --description<span class="o">=</span><span class="s2">&quot;Project-git for </span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --name<span class="o">=</span><span class="s2">&quot;project-git_</span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --scm-type<span class="o">=</span><span class="s2">&quot;git&quot;</span> <span class="se">\</span>
+  --scm-url<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PROJECT_URL</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --scm-branch<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PROJECT_BRANCH</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --scm-credential<span class="o">=</span><span class="s2">&quot;credential-git_</span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --force-on-exists
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note"></div>
+<p>Antes de usar el proyecto deberemos de esperar ya que estará descargandolo del repositorio.</p>
+<ul>
+<li>Una vez creado el proyecto crearemos el inventario:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>tower-cli inventory create <span class="se">\</span>
+  --organization<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PROJECT_ORG</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --description<span class="o">=</span><span class="s2">&quot;Inventory for </span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --name<span class="o">=</span><span class="s2">&quot;inventory_</span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --force-on-exists
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Añadimos un fichero de inventario al inventario ya creado:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>tower-cli inventory_source create <span class="se">\</span>
+  --description<span class="o">=</span><span class="s2">&quot;Source for inventory_</span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --name<span class="o">=</span><span class="s2">&quot;inventory-source_</span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --inventory<span class="o">=</span><span class="s2">&quot;inventory_</span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --source<span class="o">=</span><span class="s2">&quot;scm&quot;</span> <span class="se">\</span>
+  --source-project<span class="o">=</span><span class="s2">&quot;project-git_</span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --source-path<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">INVENTORY_FILE</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --force-on-exists
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Creamos plantilla de trabajo:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>tower-cli job_template create <span class="se">\</span>
+  --job-type<span class="o">=</span><span class="s2">&quot;run&quot;</span> <span class="se">\</span>
+  --description<span class="o">=</span><span class="s2">&quot;Job template for project </span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --name<span class="o">=</span><span class="s2">&quot;job-template_</span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --inventory<span class="o">=</span><span class="s2">&quot;inventory_</span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --project<span class="o">=</span><span class="s2">&quot;project-git_</span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --playbook<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PLAYBOOK_FILE</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --credential<span class="o">=</span><span class="s2">&quot;credential-ssh_</span><span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --ask-variables-on-launch<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  --force-on-exists
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Por último lanzamos plantilla de trabajo:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>    tower-cli job launch <span class="se">\</span>
+      --job-template<span class="o">=</span>job-template_<span class="si">${</span><span class="nv">PROJECT_ORG</span><span class="si">}</span>-<span class="si">${</span><span class="nv">PROJECT_NAME</span><span class="si">}</span> <span class="se">\</span>
+      --extra-vars<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">VARS_TO_LAUNCH</span><span class="k">:-</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+      --verbosity<span class="o">=</span><span class="m">2</span> <span class="se">\</span>
+      --monitor
+</pre></div>
+</td></tr></table>
+
+<div class="admonition note"></div>
+<p>La variable <code>VARS_TO_LAUNCH</code> se especificaría en el caso que fuera necesario:
+  <code>VARS_TO_LAUNCH="{'var1':'value1','var2':'value2'}"</code></p>
+<div class="admonition note"></div>
+<p>Para la creación del proyecto mediante comandos necesitaremos el módulo de python <code>ansible-tower-cli</code>.</p>
+<h4 id="creacion-de-proyecto-mediante-interfaz-web-de-awx">Creación de proyecto mediante interfaz web de AWX<a class="headerlink" href="#creacion-de-proyecto-mediante-interfaz-web-de-awx" title="Permanent link">&para;</a></h4>
+<p>No me da tiempo!! Lo muestro en la presentación</p>
+<hr class="h3">
+
+<h2 id="proceso-de-automatizacion">Proceso de automatización<a class="headerlink" href="#proceso-de-automatizacion" title="Permanent link">&para;</a></h2>
+<p>El proceso de automatización de la infraestructura del hosting de aplicaciones Web mediante Ansible, la hemos dividido en 3 partes:</p>
+<ul>
+<li>Creación de máquinas en openstack.</li>
+<li>Instalación y configuración de los servicios para el hosting.</li>
+<li>Creación de aplicación web en hosting.</li>
+</ul>
+<h3 id="creacion-de-maquinas-en-openstack">Creación de máquinas en openstack<a class="headerlink" href="#creacion-de-maquinas-en-openstack" title="Permanent link">&para;</a></h3>
+<p>Para la creación de máquinas en Opestack hemos utilizado los módulos de Ansible:</p>
+<ul>
+<li>os_server: Para crear las instancias</li>
+<li>os_floating_ip: Para asignar ips flotantes</li>
+</ul>
+<p>También he necisitado utilizar el cliente de openstack para actualizar el nombre del servidor DNS que reparte el servidor DHCP de la subred de mi proyecto.</p>
+<ul>
+<li>Creación de infraestructura de servidores mediante Ansible:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">PROJECT_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">PROJECT_REPO_NAME</span><span class="si">}</span>
+ansible-playbook --vault-password-file vault-password-file -i inventories/local.yml playbooks/create_servers.yml
+</pre></div>
+</td></tr></table>
+
+<p>Al finalizar la ejecución de dicho playbook tendremos creada la infraestructura de máquinas virtual:</p>
+<ul>
+<li>Servidor DNS: Para la resolución de los distintos servicios y las aplicaciones Web creadas en un futuro.</li>
+<li>Servidor Apache: Nos hará de proxy hacia las aplicaciones "contenedorizadas"</li>
+<li>Servidor MySQL: Para albergar las bases de datos de las aplicaciones.</li>
+<li>Servidor Docker: Servidor donde se alojarán los contenedores de las aplicaciones.</li>
+</ul>
+<p>Además se nos creará el inventario de dichos servidores creados.</p>
+<h3 id="instalacion-y-configuracion-de-los-servidores">Instalación y configuracion de los servidores<a class="headerlink" href="#instalacion-y-configuracion-de-los-servidores" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Se instalarán los servicios mediante el módulo de Ansible <code>apt</code>.</li>
+<li>El servicio de Docker se instalará mediante un rol de <a href="https://github.com/geerlingguy/ansible-role-docker">Ansible-galaxy</a>.</li>
+<li>
+<p>Se utilizarán los módulos comunes de Ansible para los ficheros de configuración principal de los servicios:</p>
+<blockquote>
+<ul>
+<li>template</li>
+<li>copy</li>
+<li>systemd</li>
+<li>replace</li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>Instalación y configuracion de los servidores mediante Ansible:</p>
+</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">PROJECT_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">PROJECT_REPO_NAME</span><span class="si">}</span>
+ansible-playbook --vault-password-file vault-password-file -i inventories/infra.yml playbooks/config_servers.yml
+</pre></div>
+</td></tr></table>
+
+<p>Con esto ya tedriamos la infraestructura creada y configurada del hosting, ya solo nos quedaría desplegar una aplicación.</p>
+<h3 id="despliegue-de-aplicacion-webcms-en-el-hosting">Despliegue de aplicación Web(CMS) en el hosting<a class="headerlink" href="#despliegue-de-aplicacion-webcms-en-el-hosting" title="Permanent link">&para;</a></h3>
+<p>En el despliegue de la aplicación se realizan las siguientes tareas:</p>
+<ul>
+<li>Se crea una regla de entrada de un puerto en Openstack.<blockquote>
+<p>Utilizo el módulo de cloud de Ansible <code>os_security_group_rule</code>.</p>
+</blockquote>
+</li>
+<li>Se crea un registro CNAME en el DNS para resolver el nuevo nombre de dominio de la aplicación.<blockquote>
+<p>Utilizo el módulo de Ansible <code>blockinfile</code> con una marca para que no se repitan los registros.</p>
+</blockquote>
+</li>
+<li>Se crea un virtualhost en Apache que funciona como proxy hacia el contenedor.</li>
+<li>Se crea un usuario y una base de datos para la aplicación.<blockquote>
+<p>Utilizo la línea de comandos directamente para dicha creación aunque existe un módulo de Ansible para esta tarea.</p>
+</blockquote>
+</li>
+<li>
+<p>Se crea el contenedor de la aplicación con una redirección del puerto, creada regla de entrada en Openstack, del servidor de Docker al puerto 80 del contenedor.</p>
+</li>
+<li>
+<p>Despliegue de aplicación mediante Ansible:</p>
+</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">PROJECT_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">PROJECT_REPO_NAME</span><span class="si">}</span>
+ansible-playbook --extra-vars <span class="s1">&#39;{&quot;awx_user&quot;:&quot;usuario&quot;,&quot;awx_cms&quot;:&quot;drupal&quot;}&#39;</span> --vault-password-file vault-password-file -i inventories/infra.yml playbooks/hosting.yml
+</pre></div>
+</td></tr></table>
+
+<hr class="h3">
+
+<h2 id="cosas-para-hacer-en-un-futuro">Cosas para hacer en un futuro<a class="headerlink" href="#cosas-para-hacer-en-un-futuro" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Añadir certificados para utilizar https tanto en AWX como en las aplicaciones del hosting</p>
+</li>
+<li>
+<p>Añadir más aplicaciones para el hosting</p>
+</li>
+<li>
+<p>Parametrizar la autenticación y los recursos de Openstack(red,sshkey,etc...)</p>
+</li>
+</ul>
 <hr class="h3">
 
 <h2 id="anexos">Anexos<a class="headerlink" href="#anexos" title="Permanent link">&para;</a></h2>
@@ -1278,7 +1906,7 @@ docker-compose up -d
 <ul>
 <li>Instalamos el paquete de python3 que nos permite crear entornos virtuales:</li>
 </ul>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>apt install python3-venv
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>sudo apt install python3-venv
 </pre></div>
 </td></tr></table>
 
@@ -1307,7 +1935,7 @@ docker-compose up -d
 </div>
 <h3 id="creacion-de-ficheros-cifrados">Creación de ficheros cifrados<a class="headerlink" href="#creacion-de-ficheros-cifrados" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Creamos fichero con contraseña que usaremos para cifrar los ficheros</li>
+<li>Creamos fichero con contraseña que usaremos para cifrar los ficheros:</li>
 </ul>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>openssl rand -base64 <span class="m">30</span> &gt; vault-password-file.txt
 </pre></div>
@@ -1327,7 +1955,26 @@ docker-compose up -d
 </pre></div>
 </td></tr></table>
 
-<h3 id="creacion-de-contrasena-cifradas">Creación de contraseña cifradas<a class="headerlink" href="#creacion-de-contrasena-cifradas" title="Permanent link">&para;</a></h3>
+<h3 id="creacion-de-contrasenas-cifradas">Creación de contraseñas cifradas<a class="headerlink" href="#creacion-de-contrasenas-cifradas" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>Creamos fichero con contraseña que usaremos para cifrar los ficheros</p>
+</li>
+<li>
+<p>Ciframos contraseña:</p>
+</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>ansible-vault encrypt_string --vault-password-file vault-password-file.txt --name<span class="o">=</span><span class="s2">&quot;password&quot;</span> <span class="s1">&#39;XpassX&#39;</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Ejecutar playbook de Ansible con las contraseñas descifradas:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>ansible-playbook -i inventories/inventory.yml playbooks/playbooks.yml --vault-password-file vault-password-file.txt
+</pre></div>
+</td></tr></table>
+
 <h3 id="anexo-3">Anexo 3<a class="headerlink" href="#anexo-3" title="Permanent link">&para;</a></h3>
 <p>Creación de contraseña aleatorias</p>
 <ul>
@@ -1343,6 +1990,67 @@ docker-compose up -d
 <li><code>-base64</code>: Codificación de los caracteres.</li>
 </ul>
 </div>
+<h3 id="anexo-4">Anexo 4<a class="headerlink" href="#anexo-4" title="Permanent link">&para;</a></h3>
+<p>Arreglando problemas con AWX</p>
+<p>En AWX tengo el problema de que no es capaz de ejecutar algunos módulos que en mi propio entorno de python3 si puedo, por lo tanto procedo a relizar los siguientes cambios en el contenedor de AWX que ejecuta las tareas de ansible.</p>
+<ul>
+<li>Nos conectamos al contenedor:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>docker <span class="nb">exec</span> -it awx_task bash
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Eliminamos el entorno virtual que utiliza AWX:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>rm -rf /var/lib/awx/venv/ansible/
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Creamos nuevo entorno y lo activamos:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>python3 -m venv /var/lib/awx/venv/ansible
+<span class="nb">source</span> /var/lib/awx/venv/ansible/bin/activate
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Actualizamos pip en el entorno:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>pip install --upgrade pip
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Instalamos nuevos modulos a partir del fichero <a href="https://raw.githubusercontent.com/jpcarmona/proyectoawx/master/requeriments.txt">requirements</a> de mi repositorio del proyecto:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>curl -o requeriments.txt https://raw.githubusercontent.com/jpcarmona/proyectoawx/master/requeriments.txt
+pip install -r requeriments.txt
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Instalamos <code>gcc</code> y <code>python36-devel</code> necesario para instalar el módulo de python <code>psutil</code>:</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>yum install -y gcc python36-devel
+pip install psutil
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>Además necesita resolver el nombre de <code>jupiter</code>(servidor de Openstack):</li>
+</ul>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>cat <span class="s">&lt;&lt; EOF &gt;&gt; /etc/hosts</span>
+<span class="s">172.22.222.1        jupiter.gonzalonazareno.org</span>
+<span class="s">EOF</span>
+</pre></div>
+</td></tr></table>
                 
                   
                 
