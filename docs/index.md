@@ -1,6 +1,6 @@
 # Bienvenido al Rincón Vacío
 
-[Proyecto fin de curso 2º de ASIR - Gestión de creación de infraestrucutra, configuración y administración de software con AWX](blog/proyecto.md#header1)
+[Proyecto fin de curso 2º de ASIR - Despliegue automático de una infraestructura para hosting con Ansible y AWX](blog/proyecto.md#header1)
 
 ***
 
